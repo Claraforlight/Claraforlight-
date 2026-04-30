@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cosmic Branding | @claraforlight</title>
+<link href="https://fonts.googleapis.com/css2?family=Tinos:ital,wght@0,400;0,700;1,400;1,700&family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { background:#080604; color:#f5efe0; font-family:'Tinos',Georgia,serif; line-height:1.9; overflow-x:hidden; }
+
+nav { position:sticky; top:0; padding:16px 32px; display:flex; justify-content:space-between; align-items:center; background:#080604; border-bottom:1px solid rgba(201,168,76,0.15); z-index:100; }
+.nav-logo { font-family:'Cinzel',serif; font-size:11px; letter-spacing:4px; color:#c9a84c; text-decoration:none; }
+.nav-back { font-family:'Cinzel',serif; font-size:9px; letter-spacing:2px; color:#8a7d6b; text-transform:uppercase; text-decoration:none; transition:color 0.3s; }
+.nav-back:hover { color:#c9a84c; }
+
+.hero { min-height:100vh; position:relative; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:80px 40px; overflow:hidden; }
+.hero-bg { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center top; opacity:0.22; filter:sepia(15%); }
+.hero-overlay { position:absolute; inset:0; background:linear-gradient(to bottom, rgba(8,6,4,0.65), rgba(8,6,4,0.4), rgba(8,6,4,0.95)); }
+.hero-content { position:relative; z-index:2; max-width:760px; }
+.hero-tag { display:block; font-family:'Cinzel',serif; font-size:9px; letter-spacing:8px; color:#c9a84c; text-transform:uppercase; margin-bottom:20px; opacity:0; animation:fadeUp 1s ease forwards 0.3s; }
+.hero-title { font-family:'Cinzel',serif; font-size:clamp(44px,9vw,96px); font-weight:700; color:#fff; letter-spacing:6px; line-height:1.05; margin-bottom:24px; text-shadow:0 2px 30px rgba(0,0,0,0.6); opacity:0; animation:fadeUp 1s ease forwards 0.5s; }
+.hero-sub { font-style:italic; font-size:clamp(16px,2.5vw,21px); color:#e8c97a; line-height:1.8; margin-bottom:48px; opacity:0; animation:fadeUp 1s ease forwards 0.7s; }
+.btn { display:inline-block; padding:17px 52px; background:#c9a84c; color:#080604; font-family:'Cinzel',serif; font-size:11px; letter-spacing:4px; text-transform:uppercase; text-decoration:none; border:none; cursor:pointer; transition:background 0.3s, transform 0.3s; opacity:0; animation:fadeUp 1s ease forwards 0.9s; }
+.btn:hover { background:#f0dfa0; transform:translateY(-2px); }
+.btn-static { display:inline-block; padding:17px 52px; background:#c9a84c; color:#080604; font-family:'Cinzel',serif; font-size:11px; letter-spacing:4px; text-transform:uppercase; text-decoration:none; border:none; cursor:pointer; transition:background 0.3s, transform 0.3s; }
+.btn-static:hover { background:#f0dfa0; transform:translateY(-2px); }
+
+.sep { text-align:center; padding:40px; color:#c9a84c; font-size:20px; opacity:0.5; }
+
+.section { padding:72px 40px; }
+.section-dark { background:#0e0b08; }
+.inner { max-width:780px; margin:0 auto; }
+.inner-wide { max-width:1000px; margin:0 auto; }
+
+.tag { display:block; font-family:'Cinzel',serif; font-size:9px; letter-spacing:6px; color:#c9a84c; text-transform:uppercase; text-align:center; margin-bottom:32px; }
+.h2 { font-family:'Cinzel',serif; font-size:clamp(20px,4vw,34px); font-weight:600; color:#f5efe0; text-align:center; line-height:1.3; margin-bottom:32px; letter-spacing:1.5px; }
+.h2 em { font-style:italic; color:#e8c97a; font-family:'Tinos',serif; font-weight:400; }
+.intro-phrase { font-size:17px; line-height:1.9; color:#b5a898; text-align:center; margin-bottom:24px; font-style:italic; }
+.bt { font-size:16px; line-height:2.1; color:#b5a898; margin-bottom:20px; text-align:center; }
+.bt strong { color:#f5efe0; font-weight:700; }
+.btl { font-size:16px; line-height:2.1; color:#b5a898; margin-bottom:20px; }
+.btl strong { color:#f5efe0; font-weight:700; }
+.gold { font-family:'Cinzel',serif; font-size:clamp(16px,2.5vw,24px); color:#e8c97a; text-align:center; letter-spacing:3px; margin:32px 0; }
+
+.blist { list-style:none; max-width:720px; margin:32px auto 0; }
+.blist li { display:flex; gap:18px; align-items:flex-start; padding:18px 0; border-bottom:1px solid rgba(201,168,76,0.07); }
+.blist li:last-child { border-bottom:none; }
+.bicon { font-size:20px; flex-shrink:0; }
+.btxt { font-size:16px; line-height:2; color:#b5a898; }
+.btxt strong { color:#f5efe0; }
+
+.nlist { list-style:none; max-width:720px; margin:24px auto; }
+.nlist li { display:flex; gap:16px; align-items:flex-start; padding:12px 0; border-bottom:1px solid rgba(201,168,76,0.06); }
+.nlist li:last-child { border-bottom:none; }
+.na { color:#c9a84c; font-size:18px; flex-shrink:0; }
+.nt { font-size:16px; line-height:2; color:#b5a898; }
+.nt strong { color:#f5efe0; font-weight:700; }
+
+.clist { list-style:none; max-width:720px; margin:0 auto; }
+.clist li { display:flex; gap:18px; padding:22px 0; border-bottom:1px solid rgba(201,168,76,0.08); }
+.clist li:last-child { border-bottom:none; }
+.ca { color:#c9a84c; font-size:20px; flex-shrink:0; margin-top:2px; }
+.ct { font-size:16px; line-height:2; color:#b5a898; }
+.ct strong { color:#f5efe0; font-weight:700; }
+
+.qbox { border-left:2px solid #c9a84c; padding:24px 32px; margin:32px auto; background:rgba(201,168,76,0.04); max-width:720px; font-style:italic; font-size:20px; color:#e8c97a; line-height:1.7; }
+
+.photo-center { display:block; width:100%; max-width:860px; margin:0 auto 24px; }
+
+.prix-box { background:rgba(201,168,76,0.04); border:1px solid rgba(201,168,76,0.2); padding:56px 40px; max-width:600px; margin:0 auto; text-align:center; }
+.prix-label { font-family:'Cinzel',serif; font-size:9px; letter-spacing:6px; color:#c9a84c; text-transform:uppercase; margin-bottom:16px; }
+.prix-main { font-family:'Cinzel',serif; font-size:64px; color:#e8c97a; margin-bottom:8px; }
+.prix-alt { font-size:14px; color:#8a7d6b; letter-spacing:2px; margin-bottom:32px; }
+
+.faq-list { max-width:700px; margin:0 auto; }
+.faq-item { border-bottom:1px solid rgba(201,168,76,0.2); }
+.faq-q { padding:20px 0; cursor:pointer; font-family:'Cinzel',serif; font-size:12px; letter-spacing:1px; color:#f5efe0; display:flex; justify-content:space-between; align-items:center; gap:16px; user-select:none; }
+.faq-q span { color:#c9a84c; font-size:22px; transition:transform 0.3s; flex-shrink:0; }
+.faq-a { padding:0 0 20px; font-size:15px; line-height:2; color:#b5a898; display:none; }
+.faq-item.open .faq-a { display:block; }
+.faq-item.open .faq-q span { transform:rotate(45deg); }
+
+footer { padding:40px; border-top:1px solid rgba(201,168,76,0.15); display:flex; justify-content:space-between; align-items:center; }
+.footer-logo { font-family:'Cinzel',serif; font-size:11px; letter-spacing:5px; color:#c9a84c; }
+.footer-copy { font-size:11px; color:#8a7d6b; }
+
+@keyframes fadeUp { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:translateY(0); } }
+
+@media (max-width:768px) {
+  nav { padding:14px 20px; }
+  .hero { padding:60px 24px; }
+  .section { padding:56px 24px; }
+  .prix-box { padding:40px 24px; }
+  .qbox { padding:20px 24px; font-size:17px; }
+  footer { flex-direction:column; gap:12px; text-align:center; padding:28px 24px; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">@claraforlight</a>
+  <a class="nav-back" href="index.html">← Retour</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <img class="hero-bg" src="images/01.jpg" alt="">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <span class="hero-tag">@claraforlight • Personal Branding Cosmique</span>
+    <h1 class="hero-title">COSMIC<br>BRANDING</h1>
+    <p class="hero-sub">L'alliance Astro × Marketing pour (ENFIN) vendre tes offres — même avec une petite audience — et te démarquer grâce à un univers de marque iconique et visionnaire.</p>
+    <a class="btn" href="#cta">Je veux mon Cosmic Branding 🔮</a>
+  </div>
+</section>
+
+<div class="sep">✦</div>
+
+<!-- LAISSE-MOI DEVINER -->
+<section class="section section-dark">
+  <div class="inner">
+    <span class="tag">Laisse-moi deviner...</span>
+    <ul class="blist">
+      <li>
+        <span class="bicon">👀</span>
+        <p class="btxt">Tu parles de tes offres en story comme PPJ (Paulette Pierrette et Janine, ça change un peu ici 🫠), mais <strong>0 ventes à l'horizon.</strong> Tu as carrément peur de saouler les gens et de passer pour une vendeuse de tapis.</p>
+      </li>
+      <li>
+        <span class="bicon">👻</span>
+        <p class="btxt">Tu as l'impression de parler à Casper. <strong>#zérointéractions.</strong> Il est sympa, mais il ne paie pas les factures. Que ce soit dans tes posts ou tes stories.</p>
+      </li>
+      <li>
+        <span class="bicon">🫠</span>
+        <p class="btxt">Tu as déjà bidouillé quelques trucs sur Canva, mais ce n'est pas la folie — toi-même tu le sais. <strong>Tu fais avec car "pas le choix".</strong></p>
+      </li>
+      <li>
+        <span class="bicon">👑</span>
+        <p class="btxt">Tu essaies de te mettre à la page, que <strong>ton feed soit "joli"</strong> et agréable à regarder.</p>
+      </li>
+      <li>
+        <span class="bicon">😅</span>
+        <p class="btxt">Tu suis et appliques tous les conseils des coachs Insta, mais au final... <strong>tu perds de l'énergie, de la motivation et même de l'argent.</strong></p>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<div class="sep">☾</div>
+
+<!-- C'EST PAS TA FAUTE -->
+<section class="section">
+  <div class="inner">
+    <p class="intro-phrase">Et je suis désolée, mais je vais te dire un truc qui va pas du tout t'aider... 😅</p>
+    <h2 class="h2">C'est pas ta faute.<br><em>(Mais alors vraiment pas du tout.)</em></h2>
+    <p class="bt">Je sais que tu pensais savoir ce qu'il fallait faire pour vendre tes offres. Parce que j'ai été à ta place. Moi aussi on m'avait dit qu'avoir un beau feed c'était important. Laisse-moi te dire la vérité une bonne fois pour toutes.</p>
+    <h2 class="h2" style="margin-top:32px; font-size:clamp(18px,3vw,26px);">La réalité c'est que...</h2>
+    <ul class="nlist">
+      <li>
+        <span class="na">👉🏼</span>
+        <p class="nt"><strong>NON</strong>, ce n'est pas le fait d'avoir une "jolie" page Insta qui va te faire vendre.</p>
+      </li>
+      <li>
+        <span class="na">👉🏼</span>
+        <p class="nt"><strong>NON</strong>, ce n'est pas le fait de parler de tes offres en story qui va te faire VENDRE.</p>
+      </li>
+      <li>
+        <span class="na">👉🏼</span>
+        <p class="nt"><strong>NON</strong>, ce n'est pas en appliquant aléatoirement les conseils de PPJ que ça va marcher.</p>
+      </li>
+    </ul>
+    <h2 class="h2" style="margin-top:40px; font-size:clamp(16px,2.5vw,22px);">Parce que le secret ne se trouve <strong>ABSOLUMENT PAS</strong> dans ce qu'on t'a vendu jusqu'ici.</h2>
+    <p class="bt">Instagram est une <strong>PLATEFORME</strong>. Tu peux la maîtriser à la perfection — si tu ne sais pas VENDRE à ta communauté, avoir 10K d'abonnés ne te servira à rien.</p>
+    <div class="qbox">MOI mon but, c'est que tu <strong>VENDES</strong>. Car qui dit vendre dit "vivre de ta passion" — sur le long terme.</div>
+    <p class="gold">LA MARQUE PERSONNELLE.</p>
+    <p class="bt">L'art de montrer ta personnalité de manière <strong>authentique et intelligente</strong> afin que ton univers de marque soit le parfait reflet de qui tu es — c'est ce qui va parler et vendre pour toi aux bonnes personnes.</p>
+    <p class="bt">Et ce n'est pas juste des couleurs et des typos. Cela va <strong>INFINIMENT</strong> au-delà de ça.</p>
+  </div>
+</section>
+
+<div class="sep">🃑</div>
+
+<!-- MON HISTOIRE -->
+<section class="section section-dark">
+  <div class="inner">
+    <h2 class="h2">J'ai vraiment été<br>dans les <em>extrêmes.</em></h2>
+    <p class="btl">Au tout début de mon compte, je ne montrais quasiment que ma tête — et honnêtement, ça m'allait très bien. Mais rapidement, je me suis laissée entraîner dans l'infographie. Et à partir de là, tout a été plus compliqué : j'ai commencé à m'effacer.</p>
+    <p class="btl">Résultat ? Des mois à zéro malgré toute la "valeur" de ce que j'apportais. Et je ne comprenais pas où était le problème. J'en étais même venue à douter de la qualité de mon travail... <strong>QUE NENI, je n'y étais pas du tout !</strong></p>
+    <div class="qbox">La solution était quasiment sous mes yeux. C'était <strong>MOI</strong> depuis le début. Et quand j'ai compris ça, ce n'est plus uniquement des séances à 317€ que j'ai réussi à vendre — mais mon 1.1 à <strong>4K. 👑</strong></div>
+    <p class="btl">Pour faire ce genre de ventes, il faut avoir une relation en <strong>BÉTON ARMÉ</strong> avec ta communauté — et arrêter de les voir comme des "abonnés". Ce sont des êtres humains, comme toi et moi.</p>
+  </div>
+</section>
+
+<div class="sep">✦</div>
+
+<!-- MESSAGES COMMUNAUTÉ -->
+<section class="section">
+  <div class="inner">
+    <span class="tag">Connecter avec les bonnes personnes</span>
+    <h2 class="h2">AKA notre cliente de cœur —<br><em>celles qui nous envoient ça 🥹</em></h2>
+  </div>
+  <img class="photo-center" src="images/02.jpg" alt="Messages communauté Clara">
+</section>
+
+<div class="sep">🔮</div>
+
+<!-- COSMIC BRANDING CONTIENT -->
+<section class="section section-dark">
+  <div class="inner">
+    <h2 class="h2">COSMIC BRANDING<br><em>contient tous les ingrédients nécessaires</em></h2>
+    <p class="bt">Cosmic Branding, c'est ce qui m'a permis de créer un lien très fort avec ma petite — mais ouf — audience. Et ce qui a permis à Estelle, Tania, Christine, Siao, Laura, Ludivine de me faire confiance et de payer mes services au-delà de 1K.</p>
+    <p class="bt">Pas de fausse modestie — je déteste ça. Avec Cosmic Branding, tu peux être sûre de trouver le coup de fouet dont tu as besoin pour te mettre en action. <strong>Parole de Bélier. 💥</strong></p>
+    <p class="bt">C'est un travail qu'on fait à deux : moi je m'occupe de traduire ce que tu n'arrives pas à pleinement exprimer — c'est ma zone de génie. Toi, <strong>ton job c'est de briller et d'OSER.</strong></p>
+    <p class="bt" style="margin-top:24px;"><strong>"Une image vaut mille mots... Regarde cette page jusqu'à la fin 😎👇🏼"</strong></p>
+    <p class="bt" style="font-style:italic; color:#8a7d6b;">Et oui. Parce que ce n'est pas une presta d'identité visuelle. Ça va bien au-delà. On travaille ensemble à comprendre tes traumatismes sociaux et l'image que tu vas devoir apprendre à développer pour prendre ta revanche.</p>
+  </div>
+</section>
+
+<div class="sep">👑</div>
+
+<!-- TOUTES LES PHOTOS dans l'ordre exact 03 → 38 -->
+<section class="section">
+  <div class="inner-wide">
+    <span class="tag">Il me semble que je t'avais promis un aperçu... 😏👇🏼</span>
+    <h2 class="h2">Non, c'est pas juste pour faire joli.<br><em>(Juste au cas où, si t'en doutais encore.) 👀</em></h2>
+    <p class="bt" style="margin-bottom:48px;">Cosmic Branding amène à reprendre confiance en soi, en son image, en sa capacité à passer à l'action — qu'on soit en basket ou en talon. 👟👠</p>
+
+    <img class="photo-center" src="images/03.jpg" alt="">
+    <img class="photo-center" src="images/04.jpg" alt="">
+    <img class="photo-center" src="images/05.jpg" alt="">
+    <img class="photo-center" src="images/06.jpg" alt="">
+    <img class="photo-center" src="images/07.jpg" alt="">
+    <img class="photo-center" src="images/08.jpg" alt="">
+    <img class="photo-center" src="images/09.jpg" alt="">
+    <img class="photo-center" src="images/10.jpg" alt="">
+    <img class="photo-center" src="images/11.jpg" alt="">
+    <img class="photo-center" src="images/12.jpg" alt="">
+    <img class="photo-center" src="images/13.jpg" alt="">
+    <img class="photo-center" src="images/14.jpg" alt="">
+    <img class="photo-center" src="images/15.jpg" alt="">
+    <img class="photo-center" src="images/16.jpg" alt="">
+    <img class="photo-center" src="images/17.jpg" alt="">
+    <img class="photo-center" src="images/18.jpg" alt="">
+    <img class="photo-center" src="images/19.jpg" alt="">
+    <img class="photo-center" src="images/20.jpg" alt="">
+    <img class="photo-center" src="images/21.jpg" alt="">
+    <img class="photo-center" src="images/22.jpg" alt="">
+    <img class="photo-center" src="images/23.jpg" alt="">
+    <img class="photo-center" src="images/24.jpg" alt="">
+    <img class="photo-center" src="images/25.jpg" alt="">
+    <img class="photo-center" src="images/26.jpg" alt="">
+    <img class="photo-center" src="images/27.jpg" alt="">
+    <img class="photo-center" src="images/28.jpg" alt="">
+    <img class="photo-center" src="images/29.jpg" alt="">
+    <img class="photo-center" src="images/30.jpg" alt="">
+    <img class="photo-center" src="images/31.jpg" alt="">
+    <img class="photo-center" src="images/32.jpg" alt="">
+    <img class="photo-center" src="images/33.jpg" alt="">
+    <img class="photo-center" src="images/34.jpg" alt="">
+    <img class="photo-center" src="images/35.jpg" alt="">
+    <img class="photo-center" src="images/36.jpg" alt="">
+    <img class="photo-center" src="images/37.jpg" alt="">
+    <img class="photo-center" src="images/38.jpg" alt="">
+  </div>
+</section>
+
+<div class="sep">☾</div>
+
+<!-- CONTENU OFFRE -->
+<section class="section section-dark">
+  <div class="inner">
+    <span class="tag">Ok Clara, dans le concret ça donne quoi ? 🤔</span>
+    <h2 class="h2">Ce que Cosmic Branding<br><em>contient exactement</em></h2>
+    <ul class="clist">
+      <li>
+        <span class="ca">→</span>
+        <div class="ct"><strong>Une séance ASTRO BUSINESS</strong> avec moi — 2 à 3 heures pour analyser ton thème version business. C'est là qu'on parle de ton rapport à ton image, de tes traumatismes, de ton histoire. Une mine d'or pour tes ventes.</div>
+      </li>
+      <li>
+        <span class="ca">→</span>
+        <div class="ct"><strong>Ton identité visuelle basée sur tes énergies</strong>, livrée sous une semaine max. Ouai, je suis rapide — pas le temps de niaiser ♈😏</div>
+      </li>
+      <li>
+        <span class="ca">→</span>
+        <div class="ct">De quoi <strong>créer entièrement ton personal branding</strong> et comprendre comment te <strong>DIFFÉRENCIER 💥</strong> de la concurrence.</div>
+      </li>
+      <li>
+        <span class="ca">→</span>
+        <div class="ct"><strong>Des templates clés en main</strong> totalement adaptés à toi — stories d'engagement, de vente, posts simples, carrousels, covers réels.</div>
+      </li>
+      <li>
+        <span class="ca">→</span>
+        <div class="ct">🎁 <strong>Un espace de travail</strong> fait aux petits oignons — clairement <strong>GAME CHANGER</strong> pour t'organiser dans ta vie d'entrepreneuse.</div>
+      </li>
+      <li>
+        <span class="ca">→</span>
+        <div class="ct">Et le must du must... <strong>Un processus de création de contenu</strong> qui va te changer la vie — pour que tu ne sois <strong>JAMAIS à court d'idées</strong> (ET LES TRIER SI T'EN AS TROP !).</div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<div class="sep">🔮</div>
+
+<!-- PRIX -->
+<section class="section" id="cta">
+  <div class="inner">
+    <div class="prix-box">
+      <p class="prix-label">Cosmic Branding — Investissement</p>
+      <p class="prix-main">997€</p>
+      <p class="prix-alt">ou 4 paiements de 249€</p>
+      <p style="font-size:15px; color:#b5a898; margin-bottom:16px; line-height:1.9;">Reçois immédiatement ton espace de travail et tous les bonus de l'offre pour commencer à avancer <strong style="color:#f5efe0;">MAINTENANT</strong> 🎁</p>
+      <p style="font-size:14px; color:#8a7d6b; font-style:italic; margin-bottom:40px;">Sur candidature — un premier contact est requis avant de démarrer.</p>
+      <a class="btn-static" href="https://instagram.com/claraforlight" target="_blank">Je passe à l'action → DM : BRANDING 🔥</a>
+    </div>
+  </div>
+</section>
+
+<div class="sep">☾</div>
+
+<!-- FAQ -->
+<section class="section section-dark">
+  <div class="inner">
+    <span class="tag">Questions fréquentes</span>
+    <h2 class="h2">Si tu as des questions,<br><em>tu trouveras sûrement la réponse ici 👇🏼</em></h2>
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-q">Puis-je payer en plusieurs fois ? <span>+</span></div>
+        <div class="faq-a">Oui. Tu peux régler en 4 paiements mensuels de 249€. Mentionne-le lors de ton premier contact en DM sur Instagram.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">En combien de temps vais-je recevoir mon identité visuelle ? <span>+</span></div>
+        <div class="faq-a">Ton identité visuelle est livrée sous une semaine maximum après notre séance Astro Business ensemble.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Y a-t-il des conditions pour cette offre ? <span>+</span></div>
+        <div class="faq-a">Cosmic Branding est proposé sur candidature. Un premier échange en DM est nécessaire avant de démarrer — pour s'assurer que c'est le bon moment et que tu es prête à t'investir pleinement.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Qu'est-ce qui se passe une fois que j'ai payé ? <span>+</span></div>
+        <div class="faq-a">Tu reçois immédiatement ton espace de travail et tous les bonus de l'offre pour commencer à avancer MAINTENANT. La séance Astro Business est ensuite planifiée ensemble.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">CLARAFORLIGHT</div>
+  <div class="footer-copy">© 2026 — Tarologue • Astrologue • Mentor Business</div>
+</footer>
+
+<script>
+document.querySelectorAll('.faq-item').forEach(function(item) {
+  item.querySelector('.faq-q').addEventListener('click', function() {
+    item.classList.toggle('open');
+  });
+});
+</script>
+</body>
+</html>
