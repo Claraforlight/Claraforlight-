@@ -20,21 +20,23 @@ header { position:sticky; top:0; z-index:100; background:rgba(8,6,4,0.96); backd
 .tab { background:none; border:1px solid rgba(201,168,76,0.2); color:#b5a898; font-family:'Cinzel',serif; font-size:10px; letter-spacing:2px; text-transform:uppercase; padding:9px 14px; cursor:pointer; border-radius:2px; transition:all .25s; }
 .tab:hover { color:#f5efe0; border-color:rgba(201,168,76,0.5); }
 .tab.active { background:#c9a84c; color:#080604; border-color:#c9a84c; }
+.tab:focus-visible { outline:2px solid #e8c97a; outline-offset:2px; }
 
 /* ---------- LAYOUT ---------- */
 main { max-width:820px; margin:0 auto; padding:40px 22px 90px; }
 .view { display:none; animation:fadeUp .5s ease; }
 .view.active { display:block; }
 @keyframes fadeUp { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:translateY(0); } }
+@media (prefers-reduced-motion: reduce) { *, ::before, ::after { animation:none !important; transition:none !important; } }
 
 .tag { display:block; font-family:'Cinzel',serif; font-size:9px; letter-spacing:6px; color:#c9a84c; text-transform:uppercase; text-align:center; margin-bottom:20px; }
-.h2 { font-family:'Cinzel',serif; font-size:clamp(20px,4.5vw,32px); font-weight:600; color:#f5efe0; text-align:center; line-height:1.3; margin-bottom:14px; letter-spacing:1.5px; }
+.h2 { font-family:'Cinzel',serif; font-size:clamp(20px,4.5vw,32px); font-weight:600; color:#f5efe0; text-align:center; line-height:1.3; margin-bottom:14px; letter-spacing:1.5px; text-wrap:balance; }
 .h2 em { font-style:italic; color:#e8c97a; font-family:'Tinos',serif; font-weight:400; }
 .lead { text-align:center; color:#b5a898; font-style:italic; font-size:16px; max-width:600px; margin:0 auto 34px; }
 
 /* ---------- CARDS ---------- */
 .card { background:rgba(201,168,76,0.04); border:1px solid rgba(201,168,76,0.16); border-radius:6px; padding:22px; margin-bottom:16px; }
-.card-h { font-family:'Cinzel',serif; font-size:13px; letter-spacing:2px; color:#e8c97a; text-transform:uppercase; margin-bottom:6px; display:flex; align-items:center; gap:10px; }
+.card-h { font-family:'Cinzel',serif; font-size:13px; letter-spacing:2px; color:#e8c97a; text-transform:uppercase; margin-bottom:6px; display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
 .card-sub { font-size:14px; color:#8a7d6b; margin-bottom:14px; }
 
 label.fld { display:block; font-family:'Cinzel',serif; font-size:9px; letter-spacing:2px; color:#c9a84c; text-transform:uppercase; margin:14px 0 6px; }
@@ -46,6 +48,7 @@ select option { background:#0e0b08; }
 
 .btn { display:inline-block; padding:13px 30px; background:#c9a84c; color:#080604; font-family:'Cinzel',serif; font-size:11px; letter-spacing:3px; text-transform:uppercase; border:none; cursor:pointer; border-radius:3px; transition:all .25s; }
 .btn:hover { background:#f0dfa0; transform:translateY(-2px); }
+.btn:focus-visible { outline:2px solid #e8c97a; outline-offset:2px; }
 .btn.ghost { background:none; color:#c9a84c; border:1px solid #c9a84c; }
 .btn.ghost:hover { background:rgba(201,168,76,0.1); color:#f0dfa0; }
 .btn.sm { padding:9px 18px; font-size:9px; letter-spacing:2px; }
@@ -54,9 +57,9 @@ select option { background:#0e0b08; }
 /* ---------- PLANNING GRID ---------- */
 .day { border-bottom:1px solid rgba(201,168,76,0.08); padding:14px 0; }
 .day:last-child { border-bottom:none; }
-.day-name { font-family:'Cinzel',serif; font-size:11px; letter-spacing:3px; color:#c9a84c; text-transform:uppercase; margin-bottom:8px; display:flex; justify-content:space-between; align-items:center; }
-.day-name .chips { display:flex; gap:6px; flex-wrap:wrap; }
-.chip { font-family:'Tinos',serif; font-size:12px; letter-spacing:0; text-transform:none; padding:3px 10px; border-radius:20px; background:rgba(201,168,76,0.12); color:#e8c97a; border:1px solid rgba(201,168,76,0.3); }
+.day-name { font-family:'Cinzel',serif; font-size:11px; letter-spacing:3px; color:#c9a84c; text-transform:uppercase; margin-bottom:8px; display:flex; justify-content:space-between; align-items:center; gap:8px; }
+.day-name .chips { display:flex; gap:6px; flex-wrap:wrap; justify-content:flex-end; }
+.chip { font-family:'Tinos',serif; font-size:12px; letter-spacing:0; text-transform:none; padding:3px 10px; border-radius:20px; background:rgba(201,168,76,0.12); color:#e8c97a; border:1px solid rgba(201,168,76,0.3); white-space:nowrap; }
 .chip.muscu { background:rgba(224,122,95,0.15); color:#f0a58c; border-color:rgba(224,122,95,0.4); }
 .chip.piscine { background:rgba(95,158,224,0.15); color:#9cc7f0; border-color:rgba(95,158,224,0.4); }
 
@@ -71,13 +74,13 @@ select option { background:#0e0b08; }
 /* ---------- SHARE ---------- */
 .codebox { width:100%; font-family:monospace; font-size:12px; min-height:120px; word-break:break-all; }
 .hint { font-size:13px; color:#8a7d6b; margin-top:8px; line-height:1.6; }
-.toast { position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(30px); background:#c9a84c; color:#080604; font-family:'Cinzel',serif; font-size:11px; letter-spacing:2px; padding:12px 24px; border-radius:4px; opacity:0; pointer-events:none; transition:all .3s; text-transform:uppercase; z-index:200; }
+.toast { position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(30px); background:#c9a84c; color:#080604; font-family:'Cinzel',serif; font-size:11px; letter-spacing:2px; padding:12px 24px; border-radius:4px; opacity:0; pointer-events:none; transition:all .3s; text-transform:uppercase; z-index:200; max-width:90vw; text-align:center; }
 .toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
 
 /* ---------- GAMES ---------- */
-.game-card { background:rgba(201,168,76,0.05); border:1px solid rgba(201,168,76,0.22); border-radius:8px; padding:44px 26px; text-align:center; min-height:230px; display:flex; flex-direction:column; justify-content:center; align-items:center; }
+.game-card { background:rgba(201,168,76,0.05); border:1px solid rgba(201,168,76,0.22); border-radius:8px; padding:44px 26px; text-align:center; min-height:240px; display:flex; flex-direction:column; justify-content:center; align-items:center; }
 .game-cat { font-family:'Cinzel',serif; font-size:9px; letter-spacing:4px; color:#c9a84c; text-transform:uppercase; margin-bottom:20px; }
-.game-q { font-size:clamp(19px,4.5vw,26px); color:#f5efe0; font-style:italic; line-height:1.5; max-width:560px; }
+.game-q { font-size:clamp(19px,4.5vw,26px); color:#f5efe0; font-style:italic; line-height:1.5; max-width:580px; text-wrap:balance; }
 .game-q em { color:#e8c97a; font-style:normal; }
 .counter { text-align:center; font-size:12px; color:#8a7d6b; letter-spacing:2px; margin-top:18px; font-family:'Cinzel',serif; }
 .reveal { margin-top:22px; padding:16px 20px; background:rgba(201,168,76,0.08); border-radius:6px; color:#e8c97a; font-style:italic; display:none; }
@@ -89,7 +92,6 @@ select option { background:#0e0b08; }
 .names-bar { text-align:center; font-size:13px; color:#8a7d6b; margin-bottom:24px; }
 .names-bar a { color:#c9a84c; cursor:pointer; text-decoration:underline; }
 
-.empty { text-align:center; color:#6b6155; font-style:italic; padding:20px; }
 .footer { text-align:center; padding:30px 20px; color:#6b6155; font-size:11px; font-family:'Cinzel',serif; letter-spacing:2px; }
 .footer .heart { color:#c9a84c; }
 </style>
@@ -121,9 +123,9 @@ select option { background:#0e0b08; }
     <div class="card">
       <div class="card-h">✨ Vos prénoms</div>
       <div class="card-sub">Juste pour personnaliser. C'est enregistré sur ton téléphone.</div>
-      <label class="fld">Toi</label>
+      <label class="fld" for="nameA">Toi</label>
       <input id="nameA" placeholder="Clara">
-      <label class="fld">Ta best</label>
+      <label class="fld" for="nameB">Ta best</label>
       <input id="nameB" placeholder="Ma bestie">
       <div class="btn-row"><button class="btn sm" onclick="saveNames()">Enregistrer</button></div>
     </div>
@@ -134,7 +136,7 @@ select option { background:#0e0b08; }
         <li style="padding:8px 0;">📅 <strong style="color:#f5efe0;">Planning</strong> — ta best colle son emploi du temps, jour par jour (peu importe le format).</li>
         <li style="padding:8px 0;">🏋️ <strong style="color:#f5efe0;">Sport</strong> — tu choisis tes créneaux : 1 muscu + 2 piscine par semaine.</li>
         <li style="padding:8px 0;">🔗 <strong style="color:#f5efe0;">Partage</strong> — un code à copier-coller pour vous synchroniser entre vos deux téléphones.</li>
-        <li style="padding:8px 0;">🎮 <strong style="color:#f5efe0;">Jeux</strong> — « Qui de nous deux ? » et « Est-ce qu'on se connaît ? ».</li>
+        <li style="padding:8px 0;">🎮 <strong style="color:#f5efe0;">Jeux</strong> — 7 jeux pour rire et voir si on se connaît vraiment.</li>
       </ul>
     </div>
   </section>
@@ -158,25 +160,25 @@ select option { background:#0e0b08; }
 
     <div class="card">
       <div class="card-h">💪 Muscu <span style="color:#8a7d6b;font-size:10px;">1 fois / semaine</span></div>
-      <label class="fld">Jour</label>
+      <label class="fld" for="muscuDay">Jour</label>
       <select id="muscuDay"></select>
-      <label class="fld">Heure</label>
-      <input id="muscuTime" placeholder="ex : 18h30" >
+      <label class="fld" for="muscuTime">Heure</label>
+      <input id="muscuTime" placeholder="ex : 18h30">
     </div>
 
     <div class="card">
       <div class="card-h">🏊 Piscine — séance 1</div>
-      <label class="fld">Jour</label>
+      <label class="fld" for="pisc1Day">Jour</label>
       <select id="pisc1Day"></select>
-      <label class="fld">Heure</label>
+      <label class="fld" for="pisc1Time">Heure</label>
       <input id="pisc1Time" placeholder="ex : 12h00">
     </div>
 
     <div class="card">
       <div class="card-h">🏊 Piscine — séance 2</div>
-      <label class="fld">Jour</label>
+      <label class="fld" for="pisc2Day">Jour</label>
       <select id="pisc2Day"></select>
-      <label class="fld">Heure</label>
+      <label class="fld" for="pisc2Time">Heure</label>
       <input id="pisc2Time" placeholder="ex : 19h00">
     </div>
 
@@ -218,14 +220,11 @@ select option { background:#0e0b08; }
     <h2 class="h2">On <em>joue</em> ?</h2>
     <div class="names-bar" id="namesBar"></div>
 
-    <div class="mode-switch">
-      <button class="tab active" data-game="qui">Qui de nous deux ?</button>
-      <button class="tab" data-game="connait">On se connaît ?</button>
-    </div>
+    <div class="mode-switch" id="gameSwitch"></div>
 
     <div class="game-card">
       <div class="game-cat" id="gameCat">Qui de nous deux...</div>
-      <div class="game-q" id="gameQ">Appuie sur « Carte suivante » pour commencer !</div>
+      <div class="game-q" id="gameQ">Appuie sur « Carte suivante » pour commencer ! 💛</div>
       <div class="reveal" id="gameReveal"></div>
     </div>
     <div class="counter" id="gameCounter"></div>
@@ -240,7 +239,7 @@ select option { background:#0e0b08; }
 </main>
 
 <div class="footer">Fait avec <span class="heart">♥</span> pour deux best</div>
-<div class="toast" id="toast"></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script>
 /* ================= STORAGE ================= */
@@ -260,7 +259,7 @@ function load() {
   if(!store.planning) store.planning = {};
   if(!store.sport) store.sport = { muscu:{day:'',time:''}, pisc1:{day:'',time:''}, pisc2:{day:'',time:''} };
 }
-function save() { localStorage.setItem('nousDeux', JSON.stringify(store)); }
+function save() { try { localStorage.setItem('nousDeux', JSON.stringify(store)); } catch(e){} }
 
 /* ================= TABS ================= */
 document.querySelectorAll('.tab[data-view]').forEach(function(t){
@@ -279,7 +278,7 @@ function nameB(){ return store.names.b || 'Ma bestie'; }
 function saveNames() {
   store.names.a = document.getElementById('nameA').value.trim();
   store.names.b = document.getElementById('nameB').value.trim();
-  save(); renderAll(); toast('Prénoms enregistrés ✨');
+  save(); renderNames(); renderGameSwitch(); toast('Prénoms enregistrés ✨');
 }
 function renderNames() {
   document.getElementById('nameA').value = store.names.a;
@@ -378,12 +377,12 @@ function importCode() {
   try {
     if (raw.indexOf('NOUS2:') === 0) raw = raw.slice(6);
     var data = JSON.parse(b64decode(raw));
-    var msg = 'Importer les infos de ta best ?\n\nCela va mettre à jour l\'emploi du temps et les séances affichés ici.';
-    if(!confirm(msg)) return;
+    if(!confirm('Importer les infos de ta best ?\n\nCela va mettre à jour l\'emploi du temps et les séances affichés ici.')) return;
     if(data.planning) store.planning = data.planning;
     if(data.sport) store.sport = data.sport;
     if(data.names){ if(data.names.b && !store.names.b) store.names.b = data.names.b; }
-    save(); renderAll(); toast('Planning importé ✨');
+    save(); renderNames(); renderPlanning(); renderSportInputs(); renderSportSummary(); renderGameSwitch();
+    toast('Planning importé ✨');
     document.querySelector('.tab[data-view=planning]').click();
   } catch(e) {
     toast('Code invalide 😕');
@@ -393,103 +392,187 @@ function b64encode(str){ return btoa(unescape(encodeURIComponent(str))); }
 function b64decode(str){ return decodeURIComponent(escape(atob(str))); }
 
 /* ================= GAMES ================= */
-var QUI = [
-  "arrive toujours en retard ?",
-  "rigole pour un rien ?",
-  "mange le plus vite ?",
-  "envoie le plus de vocaux de 5 minutes ?",
-  "est la plus tête en l'air ?",
-  "dit \"on se fait un sport\" mais annule à la dernière minute ?",
-  "pleure devant les films ?",
-  "a le pire sens de l'orientation ?",
-  "prend le plus de temps à se préparer ?",
-  "est la plus gourmande ?",
-  "chante le plus faux ?",
-  "check son téléphone dès le réveil ?",
-  "est la plus organisée ?",
-  "oserait parler à un•e inconnu•e ?",
-  "raconte le plus sa vie aux caissières ?",
-  "a la plus grosse playlist de guilty pleasures ?",
-  "dépenserait tout son argent en un week-end ?",
-  "est la plus rancunière ?",
-  "s'endort la première devant un film ?",
-  "a le plus de mal à dire non ?",
-  "ferait le plus de folies pour l'autre ?",
-  "connaît le plus de ragots ?",
-  "est la plus motivée à la muscu ?",
-  "nagerait le plus longtemps à la piscine ?",
-  "a toujours faim 10 min après avoir mangé ?"
-];
-var CONNAIT = [
-  "Quel est mon plat préféré ?",
-  "Quelle est ma plus grande peur ?",
-  "Si je gagnais au loto, qu'est-ce que j'achèterais en premier ?",
-  "Quel est mon film ou ma série que je peux revoir 1000 fois ?",
-  "Quelle chanson me met de bonne humeur à tous les coups ?",
-  "Quel est mon petit défaut que tout le monde connaît ?",
-  "Quelle destination je rêve de visiter ?",
-  "Qu'est-ce qui m'énerve le plus dans la vie de tous les jours ?",
-  "Quel était mon rêve de métier quand j'étais petite ?",
-  "Quel est mon souvenir préféré de nous deux ?",
-  "Thé ou café ? Et comment je le prends ?",
-  "Quel est mon animal préféré ?",
-  "Comment je préfère passer un dimanche parfait ?",
-  "Quelle est ma saison préférée ?",
-  "Qu'est-ce que je fais quand je stresse ?",
-  "Quel emoji j'utilise tout le temps ?",
-  "Quel est mon plus gros guilty pleasure ?",
-  "Sucré ou salé au petit-déj ?",
-  "Quel talent caché j'aimerais avoir ?",
-  "Qu'est-ce qui me fait rire à tous les coups ?",
-  "Quelle est la première chose que j'ai pensée en te rencontrant ?",
-  "Quel est mon endroit préféré pour décompresser ?",
-  "Si j'étais un personnage de film, ce serait qui ?",
-  "Quelle est ma mauvaise habitude que j'essaie d'arrêter ?",
-  "Muscu ou piscine, qu'est-ce que je préfère ?"
-];
+var GAMES = {
+  qui: {
+    tab:'Qui de nous 2', cat:'Qui de nous deux...',
+    help:'Comptez « 3, 2, 1 » et pointez-vous du doigt en même temps 👉 celle qui correspond le plus !',
+    render:function(x){ return 'Qui de nous deux <em>' + esc(x) + '</em>'; },
+    items:[
+      "arrive toujours en retard ?","rigole pour un rien ?","mange le plus vite ?",
+      "envoie le plus de vocaux de 5 minutes ?","est la plus tête en l'air ?",
+      "dit « on se fait un sport » mais annule à la dernière minute ?","pleure devant les films ?",
+      "a le pire sens de l'orientation ?","prend le plus de temps à se préparer ?","est la plus gourmande ?",
+      "chante le plus faux ?","check son téléphone dès le réveil ?","est la plus organisée ?",
+      "oserait parler à un•e inconnu•e ?","raconte le plus sa vie aux caissières ?",
+      "dépenserait tout son argent en un week-end ?","est la plus rancunière ?",
+      "s'endort la première devant un film ?","a le plus de mal à dire non ?",
+      "ferait le plus de folies pour l'autre ?","connaît le plus de ragots ?",
+      "est la plus motivée à la muscu ?","nagerait le plus longtemps à la piscine ?",
+      "a toujours faim 10 min après avoir mangé ?","serait la meilleure en cas de zombie apocalypse ?"
+    ]
+  },
+  connait: {
+    tab:'On se connaît ?', cat:'Est-ce qu\'on se connaît ?', reveal:true,
+    help:'Chacune son tour : devine la réponse pour l\'autre, puis elle te dit si c\'est vrai. 1 point par bonne réponse 😉',
+    render:function(x){ return esc(x); },
+    items:[
+      "Quel est mon plat préféré ?","Quelle est ma plus grande peur ?",
+      "Si je gagnais au loto, qu'est-ce que j'achèterais en premier ?",
+      "Quel film ou série je peux revoir 1000 fois ?","Quelle chanson me met de bonne humeur à coup sûr ?",
+      "Quel est mon petit défaut que tout le monde connaît ?","Quelle destination je rêve de visiter ?",
+      "Qu'est-ce qui m'énerve le plus au quotidien ?","Quel était mon rêve de métier petite ?",
+      "Quel est mon souvenir préféré de nous deux ?","Thé ou café ? Et comment je le prends ?",
+      "Quel est mon animal préféré ?","Comment je passe un dimanche parfait ?","Quelle est ma saison préférée ?",
+      "Qu'est-ce que je fais quand je stresse ?","Quel emoji j'utilise tout le temps ?",
+      "Quel est mon plus gros guilty pleasure ?","Sucré ou salé au petit-déj ?",
+      "Quel talent caché j'aimerais avoir ?","Qu'est-ce qui me fait rire à tous les coups ?",
+      "Quel est mon endroit préféré pour décompresser ?","Muscu ou piscine, qu'est-ce que je préfère ?",
+      "Quelle est ma mauvaise habitude que j'essaie d'arrêter ?","Combien de temps je mets à répondre à un message ?",
+      "Quelle est la première chose que j'ai pensée en te rencontrant ?"
+    ]
+  },
+  tupreferes: {
+    tab:'Tu préfères ?', cat:'Tu préfères...',
+    help:'Chacune répond, puis on se justifie — le plus dur, c\'est de choisir !',
+    render:function(x){ return 'Tu préfères <em>' + esc(x) + '</em>'; },
+    items:[
+      "avoir toujours trop chaud, ou toujours trop froid ?",
+      "ne plus jamais manger de chocolat, ou ne plus jamais boire de café ?",
+      "pouvoir voler, ou être invisible ?","vivre au bord de la mer, ou à la montagne ?",
+      "ne plus jamais avoir de wifi, ou ne plus jamais écouter de musique ?",
+      "manger la même chose toute ta vie, ou ne jamais manger deux fois le même plat ?",
+      "lire dans les pensées, ou voir le futur ?","gagner au loto, ou trouver l'amour parfait ?",
+      "être en avance d'une heure partout, ou en retard de 10 min partout ?",
+      "n'écouter qu'un seul artiste toute ta vie, ou jamais deux fois le même ?",
+      "avoir des abdos en or mais aller à la muscu tous les jours, ou rester comme ça sans effort ?",
+      "passer un an sans réseaux sociaux, ou un mois sans ton téléphone ?",
+      "toujours dire la vérité, ou ne jamais pouvoir mentir ?",
+      "avoir un chien qui parle, ou un chat qui fait le ménage ?",
+      "revivre le meilleur jour de ta vie en boucle, ou un nouveau jour génial chaque semaine ?",
+      "faire de la muscu avec moi tous les jours, ou de la piscine tous les jours ?",
+      "ne plus jamais te tromper de tenue, ou ne plus jamais mal dormir ?",
+      "partir en voyage surprise sans savoir où, ou tout organiser toi-même ?"
+    ]
+  },
+  jamais: {
+    tab:'Jamais je n\'ai', cat:'Jamais je n\'ai jamais...',
+    help:'Celle qui l\'a déjà fait lève la main (ou a un petit gage). Attention aux révélations 👀',
+    render:function(x){ return 'Jamais je n\'ai <em>' + esc(x) + '</em>'; },
+    items:[
+      "séché un cours ou une journée pour rester au lit",
+      "envoyé un message à la mauvaise personne","fait semblant d'avoir vu un film culte",
+      "ri à un moment super sérieux","stalké quelqu'un jusqu'en 2015 sur les réseaux",
+      "mangé un truc tombé par terre (règle des 5 secondes)",
+      "chanté à fond dans la voiture en croyant que personne ne me voyait",
+      "prétendu être malade pour annuler un plan","oublié un prénom juste après qu'on me le présente",
+      "pleuré devant une pub","gardé l'étiquette pour rendre un vêtement porté",
+      "fait semblant d'être au téléphone pour éviter quelqu'un","envoyé un vocal de plus de 5 minutes",
+      "acheté un truc juste parce qu'il était en promo","raté mon arrêt parce que j'étais sur mon téléphone",
+      "menti sur mon nombre de pas de la journée","commandé à manger alors qu'il y avait à manger à la maison",
+      "commencé un régime qui a duré moins d'une journée","relu un vieux message 50 fois avant de l'envoyer"
+    ]
+  },
+  actionverite: {
+    tab:'Action / Vérité', cat:'Action ou Vérité',
+    help:'La carte te dit quoi faire. Pas le droit de passer plus de 2 fois par partie 😏',
+    render:function(x){ return esc(x); },
+    items:[
+      "🗣️ Vérité — C'est quoi ton plus gros mensonge à tes parents ?",
+      "🗣️ Vérité — Ton crush le plus improbable ?",
+      "🗣️ Vérité — La chose la plus gênante que tu aies faite en public ?",
+      "🗣️ Vérité — Ton pire achat totalement inutile ?",
+      "🗣️ Vérité — Qui tu appelles en premier si tu as un problème ?",
+      "🗣️ Vérité — Le compliment qui t'a le plus marquée ?",
+      "🗣️ Vérité — Un truc que tu n'as jamais osé me dire ?",
+      "🗣️ Vérité — Ta plus grande fierté cette année ?",
+      "🗣️ Vérité — Le dernier truc qui t'a fait pleurer ?",
+      "🗣️ Vérité — Si tu pouvais changer une chose chez toi, ce serait quoi ?",
+      "🎬 Action — Envoie un message gentil à la 3e personne de tes contacts.",
+      "🎬 Action — Fais ta meilleure imitation de moi pendant 30 secondes.",
+      "🎬 Action — Chante le refrain de ta chanson préférée à voix haute.",
+      "🎬 Action — Montre la dernière photo de ta galerie.",
+      "🎬 Action — Parle avec l'accent de ton choix jusqu'à ton prochain tour.",
+      "🎬 Action — Fais 10 squats maintenant (échauffement muscu 💪).",
+      "🎬 Action — Prends la pose la plus ridicule et fais un selfie.",
+      "🎬 Action — Dis 3 choses que tu adores chez moi.",
+      "🎬 Action — Laisse-moi écrire ta prochaine story.",
+      "🎬 Action — Fais deviner un film en le mimant, sans parler."
+    ]
+  },
+  deuxverites: {
+    tab:'2 vérités 1 mensonge', cat:'2 vérités et 1 mensonge',
+    help:'Dis 3 phrases sur toi : 2 vraies, 1 fausse. À l\'autre de trouver l\'intrus ! Le thème t\'aide à démarrer.',
+    render:function(x){ return 'Dis 2 vérités + 1 mensonge sur : <em>' + esc(x) + '</em>'; },
+    items:[
+      "ton enfance","tes voyages","tes crushs","l'école ou le travail","tes talents cachés",
+      "les trucs bizarres que tu as déjà mangés","tes plus grandes peurs","ta famille",
+      "des célébrités que tu as croisées","tes pires hontes","ce que tu faisais à 15 ans",
+      "tes habitudes un peu secrètes","tes projets pour cette année","ce que tu détestes le plus"
+    ]
+  },
+  complete: {
+    tab:'Complète la phrase', cat:'Complète la phrase',
+    help:'Chacune termine la phrase à voix haute, sans réfléchir. Le moment tout doux du jeu 💛',
+    render:function(x){ return '« <em>' + esc(x) + '</em> »'; },
+    items:[
+      "Ce que j'admire le plus chez toi, c'est...","Mon meilleur souvenir avec toi, c'est...",
+      "Le jour où j'ai su qu'on serait amies pour la vie, c'est...","Si je devais te décrire en 3 mots, ce serait...",
+      "Le truc que tu m'as appris sans t'en rendre compte, c'est...","La prochaine folie qu'on doit faire ensemble, c'est...",
+      "Quand je pense à toi, la première image qui vient c'est...","Ce qui me manque le plus quand on ne se voit pas, c'est...",
+      "Un rêve que j'aimerais réaliser avec toi, c'est...","La chanson qui me fait penser à toi, c'est...",
+      "Si on ouvrait un business ensemble, ce serait...","Dans 10 ans, je nous imagine...",
+      "Le conseil que tu me donnes toujours et qui marche, c'est...","Ce que je préfère dans nos séances de sport, c'est...",
+      "Le surnom qui te va le mieux, c'est..."
+    ]
+  }
+};
+var GAME_ORDER = ['qui','connait','tupreferes','jamais','actionverite','deuxverites','complete'];
 var gameMode = 'qui';
 var deck = [], deckPos = -1;
 
-document.querySelectorAll('.tab[data-game]').forEach(function(t){
-  t.addEventListener('click', function(){
-    document.querySelectorAll('.tab[data-game]').forEach(function(x){x.classList.remove('active');});
-    t.classList.add('active');
-    gameMode = t.dataset.game;
-    startDeck();
+function renderGameSwitch() {
+  var html = '';
+  GAME_ORDER.forEach(function(k){
+    html += '<button class="tab'+(k===gameMode?' active':'')+'" data-game="'+k+'">'+esc(GAMES[k].tab)+'</button>';
   });
-});
+  var box = document.getElementById('gameSwitch');
+  box.innerHTML = html;
+  box.querySelectorAll('.tab[data-game]').forEach(function(t){
+    t.addEventListener('click', function(){
+      box.querySelectorAll('.tab').forEach(function(x){x.classList.remove('active');});
+      t.classList.add('active');
+      gameMode = t.dataset.game;
+      startDeck();
+    });
+  });
+}
 function shuffle(arr){
   var a = arr.slice();
   for (var i=a.length-1; i>0; i--){ var j=Math.floor(Math.random()*(i+1)); var tmp=a[i]; a[i]=a[j]; a[j]=tmp; }
   return a;
 }
 function startDeck() {
-  deck = shuffle(gameMode === 'qui' ? QUI : CONNAIT);
+  var g = GAMES[gameMode];
+  deck = shuffle(g.items);
   deckPos = -1;
-  document.getElementById('gameCat').textContent = gameMode === 'qui' ? 'Qui de nous deux...' : 'Est-ce qu\'on se connaît ?';
+  document.getElementById('gameCat').textContent = g.cat;
   document.getElementById('gameQ').innerHTML = 'Appuie sur « Carte suivante » pour commencer ! 💛';
   document.getElementById('gameCounter').textContent = '';
   document.getElementById('revealBtn').style.display = 'none';
   document.getElementById('gameReveal').classList.remove('show');
-  document.getElementById('gameHelp').textContent = gameMode === 'qui'
-    ? 'À voix haute : comptez « 3, 2, 1 » et pointez-vous du doigt en même temps 👉 celle qui correspond le plus !'
-    : 'Chacune son tour : devine la réponse pour l\'autre, puis elle te dit si c\'est vrai. Un point par bonne réponse 😉';
+  document.getElementById('gameHelp').textContent = g.help;
 }
 function nextCard() {
+  var g = GAMES[gameMode];
   if (!deck.length) startDeck();
   deckPos++;
   if (deckPos >= deck.length) { deck = shuffle(deck); deckPos = 0; toast('On refait un tour 🔄'); }
-  var q = deck[deckPos];
-  if (gameMode === 'qui') {
-    document.getElementById('gameQ').innerHTML = 'Qui de nous deux <em>' + esc(q) + '</em>';
-    document.getElementById('revealBtn').style.display = 'none';
-  } else {
-    document.getElementById('gameQ').innerHTML = esc(q);
-    document.getElementById('revealBtn').style.display = 'inline-block';
-    document.getElementById('revealBtn').textContent = 'Vous y êtes ? 👀';
-  }
+  document.getElementById('gameQ').innerHTML = g.render(deck[deckPos]);
   document.getElementById('gameReveal').classList.remove('show');
   document.getElementById('gameCounter').textContent = 'Carte ' + (deckPos+1) + ' / ' + deck.length;
+  var rb = document.getElementById('revealBtn');
+  if (g.reveal) { rb.style.display = 'inline-block'; rb.textContent = 'Vous y êtes ? 👀'; }
+  else { rb.style.display = 'none'; }
 }
 function toggleReveal() {
   var r = document.getElementById('gameReveal');
@@ -509,10 +592,10 @@ function toast(msg){
 }
 
 /* ================= INIT ================= */
-function renderAll(){ renderNames(); renderPlanning(); renderSportInputs(); renderSportSummary(); }
 load();
 fillDaySelects();
-renderAll();
+renderNames(); renderPlanning(); renderSportInputs(); renderSportSummary();
+renderGameSwitch();
 startDeck();
 </script>
 </body>
