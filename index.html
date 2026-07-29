@@ -143,7 +143,6 @@ input[type=time] { font-family:'Cinzel',serif; letter-spacing:1px; }
   <nav class="tabs">
     <button class="tab active" data-view="accueil">✦ Accueil</button>
     <button class="tab" data-view="calendrier">📅 Calendrier</button>
-    <button class="tab" data-view="sport">🏋️ Sport</button>
     <button class="tab" data-view="jeux">🎮 Jeux</button>
   </nav>
 </header>
@@ -169,8 +168,7 @@ input[type=time] { font-family:'Cinzel',serif; letter-spacing:1px; }
     <div class="card">
       <div class="card-h">📖 Comment ça marche</div>
       <ul style="list-style:none; color:#b5a898; font-size:15px;">
-        <li style="padding:8px 0;">📅 <strong style="color:#f5efe0;">Calendrier</strong> — cliquez sur un jour et ajoutez « dispo de 14:00 à 18:00 ». Synchronisé en temps réel entre vos deux téléphones.</li>
-        <li style="padding:8px 0;">🏋️ <strong style="color:#f5efe0;">Sport</strong> — tes créneaux de la semaine : 1 muscu + 2 piscine.</li>
+        <li style="padding:8px 0;">📅 <strong style="color:#f5efe0;">Calendrier</strong> — cliquez sur un jour et ajoutez « dispo de 14:00 à 18:00 ». Synchronisé en temps réel entre vos deux téléphones. Parfait aussi pour poser tes séances de sport (mets « muscu » ou « piscine » dans la note 💪🏊).</li>
         <li style="padding:8px 0;">🎮 <strong style="color:#f5efe0;">Jeux</strong> — 7 jeux pour rire et voir si on se connaît vraiment.</li>
       </ul>
     </div>
@@ -196,46 +194,6 @@ input[type=time] { font-family:'Cinzel',serif; letter-spacing:1px; }
     </div>
 
     <div class="day-panel card" id="dayPanel"></div>
-  </section>
-
-  <!-- ============ SPORT ============ -->
-  <section class="view" id="sport">
-    <span class="tag">Nos séances</span>
-    <h2 class="h2">Quand est-ce qu'on <em>bouge</em> ?</h2>
-    <p class="lead">Tes créneaux de la semaine : 1 séance de muscu 💪 et 2 séances de piscine 🏊. Un pense-bête rien que pour toi.</p>
-
-    <div class="card">
-      <div class="card-h">💪 Muscu <span style="color:#8a7d6b;font-size:10px;">1 fois / semaine</span></div>
-      <label class="fld" for="muscuDay">Jour</label>
-      <select id="muscuDay"></select>
-      <label class="fld" for="muscuTime">Heure</label>
-      <input id="muscuTime" placeholder="ex : 18h30">
-    </div>
-
-    <div class="card">
-      <div class="card-h">🏊 Piscine — séance 1</div>
-      <label class="fld" for="pisc1Day">Jour</label>
-      <select id="pisc1Day"></select>
-      <label class="fld" for="pisc1Time">Heure</label>
-      <input id="pisc1Time" placeholder="ex : 12h00">
-    </div>
-
-    <div class="card">
-      <div class="card-h">🏊 Piscine — séance 2</div>
-      <label class="fld" for="pisc2Day">Jour</label>
-      <select id="pisc2Day"></select>
-      <label class="fld" for="pisc2Time">Heure</label>
-      <input id="pisc2Time" placeholder="ex : 19h00">
-    </div>
-
-    <div class="btn-row" style="justify-content:center;">
-      <button class="btn" onclick="saveSport()">Enregistrer mes séances</button>
-    </div>
-
-    <div class="card" style="margin-top:24px;">
-      <div class="card-h">📋 Récap de la semaine</div>
-      <div id="sportSummary"></div>
-    </div>
   </section>
 
   <!-- ============ JEUX ============ -->
@@ -505,38 +463,6 @@ function delDispo(id){
   push();
 }
 
-/* ================= SPORT ================= */
-function fillDaySelects() {
-  ['muscuDay','pisc1Day','pisc2Day'].forEach(function(id){
-    document.getElementById(id).innerHTML = '<option value="">— choisir un jour —</option>' + DAYS.map(function(d){return '<option value="'+d+'">'+d+'</option>';}).join('');
-  });
-}
-function renderSportInputs() {
-  var s = store.sport;
-  document.getElementById('muscuDay').value = s.muscu.day;
-  document.getElementById('muscuTime').value = s.muscu.time;
-  document.getElementById('pisc1Day').value = s.pisc1.day;
-  document.getElementById('pisc1Time').value = s.pisc1.time;
-  document.getElementById('pisc2Day').value = s.pisc2.day;
-  document.getElementById('pisc2Time').value = s.pisc2.time;
-}
-function saveSport() {
-  store.sport = {
-    muscu:{ day:document.getElementById('muscuDay').value, time:document.getElementById('muscuTime').value.trim() },
-    pisc1:{ day:document.getElementById('pisc1Day').value, time:document.getElementById('pisc1Time').value.trim() },
-    pisc2:{ day:document.getElementById('pisc2Day').value, time:document.getElementById('pisc2Time').value.trim() }
-  };
-  save(); renderSportSummary(); toast('Séances enregistrées 🏋️');
-}
-function renderSportSummary() {
-  var s = store.sport;
-  function line(ico,label,slot){
-    var when = slot.day ? esc(slot.day)+(slot.time?' · '+esc(slot.time):'') : '<span style="color:#6b6155;font-style:italic;">à définir</span>';
-    return '<div class="slot"><div class="slot-ico">'+ico+'</div><div class="slot-info"><b>'+label+'</b><span>'+when+'</span></div></div>';
-  }
-  document.getElementById('sportSummary').innerHTML = line('💪','Muscu',s.muscu)+line('🏊','Piscine 1',s.pisc1)+line('🏊','Piscine 2',s.pisc2);
-}
-
 /* ================= GAMES ================= */
 var GAMES = {
   qui: { tab:'Qui de nous 2', cat:'Qui de nous deux...',
@@ -630,9 +556,7 @@ var t0 = new Date(); viewY = t0.getFullYear(); viewM = t0.getMonth(); selDate = 
 document.getElementById('prevMonth').addEventListener('click', function(){ viewM--; if(viewM<0){viewM=11;viewY--;} renderCalendar(); });
 document.getElementById('nextMonth').addEventListener('click', function(){ viewM++; if(viewM>11){viewM=0;viewY++;} renderCalendar(); });
 
-fillDaySelects();
 renderNames(); renderSync(); renderCalendar(); renderDayPanel();
-renderSportInputs(); renderSportSummary();
 renderGameSwitch(); startDeck();
 
 if(room) pull();
