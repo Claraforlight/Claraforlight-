@@ -45,23 +45,16 @@ input:focus, select:focus, textarea:focus { border-color:#c9a84c; }
 textarea { resize:vertical; min-height:70px; line-height:1.6; }
 select option { background:#0e0b08; }
 ::placeholder { color:#6b6155; font-style:italic; }
+input[type=time] { font-family:'Cinzel',serif; letter-spacing:1px; }
 
 .btn { display:inline-block; padding:13px 30px; background:#c9a84c; color:#080604; font-family:'Cinzel',serif; font-size:11px; letter-spacing:3px; text-transform:uppercase; border:none; cursor:pointer; border-radius:3px; transition:all .25s; }
 .btn:hover { background:#f0dfa0; transform:translateY(-2px); }
 .btn:focus-visible { outline:2px solid #e8c97a; outline-offset:2px; }
+.btn:disabled { opacity:.5; cursor:default; transform:none; }
 .btn.ghost { background:none; color:#c9a84c; border:1px solid #c9a84c; }
 .btn.ghost:hover { background:rgba(201,168,76,0.1); color:#f0dfa0; }
 .btn.sm { padding:9px 18px; font-size:9px; letter-spacing:2px; }
 .btn-row { display:flex; gap:10px; flex-wrap:wrap; margin-top:8px; }
-
-/* ---------- PLANNING GRID ---------- */
-.day { border-bottom:1px solid rgba(201,168,76,0.08); padding:14px 0; }
-.day:last-child { border-bottom:none; }
-.day-name { font-family:'Cinzel',serif; font-size:11px; letter-spacing:3px; color:#c9a84c; text-transform:uppercase; margin-bottom:8px; display:flex; justify-content:space-between; align-items:center; gap:8px; }
-.day-name .chips { display:flex; gap:6px; flex-wrap:wrap; justify-content:flex-end; }
-.chip { font-family:'Tinos',serif; font-size:12px; letter-spacing:0; text-transform:none; padding:3px 10px; border-radius:20px; background:rgba(201,168,76,0.12); color:#e8c97a; border:1px solid rgba(201,168,76,0.3); white-space:nowrap; }
-.chip.muscu { background:rgba(224,122,95,0.15); color:#f0a58c; border-color:rgba(224,122,95,0.4); }
-.chip.piscine { background:rgba(95,158,224,0.15); color:#9cc7f0; border-color:rgba(95,158,224,0.4); }
 
 /* ---------- SPORT SUMMARY ---------- */
 .slot { display:flex; align-items:center; gap:14px; padding:14px 0; border-bottom:1px solid rgba(201,168,76,0.08); }
@@ -71,11 +64,54 @@ select option { background:#0e0b08; }
 .slot-info b { color:#f5efe0; font-family:'Cinzel',serif; font-size:12px; letter-spacing:2px; text-transform:uppercase; }
 .slot-info span { display:block; color:#b5a898; font-size:15px; }
 
-/* ---------- SHARE ---------- */
-.codebox { width:100%; font-family:monospace; font-size:12px; min-height:120px; word-break:break-all; }
-.hint { font-size:13px; color:#8a7d6b; margin-top:8px; line-height:1.6; }
-.toast { position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(30px); background:#c9a84c; color:#080604; font-family:'Cinzel',serif; font-size:11px; letter-spacing:2px; padding:12px 24px; border-radius:4px; opacity:0; pointer-events:none; transition:all .3s; text-transform:uppercase; z-index:200; max-width:90vw; text-align:center; }
-.toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
+/* ---------- CALENDAR ---------- */
+.sync-card { background:rgba(201,168,76,0.05); border:1px solid rgba(201,168,76,0.2); border-radius:8px; padding:18px 20px; margin-bottom:18px; }
+.sync-status { display:flex; align-items:center; gap:8px; font-size:13px; color:#b5a898; }
+.dot { width:9px; height:9px; border-radius:50%; flex-shrink:0; }
+.dot.on { background:#7ecb8f; box-shadow:0 0 8px rgba(126,203,143,.6); }
+.dot.off { background:#e0a15f; }
+.dot.clara { background:#e8c97a; }
+.dot.lisa { background:#e6a5c1; }
+.linkbox { width:100%; font-family:monospace; font-size:12px; word-break:break-all; margin-top:10px; min-height:64px; }
+
+.me-switch { display:inline-flex; gap:6px; margin-top:4px; }
+.me-switch button { background:none; border:1px solid rgba(201,168,76,0.3); color:#b5a898; font-family:'Cinzel',serif; font-size:10px; letter-spacing:1px; padding:6px 14px; border-radius:20px; cursor:pointer; }
+.me-switch button.on-clara { background:#e8c97a; color:#080604; border-color:#e8c97a; }
+.me-switch button.on-lisa { background:#e6a5c1; color:#080604; border-color:#e6a5c1; }
+
+.cal-nav { display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; gap:8px; }
+.cal-nav .month { font-family:'Cinzel',serif; font-size:15px; letter-spacing:1px; color:#f5efe0; text-transform:capitalize; }
+.cal-nav button { background:none; border:1px solid rgba(201,168,76,0.3); color:#c9a84c; width:38px; height:38px; border-radius:50%; cursor:pointer; font-size:16px; }
+.cal-nav button:hover { background:rgba(201,168,76,0.1); }
+
+.cal-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:5px; }
+.cal-wd { text-align:center; font-family:'Cinzel',serif; font-size:9px; letter-spacing:1px; color:#8a7d6b; text-transform:uppercase; padding-bottom:4px; }
+.cal-day { aspect-ratio:1/1; border:1px solid rgba(201,168,76,0.1); border-radius:6px; padding:4px; cursor:pointer; display:flex; flex-direction:column; align-items:center; justify-content:flex-start; gap:3px; background:rgba(255,255,255,0.015); transition:border .2s, background .2s; position:relative; }
+.cal-day:hover { border-color:rgba(201,168,76,0.4); }
+.cal-day.empty { border:none; background:none; cursor:default; }
+.cal-day.today { border-color:#c9a84c; }
+.cal-day.selected { background:rgba(201,168,76,0.16); border-color:#e8c97a; }
+.cal-day .num { font-size:14px; color:#d8cbb6; font-family:'Cinzel',serif; }
+.cal-day.today .num { color:#e8c97a; font-weight:700; }
+.cal-dots { display:flex; gap:3px; flex-wrap:wrap; justify-content:center; }
+.cal-dots .dot { width:7px; height:7px; }
+
+.day-panel { margin-top:18px; }
+.dp-title { font-family:'Cinzel',serif; font-size:14px; letter-spacing:1px; color:#e8c97a; text-transform:capitalize; margin-bottom:12px; }
+.dispo { display:flex; align-items:center; gap:12px; padding:12px 14px; border-radius:6px; margin-bottom:8px; background:rgba(255,255,255,0.03); border-left:3px solid #888; }
+.dispo.clara { border-left-color:#e8c97a; }
+.dispo.lisa { border-left-color:#e6a5c1; }
+.dispo .who { font-family:'Cinzel',serif; font-size:10px; letter-spacing:1px; text-transform:uppercase; padding:3px 9px; border-radius:20px; flex-shrink:0; }
+.dispo.clara .who { background:rgba(232,201,122,.16); color:#e8c97a; }
+.dispo.lisa .who { background:rgba(230,165,193,.16); color:#e6a5c1; }
+.dispo .rng { flex:1; color:#f5efe0; font-size:15px; }
+.dispo .rng small { display:block; color:#8a7d6b; font-size:13px; font-style:italic; }
+.dispo .del { background:none; border:none; color:#a5806b; font-size:20px; cursor:pointer; line-height:1; padding:2px 6px; }
+.dispo .del:hover { color:#e08a6c; }
+.add-dispo { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:12px; }
+.add-dispo .full { grid-column:1 / -1; }
+.legend { display:flex; gap:16px; justify-content:center; font-size:12px; color:#8a7d6b; margin-top:14px; }
+.legend span { display:inline-flex; align-items:center; gap:6px; }
 
 /* ---------- GAMES ---------- */
 .game-card { background:rgba(201,168,76,0.05); border:1px solid rgba(201,168,76,0.22); border-radius:8px; padding:44px 26px; text-align:center; min-height:240px; display:flex; flex-direction:column; justify-content:center; align-items:center; }
@@ -85,7 +121,6 @@ select option { background:#0e0b08; }
 .counter { text-align:center; font-size:12px; color:#8a7d6b; letter-spacing:2px; margin-top:18px; font-family:'Cinzel',serif; }
 .reveal { margin-top:22px; padding:16px 20px; background:rgba(201,168,76,0.08); border-radius:6px; color:#e8c97a; font-style:italic; display:none; }
 .reveal.show { display:block; animation:fadeUp .3s ease; }
-
 .mode-switch { display:flex; justify-content:center; gap:8px; margin-bottom:26px; flex-wrap:wrap; }
 .mode-switch .tab { font-size:9px; }
 
@@ -94,6 +129,8 @@ select option { background:#0e0b08; }
 
 .footer { text-align:center; padding:30px 20px; color:#6b6155; font-size:11px; font-family:'Cinzel',serif; letter-spacing:2px; }
 .footer .heart { color:#c9a84c; }
+.toast { position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(30px); background:#c9a84c; color:#080604; font-family:'Cinzel',serif; font-size:11px; letter-spacing:2px; padding:12px 24px; border-radius:4px; opacity:0; pointer-events:none; transition:all .3s; text-transform:uppercase; z-index:200; max-width:90vw; text-align:center; }
+.toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
 </style>
 </head>
 <body>
@@ -105,9 +142,8 @@ select option { background:#0e0b08; }
   </div>
   <nav class="tabs">
     <button class="tab active" data-view="accueil">✦ Accueil</button>
-    <button class="tab" data-view="planning">📅 Planning</button>
+    <button class="tab" data-view="calendrier">📅 Calendrier</button>
     <button class="tab" data-view="sport">🏋️ Sport</button>
-    <button class="tab" data-view="partage">🔗 Partage</button>
     <button class="tab" data-view="jeux">🎮 Jeux</button>
   </nav>
 </header>
@@ -118,45 +154,55 @@ select option { background:#0e0b08; }
   <section class="view active" id="accueil">
     <span class="tag">Bienvenue</span>
     <h2 class="h2">Notre petit <em>espace</em> à nous</h2>
-    <p class="lead">Un endroit tout simple pour partager nos emplois du temps, caler nos séances de sport, et jouer à des jeux rien que toutes les deux.</p>
+    <p class="lead">Un endroit tout simple pour voir nos dispos en temps réel, caler nos séances de sport, et jouer à des jeux rien que toutes les deux.</p>
 
     <div class="card">
       <div class="card-h">✨ Vos prénoms</div>
-      <div class="card-sub">Juste pour personnaliser. C'est enregistré sur ton téléphone.</div>
+      <div class="card-sub">Juste pour personnaliser et colorer vos dispos dans le calendrier.</div>
       <label class="fld" for="nameA">Toi</label>
       <input id="nameA" placeholder="Clara">
       <label class="fld" for="nameB">Ta best</label>
-      <input id="nameB" placeholder="Ma bestie">
+      <input id="nameB" placeholder="Lisa">
       <div class="btn-row"><button class="btn sm" onclick="saveNames()">Enregistrer</button></div>
     </div>
 
     <div class="card">
       <div class="card-h">📖 Comment ça marche</div>
       <ul style="list-style:none; color:#b5a898; font-size:15px;">
-        <li style="padding:8px 0;">📅 <strong style="color:#f5efe0;">Planning</strong> — ta best colle son emploi du temps, jour par jour (peu importe le format).</li>
-        <li style="padding:8px 0;">🏋️ <strong style="color:#f5efe0;">Sport</strong> — tu choisis tes créneaux : 1 muscu + 2 piscine par semaine.</li>
-        <li style="padding:8px 0;">🔗 <strong style="color:#f5efe0;">Partage</strong> — un code à copier-coller pour vous synchroniser entre vos deux téléphones.</li>
+        <li style="padding:8px 0;">📅 <strong style="color:#f5efe0;">Calendrier</strong> — cliquez sur un jour et ajoutez « dispo de 14:00 à 18:00 ». Synchronisé en temps réel entre vos deux téléphones.</li>
+        <li style="padding:8px 0;">🏋️ <strong style="color:#f5efe0;">Sport</strong> — tes créneaux de la semaine : 1 muscu + 2 piscine.</li>
         <li style="padding:8px 0;">🎮 <strong style="color:#f5efe0;">Jeux</strong> — 7 jeux pour rire et voir si on se connaît vraiment.</li>
       </ul>
     </div>
   </section>
 
-  <!-- ============ PLANNING ============ -->
-  <section class="view" id="planning">
-    <span class="tag">L'emploi du temps de ta best</span>
-    <h2 class="h2">La semaine de <em id="planTitle">ta bestie</em></h2>
-    <p class="lead">Colle ou écris ce que tu veux dans chaque jour : cours, boulot, rdv... Tout s'enregistre automatiquement. Les créneaux sport de Clara s'affichent aussi ✨</p>
-    <div id="planningGrid"></div>
-    <div class="btn-row" style="justify-content:center; margin-top:20px;">
-      <button class="btn ghost sm" onclick="clearPlanning()">Tout effacer</button>
+  <!-- ============ CALENDRIER ============ -->
+  <section class="view" id="calendrier">
+    <span class="tag">Nos disponibilités</span>
+    <h2 class="h2">Le <em>calendrier</em> partagé</h2>
+    <p class="lead">Clique sur un jour, puis note « dispo de X à X ». Ta best le voit en temps réel, et toi tu vois les siennes — parfait pour s'organiser à l'avance 💛</p>
+
+    <div class="sync-card" id="syncCard"></div>
+
+    <div class="cal-nav">
+      <button id="prevMonth" aria-label="Mois précédent">‹</button>
+      <div class="month" id="calMonth"></div>
+      <button id="nextMonth" aria-label="Mois suivant">›</button>
     </div>
+    <div class="cal-grid" id="calGrid"></div>
+    <div class="legend">
+      <span><span class="dot clara"></span> <b id="legendA">Clara</b></span>
+      <span><span class="dot lisa"></span> <b id="legendB">Lisa</b></span>
+    </div>
+
+    <div class="day-panel card" id="dayPanel"></div>
   </section>
 
   <!-- ============ SPORT ============ -->
   <section class="view" id="sport">
     <span class="tag">Nos séances</span>
     <h2 class="h2">Quand est-ce qu'on <em>bouge</em> ?</h2>
-    <p class="lead">Choisis tes créneaux de la semaine : 1 séance de muscu 💪 et 2 séances de piscine 🏊. Ta best les verra direct dans le planning.</p>
+    <p class="lead">Tes créneaux de la semaine : 1 séance de muscu 💪 et 2 séances de piscine 🏊. Un pense-bête rien que pour toi.</p>
 
     <div class="card">
       <div class="card-h">💪 Muscu <span style="color:#8a7d6b;font-size:10px;">1 fois / semaine</span></div>
@@ -192,43 +238,18 @@ select option { background:#0e0b08; }
     </div>
   </section>
 
-  <!-- ============ PARTAGE ============ -->
-  <section class="view" id="partage">
-    <span class="tag">Se synchroniser</span>
-    <h2 class="h2">Partager en un <em>copier-coller</em></h2>
-    <p class="lead">Pas besoin de compte ni d'internet compliqué. On s'échange juste un petit code par SMS, WhatsApp, ou ce que tu veux.</p>
-
-    <div class="card">
-      <div class="card-h">📤 Envoyer mon code</div>
-      <div class="card-sub">Génère ton code (planning + sport), copie-le, et envoie-le à ta best.</div>
-      <div class="btn-row"><button class="btn sm" onclick="genCode()">Générer mon code</button><button class="btn ghost sm" onclick="copyCode()">Copier</button></div>
-      <textarea id="myCode" class="codebox" style="margin-top:14px;" placeholder="Ton code apparaîtra ici..." readonly></textarea>
-    </div>
-
-    <div class="card">
-      <div class="card-h">📥 Recevoir son code</div>
-      <div class="card-sub">Colle ici le code que ta best t'a envoyé, puis importe.</div>
-      <textarea id="theirCode" class="codebox" placeholder="Colle le code reçu ici..."></textarea>
-      <div class="btn-row" style="margin-top:12px;"><button class="btn sm" onclick="importCode()">Importer son planning</button></div>
-      <p class="hint">💡 En important, tu récupères son emploi du temps et ses séances. Rien n'est effacé de ton côté sans te prévenir.</p>
-    </div>
-  </section>
-
   <!-- ============ JEUX ============ -->
   <section class="view" id="jeux">
     <span class="tag">Rien que pour rire</span>
     <h2 class="h2">On <em>joue</em> ?</h2>
     <div class="names-bar" id="namesBar"></div>
-
     <div class="mode-switch" id="gameSwitch"></div>
-
     <div class="game-card">
       <div class="game-cat" id="gameCat">Qui de nous deux...</div>
       <div class="game-q" id="gameQ">Appuie sur « Carte suivante » pour commencer ! 💛</div>
       <div class="reveal" id="gameReveal"></div>
     </div>
     <div class="counter" id="gameCounter"></div>
-
     <div class="btn-row" style="justify-content:center; margin-top:22px;">
       <button class="btn ghost sm" id="revealBtn" onclick="toggleReveal()" style="display:none;">Réponse 👀</button>
       <button class="btn" onclick="nextCard()">Carte suivante →</button>
@@ -244,22 +265,25 @@ select option { background:#0e0b08; }
 <script>
 /* ================= STORAGE ================= */
 var DAYS = ['Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi','Dimanche'];
-var store = {
-  names: { a:'', b:'' },
-  planning: {},        // { Lundi: "texte", ... }
-  sport: { muscu:{day:'',time:''}, pisc1:{day:'',time:''}, pisc2:{day:'',time:''} }
-};
+var MONTHS = ['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
+var WD = ['Lun','Mar','Mer','Jeu','Ven','Sam','Dim'];
+var WD_FULL = ['dimanche','lundi','mardi','mercredi','jeudi','vendredi','samedi'];
+
+var store = { names:{a:'',b:''}, sport:{ muscu:{day:'',time:''}, pisc1:{day:'',time:''}, pisc2:{day:'',time:''} } };
+var doc = { v:2, entries:[], deleted:[] };          // shared calendar
+var room = null;                                     // { id, me:'clara'|'lisa' }
 
 function load() {
-  try {
-    var raw = localStorage.getItem('nousDeux');
-    if (raw) { var d = JSON.parse(raw); store = Object.assign(store, d); }
-  } catch(e){}
-  if(!store.names) store.names = {a:'',b:''};
-  if(!store.planning) store.planning = {};
-  if(!store.sport) store.sport = { muscu:{day:'',time:''}, pisc1:{day:'',time:''}, pisc2:{day:'',time:''} };
+  try { var raw = localStorage.getItem('nousDeux'); if (raw) store = Object.assign(store, JSON.parse(raw)); } catch(e){}
+  if(!store.names) store.names={a:'',b:''};
+  if(!store.sport) store.sport={ muscu:{day:'',time:''}, pisc1:{day:'',time:''}, pisc2:{day:'',time:''} };
+  try { var d = localStorage.getItem('nousDoc'); if (d) doc = normalizeDoc(JSON.parse(d)); } catch(e){}
+  try { var r = localStorage.getItem('nousRoom'); if (r) room = JSON.parse(r); } catch(e){}
 }
 function save() { try { localStorage.setItem('nousDeux', JSON.stringify(store)); } catch(e){} }
+function saveDoc() { try { localStorage.setItem('nousDoc', JSON.stringify(doc)); } catch(e){} }
+function saveRoom() { try { localStorage.setItem('nousRoom', JSON.stringify(room)); } catch(e){} }
+function normalizeDoc(d){ d = d||{}; return { v:2, entries:Array.isArray(d.entries)?d.entries:[], deleted:Array.isArray(d.deleted)?d.deleted:[] }; }
 
 /* ================= TABS ================= */
 document.querySelectorAll('.tab[data-view]').forEach(function(t){
@@ -268,63 +292,223 @@ document.querySelectorAll('.tab[data-view]').forEach(function(t){
     t.classList.add('active');
     document.querySelectorAll('.view').forEach(function(v){v.classList.remove('active');});
     document.getElementById(t.dataset.view).classList.add('active');
+    if (t.dataset.view === 'calendrier') pull();
     window.scrollTo({top:0, behavior:'smooth'});
   });
 });
 
 /* ================= NAMES ================= */
 function nameA(){ return store.names.a || 'Clara'; }
-function nameB(){ return store.names.b || 'Ma bestie'; }
+function nameB(){ return store.names.b || 'Lisa'; }
+function whoName(w){ return w==='clara' ? nameA() : nameB(); }
 function saveNames() {
   store.names.a = document.getElementById('nameA').value.trim();
   store.names.b = document.getElementById('nameB').value.trim();
-  save(); renderNames(); renderGameSwitch(); toast('Prénoms enregistrés ✨');
+  save(); renderNames(); renderGameSwitch(); renderSync(); renderDayPanel(); toast('Prénoms enregistrés ✨');
 }
 function renderNames() {
   document.getElementById('nameA').value = store.names.a;
   document.getElementById('nameB').value = store.names.b;
   document.getElementById('brandTitle').innerHTML = esc(nameA().toUpperCase()) + ' <em>&</em> ' + esc(nameB().toUpperCase());
-  document.getElementById('planTitle').textContent = nameB();
+  document.getElementById('legendA').textContent = nameA();
+  document.getElementById('legendB').textContent = nameB();
   document.getElementById('namesBar').innerHTML = 'Vous jouez : <strong style="color:#e8c97a;">'+esc(nameA())+'</strong> & <strong style="color:#e8c97a;">'+esc(nameB())+'</strong> · <a onclick="goHome()">changer</a>';
 }
 function goHome(){ document.querySelector('.tab[data-view=accueil]').click(); }
 
-/* ================= PLANNING ================= */
-function sportChipsFor(day) {
-  var chips = '';
-  var s = store.sport;
-  if (s.muscu.day === day) chips += '<span class="chip muscu">💪 Muscu'+(s.muscu.time?' '+esc(s.muscu.time):'')+'</span>';
-  if (s.pisc1.day === day) chips += '<span class="chip piscine">🏊 Piscine'+(s.pisc1.time?' '+esc(s.pisc1.time):'')+'</span>';
-  if (s.pisc2.day === day) chips += '<span class="chip piscine">🏊 Piscine'+(s.pisc2.time?' '+esc(s.pisc2.time):'')+'</span>';
-  return chips;
+/* ================= SYNC (jsonblob) ================= */
+var API = 'https://jsonblob.com/api/jsonBlob';
+var online = null;      // null unknown, true, false
+var lastSync = 0;
+var busy = false;
+
+function mergeDocs(a, b){
+  a = normalizeDoc(a); b = normalizeDoc(b);
+  var deleted = {}; a.deleted.concat(b.deleted).forEach(function(id){ deleted[id]=1; });
+  var byId = {};
+  a.entries.concat(b.entries).forEach(function(e){ if(e && e.id && !deleted[e.id]) byId[e.id]=e; });
+  return { v:2, entries:Object.keys(byId).map(function(k){return byId[k];}), deleted:Object.keys(deleted) };
 }
-function renderPlanning() {
-  var html = '';
-  DAYS.forEach(function(day){
-    var val = store.planning[day] || '';
-    html += '<div class="day">'
-      + '<div class="day-name"><span>'+day+'</span><span class="chips">'+sportChipsFor(day)+'</span></div>'
-      + '<textarea data-day="'+day+'" placeholder="Rien de prévu... (colle son emploi du temps ici)">'+esc(val)+'</textarea>'
+async function apiGet(id){
+  var res = await fetch(API+'/'+id, { headers:{ 'Accept':'application/json' } });
+  if(!res.ok) throw new Error('GET '+res.status);
+  return res.json();
+}
+async function apiPut(id, data){
+  var res = await fetch(API+'/'+id, { method:'PUT', headers:{ 'Content-Type':'application/json', 'Accept':'application/json' }, body: JSON.stringify(data) });
+  if(!res.ok) throw new Error('PUT '+res.status);
+  return true;
+}
+async function apiCreate(data){
+  var res = await fetch(API, { method:'POST', headers:{ 'Content-Type':'application/json', 'Accept':'application/json' }, body: JSON.stringify(data) });
+  if(!res.ok) throw new Error('POST '+res.status);
+  var loc = res.headers.get('Location') || res.headers.get('X-jsonblob') || '';
+  var id = loc.split('/').pop();
+  if(!id) throw new Error('no-id');
+  return id;
+}
+function setOnline(v){ online = v; if(v) lastSync = Date.now(); renderSyncStatus(); }
+
+async function createRoom(){
+  if(busy) return; busy = true; renderSync();
+  try {
+    var id = await apiCreate(doc);
+    room = { id:id, me:'clara' };
+    saveRoom(); setOnline(true);
+    toast('Calendrier partagé créé ✨');
+  } catch(e){
+    setOnline(false);
+    toast('Création en ligne impossible pour le moment 😕');
+  }
+  busy = false; renderSync();
+}
+async function pull(){
+  if(!room) return;
+  try {
+    var remote = await apiGet(room.id);
+    doc = mergeDocs(doc, remote);
+    saveDoc(); setOnline(true);
+    renderCalendar(); renderDayPanel();
+  } catch(e){ setOnline(false); }
+  renderSyncStatus();
+}
+async function push(){
+  saveDoc();
+  if(!room){ renderCalendar(); renderDayPanel(); return; }
+  try {
+    var remote = await apiGet(room.id);
+    doc = mergeDocs(doc, remote);
+  } catch(e){}
+  try {
+    await apiPut(room.id, doc);
+    setOnline(true);
+  } catch(e){ setOnline(false); }
+  saveDoc(); renderCalendar(); renderDayPanel(); renderSyncStatus();
+}
+function setMe(w){ if(!room) return; room.me = w; saveRoom(); renderSync(); renderDayPanel(); }
+function shareLink(){ return location.origin + location.pathname + '?room=' + (room ? room.id : ''); }
+function copyLink(){
+  var el = document.getElementById('shareLink'); if(!el) return;
+  el.select(); el.setSelectionRange(0,99999);
+  try { if(navigator.clipboard) navigator.clipboard.writeText(el.value); else document.execCommand('copy'); toast('Lien copié ! Envoie-le à ta best 💌'); }
+  catch(e){ toast('Sélectionne et copie le lien'); }
+}
+
+function renderSync(){
+  var c = document.getElementById('syncCard');
+  if(!room){
+    c.innerHTML =
+      '<div class="card-h">🔗 Activer le partage</div>'
+      + '<div class="card-sub">Crée votre calendrier commun : tu obtiendras un lien à envoyer à '+esc(nameB())+' (une seule fois). Ensuite, vos dispos se synchronisent toutes seules.</div>'
+      + '<div class="btn-row"><button class="btn sm" id="createBtn" '+(busy?'disabled':'')+' onclick="createRoom()">'+(busy?'Création...':'Créer notre calendrier partagé')+'</button></div>'
+      + '<p class="card-sub" style="margin:10px 0 0;">En attendant, tu peux déjà ajouter tes dispos : elles seront gardées sur ce téléphone.</p>';
+    renderSyncStatus(); return;
+  }
+  var meClara = room.me==='clara';
+  c.innerHTML =
+    '<div class="sync-status" id="syncStatus"></div>'
+    + '<div class="card-sub" style="margin-top:10px;">Sur ce téléphone, je suis :</div>'
+    + '<div class="me-switch">'
+      + '<button class="'+(meClara?'on-clara':'')+'" onclick="setMe(\'clara\')">'+esc(nameA())+'</button>'
+      + '<button class="'+(!meClara?'on-lisa':'')+'" onclick="setMe(\'lisa\')">'+esc(nameB())+'</button>'
+    + '</div>'
+    + '<div class="card-sub" style="margin:14px 0 4px;">📨 Lien à envoyer à '+esc(nameB())+' (une seule fois) :</div>'
+    + '<textarea id="shareLink" class="linkbox" readonly>'+esc(shareLink())+'</textarea>'
+    + '<div class="btn-row"><button class="btn ghost sm" onclick="copyLink()">Copier le lien</button></div>';
+  renderSyncStatus();
+}
+function renderSyncStatus(){
+  var s = document.getElementById('syncStatus'); if(!s) return;
+  if(online===true){
+    var ago = Math.max(0, Math.round((Date.now()-lastSync)/1000));
+    s.innerHTML = '<span class="dot on"></span> Synchronisé en ligne'+(ago<5?' · à l\'instant':' · il y a '+ago+'s');
+  } else if(online===false){
+    s.innerHTML = '<span class="dot off"></span> Hors ligne — tes dispos sont gardées ici et repartiront dès que la connexion revient';
+  } else {
+    s.innerHTML = '<span class="dot off"></span> Connexion…';
+  }
+}
+
+/* ================= CALENDAR ================= */
+var viewY, viewM, selDate;
+function pad(n){ return (n<10?'0':'')+n; }
+function ymd(y,m,d){ return y+'-'+pad(m+1)+'-'+pad(d); }
+function todayStr(){ var t=new Date(); return ymd(t.getFullYear(), t.getMonth(), t.getDate()); }
+function entriesFor(date){ return doc.entries.filter(function(e){ return e.date===date; }).sort(function(a,b){ return (a.from||'').localeCompare(b.from||''); }); }
+
+function renderCalendar(){
+  document.getElementById('calMonth').textContent = MONTHS[viewM] + ' ' + viewY;
+  var grid = document.getElementById('calGrid');
+  var html = WD.map(function(d){ return '<div class="cal-wd">'+d+'</div>'; }).join('');
+  var first = new Date(viewY, viewM, 1);
+  var lead = (first.getDay()+6)%7;               // Monday-based
+  var dim = new Date(viewY, viewM+1, 0).getDate();
+  for(var i=0;i<lead;i++) html += '<div class="cal-day empty"></div>';
+  var today = todayStr();
+  for(var d=1; d<=dim; d++){
+    var ds = ymd(viewY, viewM, d);
+    var es = entriesFor(ds);
+    var hasC = es.some(function(e){return e.who==='clara';});
+    var hasL = es.some(function(e){return e.who==='lisa';});
+    var dots = '';
+    if(hasC) dots += '<span class="dot clara"></span>';
+    if(hasL) dots += '<span class="dot lisa"></span>';
+    var cls = 'cal-day' + (ds===today?' today':'') + (ds===selDate?' selected':'');
+    html += '<div class="'+cls+'" data-date="'+ds+'"><span class="num">'+d+'</span><span class="cal-dots">'+dots+'</span></div>';
+  }
+  grid.innerHTML = html;
+  grid.querySelectorAll('.cal-day[data-date]').forEach(function(cell){
+    cell.addEventListener('click', function(){ selDate = cell.dataset.date; renderCalendar(); renderDayPanel(); document.getElementById('dayPanel').scrollIntoView({behavior:'smooth', block:'nearest'}); });
+  });
+}
+function prettyDate(ds){
+  var p = ds.split('-'); var dt = new Date(+p[0], +p[1]-1, +p[2]);
+  return WD_FULL[dt.getDay()] + ' ' + (+p[2]) + ' ' + MONTHS[+p[1]-1];
+}
+function renderDayPanel(){
+  var panel = document.getElementById('dayPanel');
+  if(!selDate){ panel.innerHTML = '<p class="card-sub" style="text-align:center;margin:0;">Choisis un jour dans le calendrier pour voir et ajouter vos dispos ☝️</p>'; return; }
+  var es = entriesFor(selDate);
+  var list = es.length ? es.map(function(e){
+    var canDel = room ? (e.who===room.me) : true;
+    return '<div class="dispo '+e.who+'">'
+      + '<span class="who">'+esc(whoName(e.who))+'</span>'
+      + '<span class="rng">'+esc(e.from)+' → '+esc(e.to)+(e.note?'<small>'+esc(e.note)+'</small>':'')+'</span>'
+      + (canDel ? '<button class="del" title="Supprimer" onclick="delDispo(\''+e.id+'\')">×</button>' : '')
       + '</div>';
-  });
-  document.getElementById('planningGrid').innerHTML = html;
-  document.querySelectorAll('#planningGrid textarea').forEach(function(ta){
-    ta.addEventListener('input', function(){
-      store.planning[ta.dataset.day] = ta.value;
-      save();
-    });
-  });
+  }).join('') : '<p class="card-sub" style="margin:0 0 6px;">Aucune dispo ce jour-là pour l\'instant.</p>';
+  var meLabel = room ? whoName(room.me) : nameA();
+  panel.innerHTML =
+    '<div class="dp-title">'+esc(prettyDate(selDate))+'</div>'
+    + list
+    + '<div class="add-dispo">'
+      + '<div><label class="fld" for="dFrom">De</label><input type="time" id="dFrom"></div>'
+      + '<div><label class="fld" for="dTo">À</label><input type="time" id="dTo"></div>'
+      + '<div class="full"><label class="fld" for="dNote">Note (facultatif)</label><input id="dNote" placeholder="ex : après ma garde, dispo pour la piscine"></div>'
+      + '<div class="full"><button class="btn sm" onclick="addDispo()">Ajouter la dispo de '+esc(meLabel)+'</button></div>'
+    + '</div>';
 }
-function clearPlanning() {
-  if(!confirm('Effacer tout l\'emploi du temps de la semaine ?')) return;
-  store.planning = {}; save(); renderPlanning(); toast('Planning effacé');
+function rid(){ return 'e'+Math.random().toString(36).slice(2,9)+(''+Date.now()).slice(-4); }
+function addDispo(){
+  var from = document.getElementById('dFrom').value;
+  var to = document.getElementById('dTo').value;
+  if(!from || !to){ toast('Indique une heure de début et de fin'); return; }
+  var note = document.getElementById('dNote').value.trim();
+  var who = room ? room.me : 'clara';
+  doc.entries.push({ id:rid(), date:selDate, who:who, from:from, to:to, note:note });
+  toast('Dispo ajoutée ✨');
+  push();
+}
+function delDispo(id){
+  doc.entries = doc.entries.filter(function(e){ return e.id!==id; });
+  if(doc.deleted.indexOf(id)<0) doc.deleted.push(id);
+  push();
 }
 
 /* ================= SPORT ================= */
 function fillDaySelects() {
   ['muscuDay','pisc1Day','pisc2Day'].forEach(function(id){
-    var sel = document.getElementById(id);
-    sel.innerHTML = '<option value="">— choisir un jour —</option>' + DAYS.map(function(d){return '<option value="'+d+'">'+d+'</option>';}).join('');
+    document.getElementById(id).innerHTML = '<option value="">— choisir un jour —</option>' + DAYS.map(function(d){return '<option value="'+d+'">'+d+'</option>';}).join('');
   });
 }
 function renderSportInputs() {
@@ -338,223 +522,67 @@ function renderSportInputs() {
 }
 function saveSport() {
   store.sport = {
-    muscu: { day:document.getElementById('muscuDay').value, time:document.getElementById('muscuTime').value.trim() },
-    pisc1: { day:document.getElementById('pisc1Day').value, time:document.getElementById('pisc1Time').value.trim() },
-    pisc2: { day:document.getElementById('pisc2Day').value, time:document.getElementById('pisc2Time').value.trim() }
+    muscu:{ day:document.getElementById('muscuDay').value, time:document.getElementById('muscuTime').value.trim() },
+    pisc1:{ day:document.getElementById('pisc1Day').value, time:document.getElementById('pisc1Time').value.trim() },
+    pisc2:{ day:document.getElementById('pisc2Day').value, time:document.getElementById('pisc2Time').value.trim() }
   };
-  save(); renderSportSummary(); renderPlanning(); toast('Séances enregistrées 🏋️');
+  save(); renderSportSummary(); toast('Séances enregistrées 🏋️');
 }
 function renderSportSummary() {
   var s = store.sport;
-  function line(ico, label, slot) {
-    var when = slot.day ? esc(slot.day) + (slot.time ? ' · ' + esc(slot.time) : '') : '<span style="color:#6b6155;font-style:italic;">à définir</span>';
+  function line(ico,label,slot){
+    var when = slot.day ? esc(slot.day)+(slot.time?' · '+esc(slot.time):'') : '<span style="color:#6b6155;font-style:italic;">à définir</span>';
     return '<div class="slot"><div class="slot-ico">'+ico+'</div><div class="slot-info"><b>'+label+'</b><span>'+when+'</span></div></div>';
   }
-  document.getElementById('sportSummary').innerHTML =
-    line('💪','Muscu', s.muscu) + line('🏊','Piscine 1', s.pisc1) + line('🏊','Piscine 2', s.pisc2);
+  document.getElementById('sportSummary').innerHTML = line('💪','Muscu',s.muscu)+line('🏊','Piscine 1',s.pisc1)+line('🏊','Piscine 2',s.pisc2);
 }
-
-/* ================= SHARE (copier-coller) ================= */
-function genCode() {
-  var payload = { names:store.names, planning:store.planning, sport:store.sport };
-  var code = 'NOUS2:' + b64encode(JSON.stringify(payload));
-  document.getElementById('myCode').value = code;
-  toast('Code généré 📤');
-}
-function copyCode() {
-  var el = document.getElementById('myCode');
-  if(!el.value){ genCode(); }
-  el.select(); el.setSelectionRange(0, 99999);
-  try {
-    if (navigator.clipboard) { navigator.clipboard.writeText(el.value); }
-    else { document.execCommand('copy'); }
-    toast('Copié ! Envoie-le à ta best 💌');
-  } catch(e){ toast('Sélectionne et copie à la main'); }
-}
-function importCode() {
-  var raw = document.getElementById('theirCode').value.trim();
-  if(!raw){ toast('Colle d\'abord un code'); return; }
-  try {
-    if (raw.indexOf('NOUS2:') === 0) raw = raw.slice(6);
-    var data = JSON.parse(b64decode(raw));
-    if(!confirm('Importer les infos de ta best ?\n\nCela va mettre à jour l\'emploi du temps et les séances affichés ici.')) return;
-    if(data.planning) store.planning = data.planning;
-    if(data.sport) store.sport = data.sport;
-    if(data.names){ if(data.names.b && !store.names.b) store.names.b = data.names.b; }
-    save(); renderNames(); renderPlanning(); renderSportInputs(); renderSportSummary(); renderGameSwitch();
-    toast('Planning importé ✨');
-    document.querySelector('.tab[data-view=planning]').click();
-  } catch(e) {
-    toast('Code invalide 😕');
-  }
-}
-function b64encode(str){ return btoa(unescape(encodeURIComponent(str))); }
-function b64decode(str){ return decodeURIComponent(escape(atob(str))); }
 
 /* ================= GAMES ================= */
 var GAMES = {
-  qui: {
-    tab:'Qui de nous 2', cat:'Qui de nous deux...',
+  qui: { tab:'Qui de nous 2', cat:'Qui de nous deux...',
     help:'Comptez « 3, 2, 1 » et pointez-vous du doigt en même temps 👉 celle qui correspond le plus !',
-    render:function(x){ return 'Qui de nous deux <em>' + esc(x) + '</em>'; },
-    items:[
-      "arrive toujours en retard ?","rigole pour un rien ?","mange le plus vite ?",
-      "envoie le plus de vocaux de 5 minutes ?","est la plus tête en l'air ?",
-      "dit « on se fait un sport » mais annule à la dernière minute ?","pleure devant les films ?",
-      "a le pire sens de l'orientation ?","prend le plus de temps à se préparer ?","est la plus gourmande ?",
-      "chante le plus faux ?","check son téléphone dès le réveil ?","est la plus organisée ?",
-      "oserait parler à un•e inconnu•e ?","raconte le plus sa vie aux caissières ?",
-      "dépenserait tout son argent en un week-end ?","est la plus rancunière ?",
-      "s'endort la première devant un film ?","a le plus de mal à dire non ?",
-      "ferait le plus de folies pour l'autre ?","connaît le plus de ragots ?",
-      "est la plus motivée à la muscu ?","nagerait le plus longtemps à la piscine ?",
-      "a toujours faim 10 min après avoir mangé ?","serait la meilleure en cas de zombie apocalypse ?"
-    ]
-  },
-  connait: {
-    tab:'On se connaît ?', cat:'Est-ce qu\'on se connaît ?', reveal:true,
+    render:function(x){ return 'Qui de nous deux <em>'+esc(x)+'</em>'; },
+    items:["arrive toujours en retard ?","rigole pour un rien ?","mange le plus vite ?","envoie le plus de vocaux de 5 minutes ?","est la plus tête en l'air ?","dit « on se fait un sport » mais annule à la dernière minute ?","pleure devant les films ?","a le pire sens de l'orientation ?","prend le plus de temps à se préparer ?","est la plus gourmande ?","chante le plus faux ?","check son téléphone dès le réveil ?","est la plus organisée ?","oserait parler à un•e inconnu•e ?","raconte le plus sa vie aux caissières ?","dépenserait tout son argent en un week-end ?","est la plus rancunière ?","s'endort la première devant un film ?","a le plus de mal à dire non ?","ferait le plus de folies pour l'autre ?","connaît le plus de ragots ?","est la plus motivée à la muscu ?","nagerait le plus longtemps à la piscine ?","a toujours faim 10 min après avoir mangé ?","serait la meilleure en cas de zombie apocalypse ?"] },
+  connait: { tab:'On se connaît ?', cat:'Est-ce qu\'on se connaît ?', reveal:true,
     help:'Chacune son tour : devine la réponse pour l\'autre, puis elle te dit si c\'est vrai. 1 point par bonne réponse 😉',
     render:function(x){ return esc(x); },
-    items:[
-      "Quel est mon plat préféré ?","Quelle est ma plus grande peur ?",
-      "Si je gagnais au loto, qu'est-ce que j'achèterais en premier ?",
-      "Quel film ou série je peux revoir 1000 fois ?","Quelle chanson me met de bonne humeur à coup sûr ?",
-      "Quel est mon petit défaut que tout le monde connaît ?","Quelle destination je rêve de visiter ?",
-      "Qu'est-ce qui m'énerve le plus au quotidien ?","Quel était mon rêve de métier petite ?",
-      "Quel est mon souvenir préféré de nous deux ?","Thé ou café ? Et comment je le prends ?",
-      "Quel est mon animal préféré ?","Comment je passe un dimanche parfait ?","Quelle est ma saison préférée ?",
-      "Qu'est-ce que je fais quand je stresse ?","Quel emoji j'utilise tout le temps ?",
-      "Quel est mon plus gros guilty pleasure ?","Sucré ou salé au petit-déj ?",
-      "Quel talent caché j'aimerais avoir ?","Qu'est-ce qui me fait rire à tous les coups ?",
-      "Quel est mon endroit préféré pour décompresser ?","Muscu ou piscine, qu'est-ce que je préfère ?",
-      "Quelle est ma mauvaise habitude que j'essaie d'arrêter ?","Combien de temps je mets à répondre à un message ?",
-      "Quelle est la première chose que j'ai pensée en te rencontrant ?"
-    ]
-  },
-  tupreferes: {
-    tab:'Tu préfères ?', cat:'Tu préfères...',
+    items:["Quel est mon plat préféré ?","Quelle est ma plus grande peur ?","Si je gagnais au loto, qu'est-ce que j'achèterais en premier ?","Quel film ou série je peux revoir 1000 fois ?","Quelle chanson me met de bonne humeur à coup sûr ?","Quel est mon petit défaut que tout le monde connaît ?","Quelle destination je rêve de visiter ?","Qu'est-ce qui m'énerve le plus au quotidien ?","Quel était mon rêve de métier petite ?","Quel est mon souvenir préféré de nous deux ?","Thé ou café ? Et comment je le prends ?","Quel est mon animal préféré ?","Comment je passe un dimanche parfait ?","Quelle est ma saison préférée ?","Qu'est-ce que je fais quand je stresse ?","Quel emoji j'utilise tout le temps ?","Quel est mon plus gros guilty pleasure ?","Sucré ou salé au petit-déj ?","Quel talent caché j'aimerais avoir ?","Qu'est-ce qui me fait rire à tous les coups ?","Quel est mon endroit préféré pour décompresser ?","Muscu ou piscine, qu'est-ce que je préfère ?","Quelle est ma mauvaise habitude que j'essaie d'arrêter ?","Combien de temps je mets à répondre à un message ?","Quelle est la première chose que j'ai pensée en te rencontrant ?"] },
+  tupreferes: { tab:'Tu préfères ?', cat:'Tu préfères...',
     help:'Chacune répond, puis on se justifie — le plus dur, c\'est de choisir !',
-    render:function(x){ return 'Tu préfères <em>' + esc(x) + '</em>'; },
-    items:[
-      "avoir toujours trop chaud, ou toujours trop froid ?",
-      "ne plus jamais manger de chocolat, ou ne plus jamais boire de café ?",
-      "pouvoir voler, ou être invisible ?","vivre au bord de la mer, ou à la montagne ?",
-      "ne plus jamais avoir de wifi, ou ne plus jamais écouter de musique ?",
-      "manger la même chose toute ta vie, ou ne jamais manger deux fois le même plat ?",
-      "lire dans les pensées, ou voir le futur ?","gagner au loto, ou trouver l'amour parfait ?",
-      "être en avance d'une heure partout, ou en retard de 10 min partout ?",
-      "n'écouter qu'un seul artiste toute ta vie, ou jamais deux fois le même ?",
-      "avoir des abdos en or mais aller à la muscu tous les jours, ou rester comme ça sans effort ?",
-      "passer un an sans réseaux sociaux, ou un mois sans ton téléphone ?",
-      "toujours dire la vérité, ou ne jamais pouvoir mentir ?",
-      "avoir un chien qui parle, ou un chat qui fait le ménage ?",
-      "revivre le meilleur jour de ta vie en boucle, ou un nouveau jour génial chaque semaine ?",
-      "faire de la muscu avec moi tous les jours, ou de la piscine tous les jours ?",
-      "ne plus jamais te tromper de tenue, ou ne plus jamais mal dormir ?",
-      "partir en voyage surprise sans savoir où, ou tout organiser toi-même ?"
-    ]
-  },
-  jamais: {
-    tab:'Jamais je n\'ai', cat:'Jamais je n\'ai jamais...',
+    render:function(x){ return 'Tu préfères <em>'+esc(x)+'</em>'; },
+    items:["avoir toujours trop chaud, ou toujours trop froid ?","ne plus jamais manger de chocolat, ou ne plus jamais boire de café ?","pouvoir voler, ou être invisible ?","vivre au bord de la mer, ou à la montagne ?","ne plus jamais avoir de wifi, ou ne plus jamais écouter de musique ?","manger la même chose toute ta vie, ou ne jamais manger deux fois le même plat ?","lire dans les pensées, ou voir le futur ?","gagner au loto, ou trouver l'amour parfait ?","être en avance d'une heure partout, ou en retard de 10 min partout ?","n'écouter qu'un seul artiste toute ta vie, ou jamais deux fois le même ?","avoir des abdos en or mais aller à la muscu tous les jours, ou rester comme ça sans effort ?","passer un an sans réseaux sociaux, ou un mois sans ton téléphone ?","toujours dire la vérité, ou ne jamais pouvoir mentir ?","avoir un chien qui parle, ou un chat qui fait le ménage ?","revivre le meilleur jour de ta vie en boucle, ou un nouveau jour génial chaque semaine ?","faire de la muscu avec moi tous les jours, ou de la piscine tous les jours ?","ne plus jamais te tromper de tenue, ou ne plus jamais mal dormir ?","partir en voyage surprise sans savoir où, ou tout organiser toi-même ?"] },
+  jamais: { tab:'Jamais je n\'ai', cat:'Jamais je n\'ai jamais...',
     help:'Celle qui l\'a déjà fait lève la main (ou a un petit gage). Attention aux révélations 👀',
-    render:function(x){ return 'Jamais je n\'ai <em>' + esc(x) + '</em>'; },
-    items:[
-      "séché un cours ou une journée pour rester au lit",
-      "envoyé un message à la mauvaise personne","fait semblant d'avoir vu un film culte",
-      "ri à un moment super sérieux","stalké quelqu'un jusqu'en 2015 sur les réseaux",
-      "mangé un truc tombé par terre (règle des 5 secondes)",
-      "chanté à fond dans la voiture en croyant que personne ne me voyait",
-      "prétendu être malade pour annuler un plan","oublié un prénom juste après qu'on me le présente",
-      "pleuré devant une pub","gardé l'étiquette pour rendre un vêtement porté",
-      "fait semblant d'être au téléphone pour éviter quelqu'un","envoyé un vocal de plus de 5 minutes",
-      "acheté un truc juste parce qu'il était en promo","raté mon arrêt parce que j'étais sur mon téléphone",
-      "menti sur mon nombre de pas de la journée","commandé à manger alors qu'il y avait à manger à la maison",
-      "commencé un régime qui a duré moins d'une journée","relu un vieux message 50 fois avant de l'envoyer"
-    ]
-  },
-  actionverite: {
-    tab:'Action / Vérité', cat:'Action ou Vérité',
+    render:function(x){ return 'Jamais je n\'ai <em>'+esc(x)+'</em>'; },
+    items:["séché un cours ou une journée pour rester au lit","envoyé un message à la mauvaise personne","fait semblant d'avoir vu un film culte","ri à un moment super sérieux","stalké quelqu'un jusqu'en 2015 sur les réseaux","mangé un truc tombé par terre (règle des 5 secondes)","chanté à fond dans la voiture en croyant que personne ne me voyait","prétendu être malade pour annuler un plan","oublié un prénom juste après qu'on me le présente","pleuré devant une pub","gardé l'étiquette pour rendre un vêtement porté","fait semblant d'être au téléphone pour éviter quelqu'un","envoyé un vocal de plus de 5 minutes","acheté un truc juste parce qu'il était en promo","raté mon arrêt parce que j'étais sur mon téléphone","menti sur mon nombre de pas de la journée","commandé à manger alors qu'il y avait à manger à la maison","commencé un régime qui a duré moins d'une journée","relu un vieux message 50 fois avant de l'envoyer"] },
+  actionverite: { tab:'Action / Vérité', cat:'Action ou Vérité',
     help:'La carte te dit quoi faire. Pas le droit de passer plus de 2 fois par partie 😏',
     render:function(x){ return esc(x); },
-    items:[
-      "🗣️ Vérité — C'est quoi ton plus gros mensonge à tes parents ?",
-      "🗣️ Vérité — Ton crush le plus improbable ?",
-      "🗣️ Vérité — La chose la plus gênante que tu aies faite en public ?",
-      "🗣️ Vérité — Ton pire achat totalement inutile ?",
-      "🗣️ Vérité — Qui tu appelles en premier si tu as un problème ?",
-      "🗣️ Vérité — Le compliment qui t'a le plus marquée ?",
-      "🗣️ Vérité — Un truc que tu n'as jamais osé me dire ?",
-      "🗣️ Vérité — Ta plus grande fierté cette année ?",
-      "🗣️ Vérité — Le dernier truc qui t'a fait pleurer ?",
-      "🗣️ Vérité — Si tu pouvais changer une chose chez toi, ce serait quoi ?",
-      "🎬 Action — Envoie un message gentil à la 3e personne de tes contacts.",
-      "🎬 Action — Fais ta meilleure imitation de moi pendant 30 secondes.",
-      "🎬 Action — Chante le refrain de ta chanson préférée à voix haute.",
-      "🎬 Action — Montre la dernière photo de ta galerie.",
-      "🎬 Action — Parle avec l'accent de ton choix jusqu'à ton prochain tour.",
-      "🎬 Action — Fais 10 squats maintenant (échauffement muscu 💪).",
-      "🎬 Action — Prends la pose la plus ridicule et fais un selfie.",
-      "🎬 Action — Dis 3 choses que tu adores chez moi.",
-      "🎬 Action — Laisse-moi écrire ta prochaine story.",
-      "🎬 Action — Fais deviner un film en le mimant, sans parler."
-    ]
-  },
-  deuxverites: {
-    tab:'2 vérités 1 mensonge', cat:'2 vérités et 1 mensonge',
+    items:["🗣️ Vérité — C'est quoi ton plus gros mensonge à tes parents ?","🗣️ Vérité — Ton crush le plus improbable ?","🗣️ Vérité — La chose la plus gênante que tu aies faite en public ?","🗣️ Vérité — Ton pire achat totalement inutile ?","🗣️ Vérité — Qui tu appelles en premier si tu as un problème ?","🗣️ Vérité — Le compliment qui t'a le plus marquée ?","🗣️ Vérité — Un truc que tu n'as jamais osé me dire ?","🗣️ Vérité — Ta plus grande fierté cette année ?","🗣️ Vérité — Le dernier truc qui t'a fait pleurer ?","🗣️ Vérité — Si tu pouvais changer une chose chez toi, ce serait quoi ?","🎬 Action — Envoie un message gentil à la 3e personne de tes contacts.","🎬 Action — Fais ta meilleure imitation de moi pendant 30 secondes.","🎬 Action — Chante le refrain de ta chanson préférée à voix haute.","🎬 Action — Montre la dernière photo de ta galerie.","🎬 Action — Parle avec l'accent de ton choix jusqu'à ton prochain tour.","🎬 Action — Fais 10 squats maintenant (échauffement muscu 💪).","🎬 Action — Prends la pose la plus ridicule et fais un selfie.","🎬 Action — Dis 3 choses que tu adores chez moi.","🎬 Action — Laisse-moi écrire ta prochaine story.","🎬 Action — Fais deviner un film en le mimant, sans parler."] },
+  deuxverites: { tab:'2 vérités 1 mensonge', cat:'2 vérités et 1 mensonge',
     help:'Dis 3 phrases sur toi : 2 vraies, 1 fausse. À l\'autre de trouver l\'intrus ! Le thème t\'aide à démarrer.',
-    render:function(x){ return 'Dis 2 vérités + 1 mensonge sur : <em>' + esc(x) + '</em>'; },
-    items:[
-      "ton enfance","tes voyages","tes crushs","l'école ou le travail","tes talents cachés",
-      "les trucs bizarres que tu as déjà mangés","tes plus grandes peurs","ta famille",
-      "des célébrités que tu as croisées","tes pires hontes","ce que tu faisais à 15 ans",
-      "tes habitudes un peu secrètes","tes projets pour cette année","ce que tu détestes le plus"
-    ]
-  },
-  complete: {
-    tab:'Complète la phrase', cat:'Complète la phrase',
+    render:function(x){ return 'Dis 2 vérités + 1 mensonge sur : <em>'+esc(x)+'</em>'; },
+    items:["ton enfance","tes voyages","tes crushs","l'école ou le travail","tes talents cachés","les trucs bizarres que tu as déjà mangés","tes plus grandes peurs","ta famille","des célébrités que tu as croisées","tes pires hontes","ce que tu faisais à 15 ans","tes habitudes un peu secrètes","tes projets pour cette année","ce que tu détestes le plus"] },
+  complete: { tab:'Complète la phrase', cat:'Complète la phrase',
     help:'Chacune termine la phrase à voix haute, sans réfléchir. Le moment tout doux du jeu 💛',
-    render:function(x){ return '« <em>' + esc(x) + '</em> »'; },
-    items:[
-      "Ce que j'admire le plus chez toi, c'est...","Mon meilleur souvenir avec toi, c'est...",
-      "Le jour où j'ai su qu'on serait amies pour la vie, c'est...","Si je devais te décrire en 3 mots, ce serait...",
-      "Le truc que tu m'as appris sans t'en rendre compte, c'est...","La prochaine folie qu'on doit faire ensemble, c'est...",
-      "Quand je pense à toi, la première image qui vient c'est...","Ce qui me manque le plus quand on ne se voit pas, c'est...",
-      "Un rêve que j'aimerais réaliser avec toi, c'est...","La chanson qui me fait penser à toi, c'est...",
-      "Si on ouvrait un business ensemble, ce serait...","Dans 10 ans, je nous imagine...",
-      "Le conseil que tu me donnes toujours et qui marche, c'est...","Ce que je préfère dans nos séances de sport, c'est...",
-      "Le surnom qui te va le mieux, c'est..."
-    ]
-  }
+    render:function(x){ return '« <em>'+esc(x)+'</em> »'; },
+    items:["Ce que j'admire le plus chez toi, c'est...","Mon meilleur souvenir avec toi, c'est...","Le jour où j'ai su qu'on serait amies pour la vie, c'est...","Si je devais te décrire en 3 mots, ce serait...","Le truc que tu m'as appris sans t'en rendre compte, c'est...","La prochaine folie qu'on doit faire ensemble, c'est...","Quand je pense à toi, la première image qui vient c'est...","Ce qui me manque le plus quand on ne se voit pas, c'est...","Un rêve que j'aimerais réaliser avec toi, c'est...","La chanson qui me fait penser à toi, c'est...","Si on ouvrait un business ensemble, ce serait...","Dans 10 ans, je nous imagine...","Le conseil que tu me donnes toujours et qui marche, c'est...","Ce que je préfère dans nos séances de sport, c'est...","Le surnom qui te va le mieux, c'est..."] }
 };
 var GAME_ORDER = ['qui','connait','tupreferes','jamais','actionverite','deuxverites','complete'];
-var gameMode = 'qui';
-var deck = [], deckPos = -1;
-
+var gameMode = 'qui', deck = [], deckPos = -1;
 function renderGameSwitch() {
-  var html = '';
-  GAME_ORDER.forEach(function(k){
-    html += '<button class="tab'+(k===gameMode?' active':'')+'" data-game="'+k+'">'+esc(GAMES[k].tab)+'</button>';
-  });
   var box = document.getElementById('gameSwitch');
-  box.innerHTML = html;
+  box.innerHTML = GAME_ORDER.map(function(k){ return '<button class="tab'+(k===gameMode?' active':'')+'" data-game="'+k+'">'+esc(GAMES[k].tab)+'</button>'; }).join('');
   box.querySelectorAll('.tab[data-game]').forEach(function(t){
     t.addEventListener('click', function(){
       box.querySelectorAll('.tab').forEach(function(x){x.classList.remove('active');});
-      t.classList.add('active');
-      gameMode = t.dataset.game;
-      startDeck();
+      t.classList.add('active'); gameMode = t.dataset.game; startDeck();
     });
   });
 }
-function shuffle(arr){
-  var a = arr.slice();
-  for (var i=a.length-1; i>0; i--){ var j=Math.floor(Math.random()*(i+1)); var tmp=a[i]; a[i]=a[j]; a[j]=tmp; }
-  return a;
-}
+function shuffle(arr){ var a=arr.slice(); for(var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=a[i]; a[i]=a[j]; a[j]=t; } return a; }
 function startDeck() {
-  var g = GAMES[gameMode];
-  deck = shuffle(g.items);
-  deckPos = -1;
+  var g = GAMES[gameMode]; deck = shuffle(g.items); deckPos = -1;
   document.getElementById('gameCat').textContent = g.cat;
   document.getElementById('gameQ').innerHTML = 'Appuie sur « Carte suivante » pour commencer ! 💛';
   document.getElementById('gameCounter').textContent = '';
@@ -564,39 +592,55 @@ function startDeck() {
 }
 function nextCard() {
   var g = GAMES[gameMode];
-  if (!deck.length) startDeck();
+  if(!deck.length) startDeck();
   deckPos++;
-  if (deckPos >= deck.length) { deck = shuffle(deck); deckPos = 0; toast('On refait un tour 🔄'); }
+  if(deckPos>=deck.length){ deck = shuffle(deck); deckPos = 0; toast('On refait un tour 🔄'); }
   document.getElementById('gameQ').innerHTML = g.render(deck[deckPos]);
   document.getElementById('gameReveal').classList.remove('show');
-  document.getElementById('gameCounter').textContent = 'Carte ' + (deckPos+1) + ' / ' + deck.length;
+  document.getElementById('gameCounter').textContent = 'Carte '+(deckPos+1)+' / '+deck.length;
   var rb = document.getElementById('revealBtn');
-  if (g.reveal) { rb.style.display = 'inline-block'; rb.textContent = 'Vous y êtes ? 👀'; }
-  else { rb.style.display = 'none'; }
+  if(g.reveal){ rb.style.display='inline-block'; rb.textContent='Vous y êtes ? 👀'; } else rb.style.display='none';
 }
 function toggleReveal() {
   var r = document.getElementById('gameReveal');
-  if (r.classList.contains('show')) { r.classList.remove('show'); return; }
-  r.innerHTML = 'Maintenant ' + esc(nameB()) + ' (ou ' + esc(nameA()) + ') donne la vraie réponse — et on compte les points ! 💛';
+  if(r.classList.contains('show')){ r.classList.remove('show'); return; }
+  r.innerHTML = 'Maintenant '+esc(nameB())+' (ou '+esc(nameA())+') donne la vraie réponse — et on compte les points ! 💛';
   r.classList.add('show');
 }
 
 /* ================= UTILS ================= */
 function esc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 var toastTimer;
-function toast(msg){
-  var t = document.getElementById('toast');
-  t.textContent = msg; t.classList.add('show');
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(function(){ t.classList.remove('show'); }, 2200);
-}
+function toast(msg){ var t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); clearTimeout(toastTimer); toastTimer=setTimeout(function(){t.classList.remove('show');},2200); }
 
 /* ================= INIT ================= */
 load();
+// join a shared room from the link (?room=ID)
+try {
+  var params = new URLSearchParams(location.search);
+  var urlRoom = params.get('room');
+  if(urlRoom){
+    if(!room || room.id!==urlRoom) room = { id:urlRoom, me:(room&&room.me)||'lisa' };
+    saveRoom();
+    history.replaceState(null,'',location.pathname);
+  }
+} catch(e){}
+
+var t0 = new Date(); viewY = t0.getFullYear(); viewM = t0.getMonth(); selDate = todayStr();
+document.getElementById('prevMonth').addEventListener('click', function(){ viewM--; if(viewM<0){viewM=11;viewY--;} renderCalendar(); });
+document.getElementById('nextMonth').addEventListener('click', function(){ viewM++; if(viewM>11){viewM=0;viewY++;} renderCalendar(); });
+
 fillDaySelects();
-renderNames(); renderPlanning(); renderSportInputs(); renderSportSummary();
-renderGameSwitch();
-startDeck();
+renderNames(); renderSync(); renderCalendar(); renderDayPanel();
+renderSportInputs(); renderSportSummary();
+renderGameSwitch(); startDeck();
+
+if(room) pull();
+// live-ish sync: refresh while the calendar tab is open and the app is visible
+setInterval(function(){
+  if(room && !document.hidden && document.getElementById('calendrier').classList.contains('active')) pull();
+}, 5000);
+document.addEventListener('visibilitychange', function(){ if(!document.hidden && room) pull(); });
 </script>
 </body>
 </html>
