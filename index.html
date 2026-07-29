@@ -316,8 +316,12 @@ function renderNames() {
 }
 function goHome(){ document.querySelector('.tab[data-view=accueil]').click(); }
 
-/* ================= SYNC (jsonblob) ================= */
-var API = 'https://jsonblob.com/api/jsonBlob';
+/* ================= SYNC (Supabase) ================= */
+var SUPA_URL = 'https://hekycwbsehuoeryfnyjk.supabase.co';
+var SUPA_KEY = 'sb_publishable_rPV1I2LftPaBpWBzh1HhEA_9_q-bFKG'; // clé "publishable" — sûre côté navigateur (RLS activée)
+var SUPA_TABLE = 'shared_docs';
+var REST = SUPA_URL + '/rest/v1/' + SUPA_TABLE;
+function supaHeaders(extra){ return Object.assign({ 'apikey':SUPA_KEY, 'Authorization':'Bearer '+SUPA_KEY, 'Content-Type':'application/json' }, extra||{}); }
 var online = null;      // null unknown, true, false
 var lastSync = 0;
 var busy = false;
@@ -330,35 +334,31 @@ function mergeDocs(a, b){
   return { v:2, entries:Object.keys(byId).map(function(k){return byId[k];}), deleted:Object.keys(deleted) };
 }
 async function apiGet(id){
-  var res = await fetch(API+'/'+id, { headers:{ 'Accept':'application/json' } });
+  var res = await fetch(REST+'?room=eq.'+encodeURIComponent(id)+'&select=data', { headers: supaHeaders() });
   if(!res.ok) throw new Error('GET '+res.status);
-  return res.json();
+  var rows = await res.json();
+  return (rows && rows.length) ? normalizeDoc(rows[0].data) : { v:2, entries:[], deleted:[] };
 }
-async function apiPut(id, data){
-  var res = await fetch(API+'/'+id, { method:'PUT', headers:{ 'Content-Type':'application/json', 'Accept':'application/json' }, body: JSON.stringify(data) });
-  if(!res.ok) throw new Error('PUT '+res.status);
+async function apiUpsert(id, data){
+  var body = [{ room:id, data:data, updated_at:new Date().toISOString() }];
+  var res = await fetch(REST, { method:'POST', headers: supaHeaders({ 'Prefer':'resolution=merge-duplicates,return=minimal' }), body: JSON.stringify(body) });
+  if(!res.ok) throw new Error('UPSERT '+res.status);
   return true;
-}
-async function apiCreate(data){
-  var res = await fetch(API, { method:'POST', headers:{ 'Content-Type':'application/json', 'Accept':'application/json' }, body: JSON.stringify(data) });
-  if(!res.ok) throw new Error('POST '+res.status);
-  var loc = res.headers.get('Location') || res.headers.get('X-jsonblob') || '';
-  var id = loc.split('/').pop();
-  if(!id) throw new Error('no-id');
-  return id;
 }
 function setOnline(v){ online = v; if(v) lastSync = Date.now(); renderSyncStatus(); }
 
+function makeRoomId(){ return 'r'+Math.random().toString(36).slice(2,8)+Math.random().toString(36).slice(2,6); }
 async function createRoom(){
   if(busy) return; busy = true; renderSync();
+  var id = makeRoomId();
   try {
-    var id = await apiCreate(doc);
+    await apiUpsert(id, doc);
     room = { id:id, me:'clara' };
     saveRoom(); setOnline(true);
     toast('Calendrier partagé créé ✨');
   } catch(e){
     setOnline(false);
-    toast('Création en ligne impossible pour le moment 😕');
+    toast('Connexion à Supabase impossible 😕');
   }
   busy = false; renderSync();
 }
@@ -380,7 +380,7 @@ async function push(){
     doc = mergeDocs(doc, remote);
   } catch(e){}
   try {
-    await apiPut(room.id, doc);
+    await apiUpsert(room.id, doc);
     setOnline(true);
   } catch(e){ setOnline(false); }
   saveDoc(); renderCalendar(); renderDayPanel(); renderSyncStatus();
