@@ -9,123 +9,116 @@
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
 html { scroll-behavior:smooth; }
 body { background:#080604; color:#f5efe0; font-family:'Tinos',Georgia,serif; line-height:1.7; -webkit-font-smoothing:antialiased; }
-
 :root{
   --gold:#c9a84c; --gold-soft:#e8c97a; --ink:#080604; --ink2:#0e0b08; --ink3:#151009;
   --parch:#f5efe0; --muted:#b5a898; --line:rgba(201,168,76,0.15);
 }
-
-/* ---------- shared bits ---------- */
-.cin{ font-family:'Cinzel',serif; }
-.gold{ color:var(--gold); }
+.cin{ font-family:'Cinzel',serif; } .gold{ color:var(--gold); }
 button{ font-family:'Cinzel',serif; cursor:pointer; }
 a{ color:inherit; }
 
-nav{ position:sticky; top:0; z-index:60; padding:14px 26px; display:flex; justify-content:space-between; align-items:center;
+nav{ position:sticky; top:0; z-index:60; padding:14px 22px; display:flex; justify-content:space-between; align-items:center;
      background:rgba(8,6,4,0.92); backdrop-filter:blur(6px); border-bottom:1px solid var(--line); }
-.nav-logo{ font-family:'Cinzel',serif; font-size:11px; letter-spacing:4px; color:var(--gold); text-decoration:none; }
-.nav-tools{ display:flex; gap:10px; align-items:center; }
+.nav-logo{ font-family:'Cinzel',serif; font-size:10.5px; letter-spacing:3px; color:var(--gold); text-decoration:none; }
+.nav-tools{ display:flex; gap:8px; }
 .icon-btn{ background:transparent; border:1px solid var(--line); color:var(--muted); font-size:10px; letter-spacing:2px;
-           text-transform:uppercase; padding:8px 14px; border-radius:2px; transition:.25s; }
+           text-transform:uppercase; padding:8px 13px; border-radius:2px; transition:.25s; white-space:nowrap; }
 .icon-btn:hover{ color:var(--gold); border-color:var(--gold); }
 
-/* ---------- hero / gallery ---------- */
-.wrap{ max-width:1080px; margin:0 auto; padding:0 24px; }
-.hero{ text-align:center; padding:70px 24px 30px; }
-.hero-tag{ display:block; font-family:'Cinzel',serif; font-size:9px; letter-spacing:7px; color:var(--gold); text-transform:uppercase; margin-bottom:18px; }
-.hero-title{ font-family:'Cinzel',serif; font-size:clamp(34px,7vw,64px); font-weight:700; color:#fff; letter-spacing:4px; line-height:1.1; margin-bottom:18px; text-shadow:0 2px 30px rgba(0,0,0,.6); }
+.wrap{ max-width:1080px; margin:0 auto; padding:0 22px; }
+.hero{ text-align:center; padding:56px 20px 12px; }
+.hero-tag{ display:block; font-family:'Cinzel',serif; font-size:9px; letter-spacing:6px; color:var(--gold); text-transform:uppercase; margin-bottom:16px; }
+.hero-title{ font-family:'Cinzel',serif; font-size:clamp(32px,7vw,60px); font-weight:700; color:#fff; letter-spacing:3px; line-height:1.1; margin-bottom:16px; text-shadow:0 2px 30px rgba(0,0,0,.6); }
 .hero-title em{ color:var(--gold-soft); font-style:italic; font-family:'Tinos',serif; }
-.hero-sub{ font-style:italic; font-size:clamp(15px,2.4vw,19px); color:var(--muted); max-width:620px; margin:0 auto 8px; }
+.hero-sub{ font-style:italic; font-size:clamp(15px,2.4vw,18px); color:var(--muted); max-width:600px; margin:0 auto; }
 
-.sep{ text-align:center; color:var(--gold); opacity:.5; font-size:18px; margin:26px 0 10px; }
+/* mode toggle */
+.mode-bar{ display:flex; justify-content:center; gap:0; margin:26px auto 6px; border:1px solid var(--line); border-radius:40px; padding:5px; width:max-content; background:var(--ink2); }
+.mode-btn{ background:transparent; border:none; color:var(--muted); font-size:11px; letter-spacing:2px; text-transform:uppercase; padding:10px 22px; border-radius:40px; transition:.25s; }
+.mode-btn.active{ background:var(--gold); color:var(--ink); }
+.mode-hint{ text-align:center; font-style:italic; color:var(--muted); font-size:13px; margin:2px 0 0; }
 
-.cards{ display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:20px; padding:20px 0 60px; }
+.cards{ display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:18px; padding:22px 0 40px; }
 .card{ position:relative; background:linear-gradient(160deg,var(--ink2),var(--ink3)); border:1px solid var(--line);
-       border-top:2px solid var(--accent,var(--gold)); border-radius:3px; padding:26px 24px 22px; display:flex; flex-direction:column;
-       transition:.3s; overflow:hidden; }
-.card:hover{ transform:translateY(-4px); border-color:var(--accent,var(--gold)); box-shadow:0 14px 40px rgba(0,0,0,.5); }
-.card-crest{ width:52px; height:52px; border-radius:50%; display:flex; align-items:center; justify-content:center;
-             font-family:'Cinzel',serif; font-size:22px; color:var(--ink); font-weight:700;
-             background:var(--accent,var(--gold)); margin-bottom:16px; box-shadow:0 0 22px -6px var(--accent,var(--gold)); }
-.card-name{ font-family:'Cinzel',serif; font-size:21px; letter-spacing:1.5px; color:var(--parch); }
-.card-tag{ font-style:italic; color:var(--accent,var(--gold-soft)); font-size:14px; margin:3px 0 14px; }
-.card-blurb{ color:var(--muted); font-size:14.5px; line-height:1.75; flex:1; margin-bottom:18px; }
-.card-actions{ display:flex; gap:8px; align-items:center; }
-.btn-primary{ flex:1; background:var(--accent,var(--gold)); color:var(--ink); border:none; padding:12px; font-size:10px;
-              letter-spacing:3px; text-transform:uppercase; border-radius:2px; transition:.25s; }
-.btn-primary:hover{ filter:brightness(1.12); transform:translateY(-1px); }
+       border-top:2px solid var(--accent,var(--gold)); border-radius:3px; padding:24px 22px 20px; display:flex; flex-direction:column; transition:.25s; }
+.card:hover{ transform:translateY(-3px); border-color:var(--accent,var(--gold)); box-shadow:0 12px 34px rgba(0,0,0,.5); }
+.card.sel{ box-shadow:0 0 0 2px var(--accent,var(--gold)), 0 12px 34px rgba(0,0,0,.5); border-color:var(--accent,var(--gold)); }
+.card.sel::after{ content:'✓'; position:absolute; top:12px; right:14px; width:24px; height:24px; border-radius:50%; background:var(--accent,var(--gold)); color:var(--ink); font-family:'Cinzel',serif; font-size:13px; display:flex; align-items:center; justify-content:center; }
+.card-crest{ width:50px; height:50px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'Cinzel',serif; font-size:21px; color:var(--ink); font-weight:700; background:var(--accent,var(--gold)); margin-bottom:14px; box-shadow:0 0 20px -6px var(--accent,var(--gold)); }
+.card-name{ font-family:'Cinzel',serif; font-size:20px; letter-spacing:1.5px; color:var(--parch); }
+.card-tag{ font-style:italic; color:var(--accent,var(--gold-soft)); font-size:14px; margin:3px 0 12px; }
+.card-blurb{ color:var(--muted); font-size:14px; line-height:1.7; flex:1; margin-bottom:16px; }
+.card-actions{ display:flex; gap:8px; }
+.btn-primary{ flex:1; background:var(--accent,var(--gold)); color:var(--ink); border:none; padding:12px; font-size:10px; letter-spacing:3px; text-transform:uppercase; border-radius:2px; transition:.25s; }
+.btn-primary:hover{ filter:brightness(1.12); transform:translateY(-1px); } .btn-primary:disabled{ opacity:.4; }
 .btn-ghost{ background:transparent; border:1px solid var(--line); color:var(--muted); padding:12px 13px; font-size:11px; border-radius:2px; transition:.25s; }
 .btn-ghost:hover{ color:var(--gold); border-color:var(--gold); }
-.card.add{ align-items:center; justify-content:center; text-align:center; border-style:dashed; border-top-style:dashed; color:var(--muted); min-height:220px; }
-.card.add:hover{ color:var(--gold); }
-.card.add .plus{ font-family:'Cinzel',serif; font-size:40px; color:var(--gold); margin-bottom:8px; }
+.card.add{ align-items:center; justify-content:center; text-align:center; border-style:dashed; border-top-style:dashed; color:var(--muted); min-height:210px; }
+.card.add:hover{ color:var(--gold); } .card.add .plus{ font-family:'Cinzel',serif; font-size:38px; color:var(--gold); margin-bottom:6px; }
 
-/* ---------- chat view ---------- */
+.group-bar{ position:fixed; left:0; right:0; bottom:0; z-index:55; display:none; align-items:center; justify-content:space-between; gap:14px;
+            padding:14px 22px calc(14px + env(safe-area-inset-bottom)); background:rgba(14,11,8,.97); border-top:1px solid var(--gold); backdrop-filter:blur(6px); }
+.group-bar span{ color:var(--muted); font-family:'Cinzel',serif; font-size:11px; letter-spacing:1px; }
+.group-bar .btn-primary{ flex:0 0 auto; padding:13px 26px; }
+
+.foot{ text-align:center; padding:24px; color:var(--muted); font-size:11px; letter-spacing:1px; opacity:.6; border-top:1px solid var(--line); }
+
+/* chat */
 #view-chat{ display:none; position:fixed; inset:0; z-index:70; background:var(--ink); flex-direction:column; }
-.chat-head{ display:flex; align-items:center; gap:14px; padding:14px 20px; border-bottom:1px solid var(--line);
-            background:rgba(14,11,8,.96); }
-.chat-back{ background:transparent; border:none; color:var(--muted); font-size:20px; padding:4px 8px; }
-.chat-back:hover{ color:var(--gold); }
-.chat-crest{ width:42px; height:42px; border-radius:50%; display:flex; align-items:center; justify-content:center;
-             font-family:'Cinzel',serif; font-weight:700; color:var(--ink); background:var(--accent,var(--gold)); flex-shrink:0; }
+.chat-head{ display:flex; align-items:center; gap:12px; padding:12px 16px; border-bottom:1px solid var(--line); background:rgba(14,11,8,.96); }
+.chat-back{ background:transparent; border:none; color:var(--muted); font-size:22px; padding:2px 6px; } .chat-back:hover{ color:var(--gold); }
+.chat-crest{ display:flex; align-items:center; width:42px; height:42px; border-radius:50%; justify-content:center; font-family:'Cinzel',serif; font-weight:700; color:var(--ink); background:var(--accent,var(--gold)); flex-shrink:0; }
+.mini{ width:34px; height:34px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-family:'Cinzel',serif; font-size:14px; font-weight:700; color:var(--ink); border:2px solid var(--ink); }
+.mini.more{ background:var(--ink3); color:var(--gold); }
 .chat-id{ flex:1; min-width:0; }
-.chat-id h3{ font-family:'Cinzel',serif; font-size:16px; letter-spacing:1px; color:var(--parch); }
-.chat-id p{ font-style:italic; font-size:12.5px; color:var(--accent,var(--gold-soft)); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-.chat-head .icon-btn{ padding:7px 11px; }
+.chat-id h3{ font-family:'Cinzel',serif; font-size:15px; letter-spacing:1px; color:var(--parch); }
+.chat-id p{ font-style:italic; font-size:12px; color:var(--accent,var(--gold-soft)); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.chat-head .icon-btn{ padding:7px 10px; }
 
-.messages{ flex:1; overflow-y:auto; padding:26px 18px 8px; }
-.messages-inner{ max-width:760px; margin:0 auto; display:flex; flex-direction:column; gap:16px; }
-.msg{ max-width:82%; padding:13px 17px; border-radius:12px; font-size:15.5px; line-height:1.75; white-space:pre-wrap; word-wrap:break-word; }
+.messages{ flex:1; overflow-y:auto; padding:24px 16px 8px; }
+.messages-inner{ max-width:760px; margin:0 auto; display:flex; flex-direction:column; gap:14px; }
+.scene-intro{ text-align:center; font-style:italic; color:var(--muted); font-size:14px; padding:30px 10px; line-height:1.8; }
+.msg{ max-width:84%; padding:12px 16px; border-radius:12px; font-size:15.5px; line-height:1.75; white-space:pre-wrap; word-wrap:break-word; }
 .msg em{ color:var(--gold-soft); font-style:italic; }
 .msg.them{ align-self:flex-start; background:var(--ink2); border:1px solid var(--line); border-bottom-left-radius:3px; }
-.msg.me{ align-self:flex-end; background:linear-gradient(160deg,rgba(201,168,76,.16),rgba(201,168,76,.06));
-         border:1px solid rgba(201,168,76,.28); border-bottom-right-radius:3px; color:var(--parch); }
-.msg-name{ display:block; font-family:'Cinzel',serif; font-size:9px; letter-spacing:2px; text-transform:uppercase;
-           color:var(--accent,var(--gold)); margin-bottom:5px; }
-.typing{ display:inline-flex; gap:5px; padding:4px 2px; }
+.msg.me{ align-self:flex-end; background:linear-gradient(160deg,rgba(201,168,76,.16),rgba(201,168,76,.06)); border:1px solid rgba(201,168,76,.28); border-bottom-right-radius:3px; color:var(--parch); }
+.msg-name{ display:block; font-family:'Cinzel',serif; font-size:9px; letter-spacing:2px; text-transform:uppercase; margin-bottom:5px; }
+.typing{ display:inline-flex; gap:5px; padding:3px 2px; }
 .typing span{ width:6px; height:6px; border-radius:50%; background:var(--gold); opacity:.4; animation:blink 1.2s infinite; }
 .typing span:nth-child(2){ animation-delay:.2s; } .typing span:nth-child(3){ animation-delay:.4s; }
 @keyframes blink{ 0%,100%{opacity:.25; transform:translateY(0);} 50%{opacity:1; transform:translateY(-3px);} }
 
-.composer{ border-top:1px solid var(--line); background:rgba(14,11,8,.96); padding:14px 18px calc(14px + env(safe-area-inset-bottom)); }
+.composer{ border-top:1px solid var(--line); background:rgba(14,11,8,.96); padding:12px 16px calc(12px + env(safe-area-inset-bottom)); }
 .composer-inner{ max-width:760px; margin:0 auto; display:flex; gap:10px; align-items:flex-end; }
-.composer textarea{ flex:1; resize:none; background:var(--ink3); border:1px solid var(--line); color:var(--parch);
-                    font-family:'Tinos',serif; font-size:15.5px; line-height:1.5; padding:12px 14px; border-radius:8px; max-height:160px; }
+.composer textarea{ flex:1; resize:none; background:var(--ink3); border:1px solid var(--line); color:var(--parch); font-family:'Tinos',serif; font-size:15.5px; line-height:1.5; padding:12px 14px; border-radius:8px; max-height:160px; }
 .composer textarea:focus{ outline:none; border-color:var(--gold); }
-.send-btn{ background:var(--accent,var(--gold)); color:var(--ink); border:none; width:48px; height:48px; border-radius:50%;
-           font-size:18px; flex-shrink:0; display:flex; align-items:center; justify-content:center; transition:.2s; }
+.send-btn{ background:var(--accent,var(--gold)); color:var(--ink); border:none; width:48px; height:48px; border-radius:50%; font-size:18px; flex-shrink:0; display:flex; align-items:center; justify-content:center; transition:.2s; }
 .send-btn:hover{ filter:brightness(1.12); } .send-btn:disabled{ opacity:.4; cursor:default; }
-.chat-hint{ text-align:center; color:var(--muted); font-size:11px; font-style:italic; margin-top:8px; opacity:.7; }
+.chat-hint{ text-align:center; color:var(--muted); font-size:11px; font-style:italic; margin-top:7px; opacity:.7; }
 
-/* ---------- modals ---------- */
-.overlay{ display:none; position:fixed; inset:0; z-index:90; background:rgba(4,3,2,.82); backdrop-filter:blur(4px);
-          align-items:center; justify-content:center; padding:18px; overflow-y:auto; }
+/* modals */
+.overlay{ display:none; position:fixed; inset:0; z-index:90; background:rgba(4,3,2,.82); backdrop-filter:blur(4px); align-items:flex-start; justify-content:center; padding:18px; overflow-y:auto; }
 .overlay.open{ display:flex; }
-.modal{ width:100%; max-width:520px; background:linear-gradient(160deg,var(--ink2),var(--ink3)); border:1px solid var(--line);
-        border-top:2px solid var(--gold); border-radius:4px; padding:28px 26px; margin:auto; }
+.modal{ width:100%; max-width:540px; background:linear-gradient(160deg,var(--ink2),var(--ink3)); border:1px solid var(--line); border-top:2px solid var(--gold); border-radius:4px; padding:26px 24px; margin:auto; }
 .modal h2{ font-family:'Cinzel',serif; font-size:18px; letter-spacing:2px; color:var(--parch); margin-bottom:4px; }
-.modal .lead{ font-style:italic; color:var(--muted); font-size:13.5px; margin-bottom:20px; }
-.field{ margin-bottom:16px; }
-.field label{ display:block; font-family:'Cinzel',serif; font-size:9px; letter-spacing:2px; text-transform:uppercase; color:var(--gold); margin-bottom:7px; }
-.field input, .field textarea, .field select{ width:100%; background:var(--ink); border:1px solid var(--line); color:var(--parch);
-       font-family:'Tinos',serif; font-size:14.5px; padding:11px 13px; border-radius:3px; }
-.field textarea{ resize:vertical; min-height:90px; line-height:1.6; }
+.modal .lead{ font-style:italic; color:var(--muted); font-size:13.5px; margin-bottom:18px; }
+.field{ margin-bottom:15px; }
+.field label{ display:block; font-family:'Cinzel',serif; font-size:9px; letter-spacing:2px; text-transform:uppercase; color:var(--gold); margin-bottom:6px; }
+.field input, .field textarea, .field select{ width:100%; background:var(--ink); border:1px solid var(--line); color:var(--parch); font-family:'Tinos',serif; font-size:14.5px; padding:11px 13px; border-radius:3px; }
+.field textarea{ resize:vertical; min-height:70px; line-height:1.6; }
 .field input:focus, .field textarea:focus, .field select:focus{ outline:none; border-color:var(--gold); }
-.field .hint{ font-size:11.5px; color:var(--muted); font-style:italic; margin-top:6px; }
-.swatches{ display:flex; gap:9px; flex-wrap:wrap; margin-top:4px; }
+.field .hint{ font-size:11.5px; color:var(--muted); font-style:italic; margin-top:5px; }
+.field-group-title{ font-family:'Cinzel',serif; font-size:10px; letter-spacing:3px; text-transform:uppercase; color:var(--gold-soft); margin:22px 0 12px; padding-bottom:6px; border-bottom:1px solid var(--line); }
+.swatches{ display:flex; gap:9px; flex-wrap:wrap; }
 .swatch{ width:30px; height:30px; border-radius:50%; border:2px solid transparent; cursor:pointer; transition:.2s; }
 .swatch.sel{ border-color:var(--parch); transform:scale(1.12); }
 .modal-actions{ display:flex; gap:10px; margin-top:22px; flex-wrap:wrap; }
 .modal-actions .btn-primary{ flex:1; min-width:120px; }
 .modal-actions .btn-ghost{ padding:12px 18px; }
-.btn-danger{ background:transparent; border:1px solid rgba(180,70,70,.5); color:#c98a8a; padding:12px 16px; font-size:10px;
-             letter-spacing:2px; text-transform:uppercase; border-radius:2px; }
+.btn-danger{ background:transparent; border:1px solid rgba(180,70,70,.5); color:#c98a8a; padding:12px 16px; font-size:10px; letter-spacing:2px; text-transform:uppercase; border-radius:2px; }
 .btn-danger:hover{ border-color:#c96a6a; color:#e0a0a0; }
-.note{ background:rgba(201,168,76,.07); border:1px solid var(--line); border-radius:3px; padding:12px 14px; font-size:12.5px;
-       color:var(--muted); line-height:1.6; margin-bottom:18px; }
-.note b{ color:var(--gold-soft); }
-.note a{ color:var(--gold); text-decoration:underline; }
-.foot{ text-align:center; padding:26px; color:var(--muted); font-size:11px; letter-spacing:1px; opacity:.6; border-top:1px solid var(--line); }
+.note{ background:rgba(201,168,76,.07); border:1px solid var(--line); border-radius:3px; padding:12px 14px; font-size:12.5px; color:var(--muted); line-height:1.6; margin-bottom:18px; }
+.note b{ color:var(--gold-soft); } .note a{ color:var(--gold); text-decoration:underline; }
 ::-webkit-scrollbar{ width:9px; } ::-webkit-scrollbar-track{ background:var(--ink); } ::-webkit-scrollbar-thumb{ background:rgba(201,168,76,.25); border-radius:9px; }
 </style>
 </head>
@@ -139,457 +132,505 @@ nav{ position:sticky; top:0; z-index:60; padding:14px 26px; display:flex; justif
   </div>
 </nav>
 
-<!-- ============ GALLERY ============ -->
+<!-- GALLERY -->
 <div id="view-gallery">
   <div class="hero">
     <span class="hero-tag">Harem inversé · Romantasy</span>
     <h1 class="hero-title">Le Salon des <em>Prétendants</em></h1>
-    <p class="hero-sub">Cinq âmes courtisent la tienne, chacune à sa façon. Choisis un prétendant, ouvre le dialogue, et laisse la scène s'écrire — pour nourrir tes propres pages.</p>
+    <p class="hero-sub">Parle à un prétendant en solo, ou réunis-les dans une même scène. Chacun a sa voix, ses failles, sa façon de t'aimer — pour nourrir tes propres pages.</p>
   </div>
   <div class="wrap">
-    <div class="sep">✦ ✦ ✦</div>
+    <div class="mode-bar">
+      <button class="mode-btn active" id="modeSolo">Solo</button>
+      <button class="mode-btn" id="modeGroup">Scène de groupe</button>
+    </div>
+    <p class="mode-hint" id="modeHint" style="display:none">Choisis au moins deux prétendants, puis ouvre la scène commune.</p>
     <div class="cards" id="cards"></div>
   </div>
   <div class="foot">Fiction interactive · Tes conversations restent sur cet appareil</div>
 </div>
 
-<!-- ============ CHAT ============ -->
+<div class="group-bar" id="groupBar">
+  <span id="groupCount">0 prétendant(s)</span>
+  <button class="btn-primary" id="groupOpen" disabled>Ouvrir la scène ✦</button>
+</div>
+
+<!-- CHAT -->
 <div id="view-chat">
   <div class="chat-head">
     <button class="chat-back" id="chatBack" title="Retour">‹</button>
     <div class="chat-crest" id="chatCrest">A</div>
-    <div class="chat-id">
-      <h3 id="chatName">—</h3>
-      <p id="chatTag">—</p>
-    </div>
+    <div class="chat-id"><h3 id="chatName">—</h3><p id="chatTag">—</p></div>
     <button class="icon-btn" id="chatRegen" title="Régénérer la dernière réponse">↻</button>
     <button class="icon-btn" id="chatClear" title="Recommencer la scène">Effacer</button>
   </div>
   <div class="messages" id="messages"><div class="messages-inner" id="messagesInner"></div></div>
   <div class="composer">
     <div class="composer-inner">
-      <textarea id="input" rows="1" placeholder="Écris à ton prétendant…"></textarea>
+      <textarea id="input" rows="1" placeholder="Écris ta réplique…"></textarea>
       <button class="send-btn" id="sendBtn" title="Envoyer">➤</button>
     </div>
     <div class="chat-hint">Entrée pour envoyer · Maj+Entrée pour un saut de ligne</div>
   </div>
 </div>
 
-<!-- ============ SETTINGS MODAL ============ -->
-<div class="overlay" id="modalSettings">
-  <div class="modal">
-    <h2>Réglages</h2>
-    <p class="lead">Le chatbot a besoin d'une clé pour donner vie aux personnages.</p>
-    <div class="note">
-      <b>Comment obtenir une clé :</b> crée un compte sur <a href="https://console.anthropic.com" target="_blank" rel="noopener">console.anthropic.com</a>, ajoute un petit crédit, puis génère une clé API (elle commence par <b>sk-ant-</b>). Colle-la ci-dessous — elle reste <b>uniquement sur ton appareil</b>, jamais envoyée ailleurs qu'à Anthropic.
-    </div>
-    <div class="field">
-      <label>Clé API Anthropic</label>
-      <input type="password" id="setKey" placeholder="sk-ant-…" autocomplete="off">
-      <div class="hint">Stockée localement dans ton navigateur.</div>
-    </div>
-    <div class="field">
-      <label>Modèle</label>
-      <select id="setModel">
-        <option value="claude-sonnet-5">Sonnet 5 — équilibré (recommandé)</option>
-        <option value="claude-opus-5">Opus 5 — prose la plus riche (plus coûteux)</option>
-        <option value="claude-haiku-4-5">Haiku 4.5 — rapide & économique</option>
-      </select>
-      <div class="hint">Tu peux changer à tout moment selon ton envie et ton budget.</div>
-    </div>
-    <div class="field">
-      <label>Univers / contexte</label>
-      <textarea id="setWorld" placeholder="Décris ton monde…"></textarea>
-      <div class="hint">Ce texte est donné à tous les prétendants pour ancrer les scènes dans ton univers.</div>
-    </div>
-    <div class="modal-actions">
-      <button class="btn-primary" id="setSave">Enregistrer</button>
-      <button class="btn-ghost" id="setClose">Fermer</button>
-    </div>
-  </div>
-</div>
+<!-- SETTINGS -->
+<div class="overlay" id="modalSettings"><div class="modal">
+  <h2>Réglages</h2>
+  <p class="lead">Le chatbot a besoin d'une clé pour donner vie aux personnages.</p>
+  <div class="note"><b>Obtenir une clé (une seule fois) :</b> crée un compte sur <a href="https://console.anthropic.com" target="_blank" rel="noopener">console.anthropic.com</a>, ajoute un petit crédit, génère une clé API (elle commence par <b>sk-ant-</b>). Colle-la ci-dessous — elle reste <b>uniquement sur ton appareil</b>.</div>
+  <div class="field"><label>Clé API Anthropic</label><input type="password" id="setKey" placeholder="sk-ant-…" autocomplete="off"><div class="hint">Stockée localement, demandée une seule fois.</div></div>
+  <div class="field"><label>Modèle</label><select id="setModel">
+    <option value="claude-sonnet-5">Sonnet 5 — équilibré (recommandé)</option>
+    <option value="claude-opus-5">Opus 5 — prose la plus riche (plus coûteux)</option>
+    <option value="claude-haiku-4-5">Haiku 4.5 — rapide &amp; économique</option>
+  </select></div>
+  <div class="field"><label>Univers / contexte (mémoire de fond)</label><textarea id="setWorld" placeholder="Décris ton monde…"></textarea><div class="hint">Donné à tous les prétendants pour ancrer les scènes dans ton univers.</div></div>
+  <div class="modal-actions"><button class="btn-primary" id="setSave">Enregistrer</button><button class="btn-ghost" id="setClose">Fermer</button></div>
+</div></div>
 
-<!-- ============ HEROINE MODAL ============ -->
-<div class="overlay" id="modalHeroine">
-  <div class="modal">
-    <h2>Ton héroïne</h2>
-    <p class="lead">Comment les prétendants doivent-ils t'appeler ?</p>
-    <div class="field">
-      <label>Nom / surnom de l'héroïne</label>
-      <input type="text" id="heroName" placeholder="ex. Elara, ou simplement « toi »">
-    </div>
-    <div class="field">
-      <label>Quelques traits d'elle (optionnel)</label>
-      <textarea id="heroTraits" placeholder="ex. Vive, indomptable, curieuse de magie…"></textarea>
-      <div class="hint">Aide les prétendants à réagir à ta personnalité.</div>
-    </div>
-    <div class="modal-actions">
-      <button class="btn-primary" id="heroSave">Enregistrer</button>
-      <button class="btn-ghost" id="heroClose">Fermer</button>
-    </div>
-  </div>
-</div>
+<!-- HEROINE -->
+<div class="overlay" id="modalHeroine"><div class="modal">
+  <h2>Ton héroïne</h2>
+  <p class="lead">Comment les prétendants doivent-ils t'appeler ?</p>
+  <div class="field"><label>Nom / surnom de l'héroïne</label><input type="text" id="heroName" placeholder="ex. Elara"></div>
+  <div class="field"><label>Quelques traits d'elle (optionnel)</label><textarea id="heroTraits" placeholder="ex. Vive, indomptable, curieuse de magie…"></textarea></div>
+  <div class="modal-actions"><button class="btn-primary" id="heroSave">Enregistrer</button><button class="btn-ghost" id="heroClose">Fermer</button></div>
+</div></div>
 
-<!-- ============ EDIT CHARACTER MODAL ============ -->
-<div class="overlay" id="modalChar">
-  <div class="modal">
-    <h2 id="charTitle">Nouveau prétendant</h2>
-    <p class="lead">Façonne sa personnalité, sa voix, sa couleur.</p>
-    <div class="field">
-      <label>Nom</label>
-      <input type="text" id="charName" placeholder="ex. Aeron">
-    </div>
-    <div class="field">
-      <label>Archétype / accroche</label>
-      <input type="text" id="charTag" placeholder="ex. Le prince au cœur de glace">
-    </div>
-    <div class="field">
-      <label>Présentation courte (carte)</label>
-      <textarea id="charBlurb" placeholder="Une ou deux phrases visibles sur sa carte."></textarea>
-    </div>
-    <div class="field">
-      <label>Personnalité & voix (donnée à l'IA)</label>
-      <textarea id="charPersona" placeholder="Décris son tempérament, son passé, sa façon de parler, ce qu'il ressent pour l'héroïne…" style="min-height:130px"></textarea>
-      <div class="hint">Plus c'est précis, plus il sera crédible et distinct.</div>
-    </div>
-    <div class="field">
-      <label>Première réplique (son entrée en scène)</label>
-      <textarea id="charOpening" placeholder="Ce qu'il dit en premier quand la scène s'ouvre."></textarea>
-    </div>
-    <div class="field">
-      <label>Couleur</label>
-      <div class="swatches" id="swatches"></div>
-    </div>
-    <div class="modal-actions">
-      <button class="btn-primary" id="charSave">Enregistrer</button>
-      <button class="btn-ghost" id="charClose">Annuler</button>
-      <button class="btn-danger" id="charDelete">Supprimer</button>
-    </div>
-  </div>
-</div>
+<!-- CHARACTER BIBLE -->
+<div class="overlay" id="modalChar"><div class="modal">
+  <h2 id="charTitle">Nouveau prétendant</h2>
+  <p class="lead">Une bible complète — plus elle est précise, plus il sera unique.</p>
+
+  <div class="field"><label>Nom</label><input type="text" id="charName" placeholder="ex. Aeron"></div>
+  <div class="field"><label>Archétype / accroche</label><input type="text" id="charTag" placeholder="ex. Le prince au cœur de glace"></div>
+  <div class="field"><label>Comment il t'appelle</label><select id="charAddress"><option value="tu">Il te tutoie (« tu »)</option><option value="vous">Il te vouvoie (« vous »)</option></select><div class="hint">À toi de choisir selon le personnage.</div></div>
+  <div class="field"><label>Présentation courte (visible sur la carte)</label><textarea id="charBlurb" placeholder="Une ou deux phrases."></textarea></div>
+
+  <div class="field-group-title">Bible du personnage</div>
+  <div class="field"><label>Âge / rôle</label><input type="text" id="charAge" placeholder="ex. Prince héritier, la vingtaine"></div>
+  <div class="field"><label>Apparence</label><input type="text" id="charAppear" placeholder="ex. Haute stature, regard d'hiver"></div>
+  <div class="field"><label>Tempérament</label><textarea id="charTemper" placeholder="Son caractère profond."></textarea></div>
+  <div class="field"><label>Voix &amp; manière de parler</label><textarea id="charVoice" placeholder="Rythme, vocabulaire, tics de langage, humour…"></textarea><div class="hint">C'est ce qui rend ses dialogues reconnaissables entre tous.</div></div>
+  <div class="field"><label>Valeurs &amp; failles</label><textarea id="charValues" placeholder="Ce qui compte pour lui, ses peurs, ses blessures."></textarea></div>
+  <div class="field"><label>Façon de réagir</label><textarea id="charReacts" placeholder="Face au flirt, au conflit, à la jalousie, à la tendresse…"></textarea></div>
+  <div class="field"><label>Lien avec l'héroïne</label><textarea id="charBond" placeholder="Leur histoire, ce qu'il ressent, ce qu'il veut."></textarea></div>
+  <div class="field"><label>Notes libres (optionnel)</label><textarea id="charNotes" placeholder="Tout autre détail utile."></textarea></div>
+
+  <div class="field-group-title">Mise en scène</div>
+  <div class="field"><label>Première réplique (son entrée en solo)</label><textarea id="charOpening" placeholder="Ce qu'il dit en premier quand tu ouvres une scène solo."></textarea></div>
+  <div class="field"><label>Couleur</label><div class="swatches" id="swatches"></div></div>
+
+  <div class="modal-actions"><button class="btn-primary" id="charSave">Enregistrer</button><button class="btn-ghost" id="charClose">Annuler</button><button class="btn-danger" id="charDelete">Supprimer</button></div>
+</div></div>
 
 <script>
 "use strict";
 const $ = s => document.querySelector(s);
-const LS = {
-  key:'hr_apikey', model:'hr_model', world:'hr_world',
-  chars:'hr_characters', convos:'hr_convos', hero:'hr_heroine'
-};
+const LS = { key:'hr_apikey', model:'hr_model', world:'hr_world', chars:'hr_characters', convos:'hr_convos', scenes:'hr_scenes', hero:'hr_heroine' };
 const ACCENTS = ['#7fb3d5','#d9765a','#9b7fc9','#6fae8f','#e8c97a','#d18fb0','#c9a84c','#a0b56f'];
 
-const DEFAULT_WORLD =
-"Manésia — un monde de romantasy où la magie court dans le sang de quelques élus. " +
-"Cours rivales, serments anciens et créatures de légende. L'héroïne y avance libre et convoitée, " +
-"chaque prétendant portant sa part de lumière et d'ombre.";
+const DEFAULT_WORLD = "Manésia — un monde de romantasy où la magie court dans le sang de quelques élus. Cours rivales, serments anciens et créatures de légende. L'héroïne y avance libre et convoitée, chaque prétendant portant sa part de lumière et d'ombre.";
 
 const DEFAULT_CHARS = [
-  { id:'c1', name:'Aeron', accent:'#7fb3d5',
-    tag:"Le prince au cœur de glace",
+  { id:'c1', name:'Aeron', accent:'#7fb3d5', tag:"Le prince au cœur de glace",
     blurb:"Héritier d'une cour d'hiver. Distant, orgueilleux — et pourtant, sous le givre, quelque chose fond quand tu t'approches.",
-    persona:"Aeron est le prince héritier de la Cour de Givre. Froid, maître de lui, d'une politesse tranchante. Il choisit ses mots comme des lames, se protège derrière l'étiquette et le devoir. Mais face à l'héroïne, sa carapace se fêle : il devient possessif, presque vulnérable, et le laisse à peine paraître. Il exprime la tendresse par des gestes discrets plus que par des mots. Fierté, retenue, feu sous la glace.",
-    opening:"*Le froid de la salle du trône semble reculer d'un pas quand tu entres.* Vous voilà. *Il ne se lève pas, mais son regard, lui, ne te lâche plus.* J'avais donné l'ordre qu'on ne me dérange pas ce soir. *Un silence.* Étrangement, je ne vous trouve pas… dérangeante." },
-  { id:'c2', name:'Kaelen', accent:'#d9765a',
-    tag:"Le guerrier au sang ardent",
+    age:"Prince héritier de la Cour de Givre, la vingtaine.",
+    appear:"Haute stature, traits pâles et nets, regard d'hiver.",
+    temper:"Froid, maîtrisé, orgueilleux. Sens aigu du devoir. Se protège derrière l'étiquette et le silence.",
+    voice:"Phrases courtes, précises, un peu formelles. Peu d'exclamations. L'ironie glaciale plutôt que la chaleur. Il dit rarement ce qu'il ressent ; il le laisse deviner.",
+    values:"Le devoir et l'honneur de sa lignée. Faille : la peur d'être aimé pour son rang et non pour lui ; une solitude qu'il nie.",
+    reacts:"Face au flirt : se raidit, détourne, puis cède par petites failles. Face au danger pour elle : possessif, presque brutal de protection. La tendresse passe par des gestes, jamais par de grands mots.",
+    bond:"Il n'attendait rien de personne — et elle l'a désarçonné. Il ne se l'avoue qu'à contrecœur.", notes:"",
+    opening:"*Le froid de la salle semble reculer d'un pas quand tu entres.* Te voilà. *Il ne se lève pas, mais son regard ne te lâche plus.* J'avais ordonné qu'on ne me dérange pas ce soir. *Un silence.* Étrangement, toi, tu ne me déranges pas." },
+
+  { id:'c2', name:'Kaelen', accent:'#d9765a', tag:"Le guerrier au sang ardent",
     blurb:"Capitaine de la garde, rieur et loyal. Il te protégerait au prix de sa vie — et te taquinerait jusqu'à ton dernier souffle.",
-    persona:"Kaelen est capitaine de la garde royale. Chaleureux, franc, taquin, un rire facile et un courage sans faille. Il flirte ouvertement, avec une audace bon enfant, mais sa loyauté est totale et son cœur, une fois donné, ne se reprend pas. Physique, protecteur, il touche l'épaule, tend la main. Sous la bravade, une sincérité désarmante. Feu franc et généreux.",
+    age:"Capitaine de la garde royale, fin de vingtaine.",
+    appear:"Carrure de soldat, sourire facile, une cicatrice à la lèvre.",
+    temper:"Chaleureux, franc, taquin, brave. Loyal jusqu'à l'os.",
+    voice:"Direct, imagé, plein d'humour et de taquineries. Lance des défis, rit de lui-même. Franc-parler de soldat, jamais lourd.",
+    values:"La loyauté, la protection des siens. Faille : il cache ses blessures derrière la bravade ; peur de n'être bon qu'à se battre.",
+    reacts:"Face au flirt : entre dans le jeu, audacieux mais respectueux. Face à la rivalité : bon joueur, un brin provocateur. Tendresse sincère et directe quand ça compte vraiment.",
+    bond:"Il la protégerait sans réfléchir — et se surprend à vouloir bien plus que la protéger.", notes:"",
     opening:"*Il abaisse son épée d'entraînement, le souffle court, un sourire au coin des lèvres en te voyant.* Tiens donc. *Il essuie son front d'un revers de main.* Tu viens me regarder m'entraîner, ou tu comptes croiser le fer avec moi ? *Un clin d'œil.* Je te préviens : je ne laisse gagner personne. Sauf peut-être toi." },
-  { id:'c3', name:'Nyx', accent:'#9b7fc9',
-    tag:"Le mage des ombres",
-    blurb:"Il parle par énigmes et lit dans les silences. Mystérieux, envoutant — nul ne sait ce qu'il veut vraiment. Toi, peut-être.",
-    persona:"Nyx est un mage de l'ombre, énigmatique et d'une élégance inquiétante. Il parle bas, par métaphores et demi-vérités, semble toujours en savoir plus qu'il n'en dit. Séduisant par le mystère, il observe, devine, effleure les pensées. Derrière l'apparente froideur, une fascination profonde pour l'héroïne — la seule qu'il ne parvient pas entièrement à lire. Poétique, magnétique, un danger doux.",
+
+  { id:'c3', name:'Nyx', accent:'#9b7fc9', tag:"Le mage des ombres",
+    blurb:"Il parle par énigmes et lit dans les silences. Mystérieux, envoûtant — nul ne sait ce qu'il veut vraiment. Toi, peut-être.",
+    age:"Mage de l'ombre, âge indéfinissable.",
+    appear:"Silhouette élégante, vêtu de sombre, des yeux qui semblent tout savoir.",
+    temper:"Énigmatique, calme, magnétique. Observe bien plus qu'il n'agit.",
+    voice:"Parle bas, par questions et métaphores. Laisse ses phrases en suspens. Rarement d'affirmation directe : il suggère, il devine. Poétique, un peu inquiétant.",
+    values:"La connaissance, les secrets. Faille : il lit tout le monde sauf elle, et cela le fascine autant que ça l'effraie.",
+    reacts:"Face au flirt : joue de l'ambiguïté, ne se livre jamais tout à fait. Face à la rivalité : ironie feutrée. Sa tendresse est une confidence rare, presque volée.",
+    bond:"Elle est l'énigme qu'il ne résout pas — la seule chose qu'il désire vraiment comprendre.", notes:"",
     opening:"*La lumière des chandelles vacille, comme si l'ombre elle-même te faisait place.* Je t'attendais. *Il incline la tête, un sourire indéchiffrable.* Non — je te sentais venir. Il y a une différence. *Ses yeux cherchent les tiens.* Dis-moi… sais-tu seulement ce que tu es venue chercher ici ce soir ?" },
-  { id:'c4', name:'Roan', accent:'#6fae8f',
-    tag:"Le voleur au sourire d'or",
+
+  { id:'c4', name:'Roan', accent:'#6fae8f', tag:"Le voleur au sourire d'or",
     blurb:"Hors-la-loi charmeur, langue affûtée et doigts agiles. Il te volera peut-être quelque chose — à commencer par ta tranquillité.",
-    persona:"Roan est un voleur au charme insolent, l'esprit vif et la répartie plus rapide que sa lame. Il taquine sans cesse, joue de l'ironie et du flirt, refuse de se prendre au sérieux — c'est son armure. Mais au fil des scènes, l'héroïne fait tomber le masque : sous le bagou, un cœur loyal et une peur d'être vu vraiment. Impertinent, malicieux, secrètement tendre.",
+    age:"Voleur, la vingtaine.",
+    appear:"Allure vive, sourire en coin, doigts agiles, toujours une bague à faire tourner.",
+    temper:"Charmeur insolent, esprit vif, refuse le sérieux.",
+    voice:"Répartie rapide, ironie, flirt appuyé, vannes. Familier, joueur, un brin frimeur. Il détourne l'émotion par une blague — c'est son armure.",
+    values:"La liberté, sa bande. Faille : la peur d'être vu vraiment ; sous le bagout, un cœur loyal qu'il cache.",
+    reacts:"Face au flirt : surenchérit, taquin. Face à la rivalité : provoque avec le sourire. Quand il baisse la garde, la sincérité le rend soudain vulnérable.",
+    bond:"Elle voit à travers son numéro — et ça le terrifie autant que ça l'attire.", notes:"",
     opening:"*Il est perché sur le rebord de la fenêtre, là où personne ne devrait pouvoir entrer.* Avant que tu ne cries à la garde — *il lève les mains, un sourire en coin* — je n'ai rien volé. Enfin. *Il fait tourner une bague dorée entre ses doigts.* Rien qui ne t'appartienne… encore. Alors ? Tu me dénonces, ou tu m'offres un verre ?" },
-  { id:'c5', name:'Elian', accent:'#e8c97a',
-    tag:"L'ami de toujours",
+
+  { id:'c5', name:'Elian', accent:'#e8c97a', tag:"L'ami de toujours",
     blurb:"Il te connaît depuis l'enfance et t'a aimée en secret tout ce temps. Doux, fidèle — et enfin prêt à le dire.",
-    persona:"Elian est l'ami d'enfance de l'héroïne, devenu érudit et guérisseur. Doux, attentif, d'une constance rare. Il connaît ses silences, ses habitudes, ses blessures. Il l'aime depuis toujours sans jamais l'avoir dit, par peur de tout perdre. Tendre, maladroit dès qu'il s'agit de ses sentiments, profondément loyal. La chaleur du connu qui bascule, doucement, en désir. Slow-burn, sincérité, dévotion.",
+    age:"Érudit et guérisseur, ami d'enfance.",
+    appear:"Douceur dans le regard, mains soigneuses, toujours un livre à portée.",
+    temper:"Doux, attentif, constant. Il connaît ses silences par cœur.",
+    voice:"Chaleureux, posé, un peu hésitant dès qu'il s'agit de ses sentiments. Précis quand il parle de savoir, maladroit quand il parle de lui. Tendre.",
+    values:"La fidélité, le soin des autres. Faille : il l'aime en secret depuis toujours, par peur de tout perdre en le disant.",
+    reacts:"Face au flirt : se trouble, rougit, puis ose. Face à la rivalité : une jalousie discrète le ronge sans qu'il l'avoue. Sa tendresse est totale, patiente, dévouée.",
+    bond:"L'ami de toujours qui a tu son amour trop longtemps — et qui, enfin, veut le dire.", notes:"",
     opening:"*Il lève les yeux du grimoire ouvert devant lui, et son visage s'éclaire de cette façon qu'il n'a que pour toi.* Te voilà. *Il referme le livre, un peu trop vite.* Je gardais ta place, comme toujours. *Un silence, puis, plus bas :* Il y a… quelque chose que j'aurais dû te dire depuis longtemps. Mais assieds-toi d'abord. Reste." },
 ];
 
-/* ---------- state ---------- */
+/* state */
 let chars = load(LS.chars, DEFAULT_CHARS);
 let convos = load(LS.convos, {});
+let scenes = load(LS.scenes, {});
 let hero = load(LS.hero, {name:'', traits:''});
 let apikey = localStorage.getItem(LS.key) || '';
 let model = localStorage.getItem(LS.model) || 'claude-sonnet-5';
 let world = localStorage.getItem(LS.world) || DEFAULT_WORLD;
-let current = null;        // active character id in chat
-let editingId = null;      // character being edited (null = new)
-let editAccent = ACCENTS[0];
-let streaming = false;
+let mode = 'solo';            // gallery mode: 'solo' | 'group'
+let groupSel = [];           // selected char ids for a group scene
+let active = null;           // {type:'solo', id} | {type:'group', key}
+let editingId = null, editAccent = ACCENTS[0], streaming = false;
 
 function load(k, fb){ try{ const v=JSON.parse(localStorage.getItem(k)); return v==null?fb:v; }catch(e){ return fb; } }
 function save(k, v){ localStorage.setItem(k, JSON.stringify(v)); }
 function saveChars(){ save(LS.chars, chars); }
 function saveConvos(){ save(LS.convos, convos); }
+function saveScenes(){ save(LS.scenes, scenes); }
 function charById(id){ return chars.find(c=>c.id===id); }
-function initial(name){ return (name||'?').trim().charAt(0).toUpperCase(); }
-function esc(s){ return s.replace(/[&<>]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[m])); }
+function initial(n){ return (n||'?').trim().charAt(0).toUpperCase(); }
+function esc(s){ return String(s).replace(/[&<>]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[m])); }
 function fmt(s){ return esc(s).replace(/\*(.+?)\*/gs,'<em>$1</em>'); }
+function heroLabel(){ return (hero.name||'').trim() || "l'héroïne"; }
 
-/* ---------- gallery render ---------- */
+/* ---- system prompt (bible) ---- */
+function buildBible(c){
+  const rows=[];
+  if(c.tag) rows.push(`Archétype : ${c.tag}`);
+  if(c.age) rows.push(`Âge / rôle : ${c.age}`);
+  if(c.appear) rows.push(`Apparence : ${c.appear}`);
+  if(c.temper) rows.push(`Tempérament : ${c.temper}`);
+  if(c.voice) rows.push(`Voix & manière de parler : ${c.voice}`);
+  if(c.values) rows.push(`Valeurs & failles : ${c.values}`);
+  if(c.reacts) rows.push(`Façon de réagir : ${c.reacts}`);
+  if(c.bond) rows.push(`Lien avec l'héroïne : ${c.bond}`);
+  if(c.notes) rows.push(`Notes : ${c.notes}`);
+  if(!rows.length && c.persona) rows.push(c.persona); // ancienne fiche
+  return rows.join('\n');
+}
+function buildSystem(c, isGroup){
+  let s = `Tu incarnes ${c.name}, « ${c.tag||''} », un personnage masculin d'un roman de romantasy en HAREM INVERSÉ (plusieurs prétendants courtisent une même héroïne).\n\n`;
+  s += `UNIVERS :\n${world}\n\n`;
+  s += `FICHE DU PERSONNAGE — ${c.name} :\n${buildBible(c)}\n\n`;
+  s += `L'HÉROÏNE : ${heroLabel()}.` + ((hero.traits||'').trim()? ` Traits : ${hero.traits.trim()}.` : '') + ` Tu es l'un de ses prétendants et tu cherches, à ta manière, à gagner son cœur.\n\n`;
+
+  if(isGroup){
+    const others = getMembers().filter(id=>id!==c.id).map(charById).filter(Boolean)
+      .map(o=>`${o.name} (${o.tag||''})`).join(', ');
+    s += `SCÈNE DE GROUPE : d'autres personnages sont présents — ${others||'aucun'}.\n`+
+         `Dans l'historique, chaque réplique est préfixée du nom de qui parle (ex. « Kaelen : … », « ${heroLabel()} : … »). Toi, tu réponds UNIQUEMENT en tant que ${c.name} : n'écris jamais les répliques des autres, ne devine pas ce qu'ils vont dire.\n`+
+         `Réagis autant à l'héroïne qu'aux autres prétendants (rivalité, complicité, jalousie, taquineries selon ton caractère). Ne mets pas ton propre nom en préfixe : donne directement ta réplique. Garde-la courte (1 à 2 paragraphes) pour laisser vivre la scène.\n\n`;
+  }
+
+  s += `RÈGLES :\n`+
+    `- Réponds toujours en français, à la première personne, en restant ${c.name}.\n`+
+    (c.address==='vous'
+      ? `- VOUVOIE toujours l'héroïne (emploie « vous », jamais « tu »).\n`
+      : `- TUTOIE toujours l'héroïne (emploie « tu », jamais « vous »).\n`)+
+    `- Incarne pleinement cette identité : ton vocabulaire, ton rythme, tes réactions doivent être uniques et reconnaissables. Deux personnages ne réagissent jamais de la même façon à la même situation.\n`+
+    `- Écris de façon immersive : mêle dialogue, sensations et gestes. Mets les actions/gestes entre *astérisques*.\n`+
+    (isGroup? '' : `- Garde tes réponses courtes à moyennes (1 à 3 paragraphes).\n`)+
+    `- Réagis à ce qui vient d'être dit et fait avancer la tension romantique ; pose parfois une question.\n`+
+    `- Ne romps JAMAIS le personnage, ne parle jamais en tant qu'IA ou assistant.\n`+
+    `- Registre romantique et sensuel possible, mais élégant et suggéré : privilégie la tension et le tact à l'explicite. C'est une fiction pour inspirer l'écriture.`;
+  return s;
+}
+
+/* ---- gallery ---- */
+function setMode(m){
+  mode=m;
+  $('#modeSolo').classList.toggle('active', m==='solo');
+  $('#modeGroup').classList.toggle('active', m==='group');
+  $('#modeHint').style.display = m==='group'?'block':'none';
+  $('#groupBar').style.display = m==='group'?'flex':'none';
+  document.body.style.paddingBottom = m==='group'?'80px':'';
+  if(m==='solo') groupSel=[];
+  renderCards(); updateGroupBar();
+}
+function updateGroupBar(){
+  $('#groupCount').textContent = groupSel.length + ' prétendant(s)';
+  $('#groupOpen').disabled = groupSel.length < 2;
+}
+function toggleSelect(id){
+  const i=groupSel.indexOf(id);
+  if(i>=0) groupSel.splice(i,1); else groupSel.push(id);
+  renderCards(); updateGroupBar();
+}
 function renderCards(){
-  const el = $('#cards'); el.innerHTML='';
+  const el=$('#cards'); el.innerHTML='';
   chars.forEach(c=>{
-    const div = document.createElement('div');
-    div.className='card'; div.style.setProperty('--accent', c.accent);
+    const sel = groupSel.includes(c.id);
+    const div=document.createElement('div');
+    div.className='card'+(mode==='group'&&sel?' sel':'');
+    div.style.setProperty('--accent', c.accent);
+    const btn = mode==='solo'
+      ? `<button class="btn-primary" data-open="${c.id}">Commencer</button>`
+      : `<button class="btn-primary" data-toggle="${c.id}">${sel?'✓ Dans la scène':'Ajouter'}</button>`;
     div.innerHTML =
       `<div class="card-crest">${esc(initial(c.name))}</div>`+
       `<div class="card-name">${esc(c.name)}</div>`+
       `<div class="card-tag">${esc(c.tag||'')}</div>`+
       `<div class="card-blurb">${esc(c.blurb||'')}</div>`+
-      `<div class="card-actions">`+
-        `<button class="btn-primary" data-open="${c.id}">Commencer</button>`+
-        `<button class="btn-ghost" data-edit="${c.id}" title="Modifier">✎</button>`+
-      `</div>`;
+      `<div class="card-actions">${btn}<button class="btn-ghost" data-edit="${c.id}" title="Modifier la bible">✎</button></div>`;
     el.appendChild(div);
   });
-  const add = document.createElement('div');
-  add.className='card add';
-  add.innerHTML='<div class="plus">+</div><div>Créer un prétendant</div>';
-  add.onclick=()=>openCharEditor(null);
-  el.appendChild(add);
-  el.querySelectorAll('[data-open]').forEach(b=>b.onclick=()=>openChat(b.dataset.open));
+  if(mode==='solo'){
+    const add=document.createElement('div');
+    add.className='card add'; add.innerHTML='<div class="plus">+</div><div>Créer un prétendant</div>';
+    add.onclick=()=>openCharEditor(null); el.appendChild(add);
+  }
+  el.querySelectorAll('[data-open]').forEach(b=>b.onclick=()=>openSolo(b.dataset.open));
+  el.querySelectorAll('[data-toggle]').forEach(b=>b.onclick=()=>toggleSelect(b.dataset.toggle));
   el.querySelectorAll('[data-edit]').forEach(b=>b.onclick=()=>openCharEditor(b.dataset.edit));
 }
 
-/* ---------- chat ---------- */
-function heroLabel(){ return (hero.name||'').trim() || 'l\'héroïne'; }
+/* ---- chat plumbing ---- */
+function getLog(){
+  if(active.type==='solo'){ if(!convos[active.id]) convos[active.id]=[]; return convos[active.id]; }
+  return scenes[active.key].log;
+}
+function getMembers(){ return active.type==='solo' ? [active.id] : scenes[active.key].members; }
+function persist(){ active.type==='solo' ? saveConvos() : saveScenes(); }
 
-function buildSystem(c){
-  let s = `Tu incarnes ${c.name}, « ${c.tag} », un personnage masculin d'un roman de romantasy en HAREM INVERSÉ (plusieurs prétendants courtisent une même héroïne).\n\n`;
-  s += `UNIVERS :\n${world}\n\n`;
-  s += `TON PERSONNAGE :\n${c.persona}\n\n`;
-  s += `L'HÉROÏNE : ${heroLabel()}.`;
-  if((hero.traits||'').trim()) s += ` Traits : ${hero.traits.trim()}.`;
-  s += ` Tu t'adresses à elle. Tu es l'un de ses prétendants et tu cherches, à ta manière, à gagner son cœur.\n\n`;
-  s += `RÈGLES DU JEU :\n`+
-    `- Réponds toujours en français, à la première personne, en restant ${c.name}.\n`+
-    `- Écris de façon immersive et romanesque : mêle dialogue, sensations et gestes. Mets les actions/gestes entre *astérisques*.\n`+
-    `- Garde tes réponses courtes à moyennes (1 à 3 paragraphes) : fais vivre la scène sans monologuer.\n`+
-    `- Réagis à ce qu'elle dit et fait, fais avancer la tension romantique, pose parfois une question.\n`+
-    `- Reste fidèle à ta voix et à ta personnalité. Ne romps JAMAIS le personnage, ne parle jamais en tant qu'IA ou assistant.\n`+
-    `- Le registre peut être romantique et sensuel, mais élégant et suggéré : privilégie la tension et le tact à l'explicite. C'est une fiction destinée à inspirer l'écriture.`;
-  return s;
+function toApiMessages(list){ // solo: strip leading assistant (opening greeting)
+  const out=[]; let started=false;
+  for(const m of list){ if(!started){ if(m.role!=='user') continue; started=true; } out.push({role:m.role, content:m.content}); }
+  return out;
+}
+function buildGroupMessages(list, meId){
+  const raw=[];
+  for(const m of list){
+    if(m.role==='assistant' && m.who===meId){ raw.push({role:'assistant', content:m.content}); }
+    else {
+      const who = m.who==='me' ? heroLabel() : ((charById(m.who)||{}).name || 'Quelqu\'un');
+      raw.push({role:'user', content:`${who} : ${m.content}`});
+    }
+  }
+  let i=0; while(i<raw.length && raw[i].role==='assistant') i++;
+  const out=[];
+  for(const m of raw.slice(i)){
+    const last=out[out.length-1];
+    if(last && last.role===m.role) last.content += '\n'+m.content; else out.push({...m});
+  }
+  return out;
 }
 
-function openChat(id){
-  current = id;
-  const c = charById(id);
+function openSolo(id){
+  active={type:'solo', id}; const c=charById(id);
+  if(!convos[id] || !convos[id].length) convos[id] = c.opening ? [{role:'assistant', content:c.opening}] : [];
+  saveConvos(); enterChat();
+}
+function openGroupScene(){
+  const key='group:'+[...groupSel].sort().join(',');
+  if(!scenes[key]) scenes[key]={ members:[...groupSel], log:[] };
+  else scenes[key].members = scenes[key].members.filter(id=>charById(id)); // clean deleted
+  saveScenes(); active={type:'group', key}; enterChat();
+}
+function enterChat(){
   document.body.style.overflow='hidden';
   $('#view-chat').style.display='flex';
-  $('#view-chat').style.setProperty('--accent', c.accent);
-  $('#chatCrest').textContent = initial(c.name);
-  $('#chatCrest').style.background = c.accent;
-  $('#chatName').textContent = c.name;
-  $('#chatTag').textContent = c.tag||'';
-  if(!convos[id] || !convos[id].length){
-    convos[id] = c.opening ? [{role:'assistant', content:c.opening}] : [];
-    saveConvos();
-  }
-  renderMessages();
-  $('#input').focus();
+  setChatHeader(); renderMessages(); $('#input').focus();
 }
-function closeChat(){
-  $('#view-chat').style.display='none';
-  document.body.style.overflow='';
-  current=null; renderCards();
+function closeChat(){ $('#view-chat').style.display='none'; document.body.style.overflow=''; active=null; renderCards(); }
+
+function setChatHeader(){
+  const crest=$('#chatCrest');
+  if(active.type==='solo'){
+    const c=charById(active.id);
+    $('#view-chat').style.setProperty('--accent', c.accent);
+    crest.style.background=c.accent; crest.innerHTML=''; crest.textContent=initial(c.name);
+    $('#chatName').textContent=c.name; $('#chatTag').textContent=c.tag||'';
+  } else {
+    const ms=getMembers().map(charById).filter(Boolean);
+    $('#view-chat').style.setProperty('--accent','var(--gold)');
+    crest.style.background='transparent';
+    crest.innerHTML = ms.slice(0,3).map((c,i)=>`<span class="mini" style="background:${c.accent};margin-left:${i?-12:0}px">${esc(initial(c.name))}</span>`).join('') + (ms.length>3?`<span class="mini more" style="margin-left:-12px">+${ms.length-3}</span>`:'');
+    $('#chatName').textContent='Scène de groupe';
+    $('#chatTag').textContent=ms.map(c=>c.name).join(' · ');
+  }
 }
 function renderMessages(){
-  const c = charById(current);
-  const inner = $('#messagesInner'); inner.innerHTML='';
-  (convos[current]||[]).forEach(m=>{
+  const inner=$('#messagesInner'); inner.innerHTML='';
+  const grp=active.type==='group', log=getLog();
+  if(grp && log.length===0){
+    const names=getMembers().map(id=>(charById(id)||{}).name).filter(Boolean).join(', ');
+    const intro=document.createElement('div'); intro.className='scene-intro';
+    intro.innerHTML=fmt(`*La scène s'ouvre. ${names} sont là, autour de toi. À toi d'entrer…*`);
+    inner.appendChild(intro);
+  }
+  log.forEach(m=>{
     const d=document.createElement('div');
-    d.className='msg '+(m.role==='assistant'?'them':'me');
-    const label = m.role==='assistant' ? `<span class="msg-name">${esc(c.name)}</span>` : '';
-    d.innerHTML = label + fmt(m.content);
+    if(m.role==='user'){
+      d.className='msg me';
+      d.innerHTML = grp ? `<span class="msg-name" style="color:var(--gold-soft)">${esc(heroLabel())}</span>`+fmt(m.content) : fmt(m.content);
+    } else {
+      const c = grp ? charById(m.who) : charById(active.id);
+      const col = c?c.accent:'var(--gold)';
+      d.className='msg them'; if(grp) d.style.borderLeft='2px solid '+col;
+      d.innerHTML = `<span class="msg-name" style="color:${col}">${esc(c?c.name:'?')}</span>`+fmt(m.content);
+    }
     inner.appendChild(d);
   });
   scrollDown();
 }
 function scrollDown(){ const m=$('#messages'); m.scrollTop=m.scrollHeight; }
 
-async function send(){
-  if(streaming) return;
-  const ta = $('#input');
-  const text = ta.value.trim();
-  if(!text) return;
-  if(!apikey){ openSettings(); return; }
-  ta.value=''; ta.style.height='auto';
-  convos[current].push({role:'user', content:text});
-  saveConvos(); renderMessages();
-  await stream();
-}
-
-async function regenerate(){
-  if(streaming) return;
-  const conv = convos[current];
-  if(!conv || conv.length<2) return;
-  if(conv[conv.length-1].role==='assistant') conv.pop();
-  saveConvos(); renderMessages();
-  await stream();
-}
-
-async function stream(){
-  if(!apikey){ openSettings(); return; }
-  streaming = true; $('#sendBtn').disabled=true;
-  const c = charById(current);
-  const inner = $('#messagesInner');
-  const bubble = document.createElement('div');
-  bubble.className='msg them';
-  bubble.innerHTML = `<span class="msg-name">${esc(c.name)}</span><div class="typing"><span></span><span></span><span></span></div>`;
-  inner.appendChild(bubble); scrollDown();
-
-  let acc='';
-  const paint = ()=>{ bubble.innerHTML = `<span class="msg-name">${esc(c.name)}</span>` + fmt(acc); scrollDown(); };
-  try{
-    const res = await fetch('https://api.anthropic.com/v1/messages',{
-      method:'POST',
-      headers:{
-        'content-type':'application/json',
-        'x-api-key':apikey,
-        'anthropic-version':'2023-06-01',
-        'anthropic-dangerous-direct-browser-access':'true'
-      },
-      body: JSON.stringify({
-        model,
-        max_tokens:1400,
-        stream:true,
-        system: buildSystem(c),
-        messages: convos[current].map(m=>({role:m.role, content:m.content}))
-      })
-    });
-    if(!res.ok){
-      let msg = 'Erreur '+res.status;
-      try{ const j=await res.json(); if(j.error&&j.error.message) msg=j.error.message; }catch(e){}
-      throw new Error(msg);
-    }
-    const reader = res.body.getReader();
-    const dec = new TextDecoder();
-    let buf='';
-    while(true){
-      const {done,value} = await reader.read();
-      if(done) break;
-      buf += dec.decode(value,{stream:true});
-      let i;
-      while((i=buf.indexOf('\n\n'))>=0){
-        const chunk = buf.slice(0,i); buf=buf.slice(i+2);
-        for(const line of chunk.split('\n')){
-          if(!line.startsWith('data:')) continue;
-          const data = line.slice(5).trim();
-          if(!data || data==='[DONE]') continue;
-          try{
-            const ev = JSON.parse(data);
-            if(ev.type==='content_block_delta' && ev.delta && ev.delta.type==='text_delta'){
-              acc += ev.delta.text; paint();
-            } else if(ev.type==='error'){
-              throw new Error(ev.error&&ev.error.message ? ev.error.message : 'Erreur du serveur');
-            }
-          }catch(e){ if(e instanceof Error && e.message && !/JSON/.test(e.message)) throw e; }
-        }
+/* ---- API ---- */
+async function requestStream(system, messages, onToken){
+  const res = await fetch('https://api.anthropic.com/v1/messages',{
+    method:'POST',
+    headers:{ 'content-type':'application/json','x-api-key':apikey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true' },
+    body: JSON.stringify({ model, max_tokens:1400, stream:true, system, messages })
+  });
+  if(!res.ok){ let msg='Erreur '+res.status; try{ const j=await res.json(); if(j.error&&j.error.message) msg=j.error.message; }catch(e){} throw new Error(msg); }
+  const reader=res.body.getReader(), dec=new TextDecoder(); let buf='';
+  while(true){
+    const {done,value}=await reader.read(); if(done) break;
+    buf+=dec.decode(value,{stream:true}); let i;
+    while((i=buf.indexOf('\n\n'))>=0){
+      const chunk=buf.slice(0,i); buf=buf.slice(i+2);
+      for(const line of chunk.split('\n')){
+        if(!line.startsWith('data:')) continue;
+        const data=line.slice(5).trim(); if(!data||data==='[DONE]') continue;
+        let ev; try{ ev=JSON.parse(data); }catch(e){ continue; }
+        if(ev.type==='content_block_delta' && ev.delta && ev.delta.type==='text_delta') onToken(ev.delta.text);
+        else if(ev.type==='error') throw new Error(ev.error&&ev.error.message?ev.error.message:'Erreur du serveur');
       }
     }
-    if(acc.trim()){
-      convos[current].push({role:'assistant', content:acc.trim()});
-      saveConvos();
-    } else {
-      acc='*Un silence…* (aucune réponse reçue — vérifie ta clé et ton modèle dans les Réglages.)'; paint();
-    }
-  }catch(err){
-    acc = '⚠️ '+ (err.message||'Impossible de contacter le service.') +
-          '\n\n*(Ouvre les Réglages pour vérifier ta clé API et ton crédit.)*';
-    bubble.classList.remove('them'); bubble.classList.add('them');
-    bubble.innerHTML = `<span class="msg-name">${esc(c.name)}</span>` + fmt(acc);
-    scrollDown();
-  }finally{
-    streaming=false; $('#sendBtn').disabled=false; $('#input').focus();
   }
 }
+async function runReply(member){
+  const inner=$('#messagesInner');
+  const grp=active.type==='group';
+  const bubble=document.createElement('div'); bubble.className='msg them';
+  if(grp) bubble.style.borderLeft='2px solid '+member.accent;
+  const label=`<span class="msg-name" style="color:${member.accent}">${esc(member.name)}</span>`;
+  bubble.innerHTML=label+`<div class="typing"><span></span><span></span><span></span></div>`;
+  inner.appendChild(bubble); scrollDown();
+  let acc=''; const paint=()=>{ bubble.innerHTML=label+fmt(acc); scrollDown(); };
+  const messages = grp ? buildGroupMessages(getLog(), member.id) : toApiMessages(getLog());
+  try{
+    await requestStream(buildSystem(member, grp), messages, t=>{ acc+=t; paint(); });
+    if(acc.trim()){ getLog().push({role:'assistant', content:acc.trim(), who: grp?member.id:undefined}); persist(); }
+    else { acc='*(silence — vérifie ta clé et ton modèle dans les Réglages.)*'; paint(); }
+  }catch(err){
+    acc='⚠️ '+(err.message||'Erreur')+'\n\n*(Ouvre les Réglages pour vérifier ta clé API et ton crédit.)*'; paint();
+  }
+}
+async function runRound(){
+  streaming=true; $('#sendBtn').disabled=true;
+  try{
+    if(active.type==='solo') await runReply(charById(active.id));
+    else for(const id of getMembers()){ const m=charById(id); if(m) await runReply(m); }
+  } finally { streaming=false; $('#sendBtn').disabled=false; $('#input').focus(); }
+}
+async function send(){
+  if(streaming) return;
+  const ta=$('#input'); const text=ta.value.trim(); if(!text) return;
+  if(!apikey){ openSettings(); return; }
+  ta.value=''; ta.style.height='auto';
+  getLog().push({role:'user', content:text, who: active.type==='group'?'me':undefined});
+  persist(); renderMessages(); await runRound();
+}
+async function regenerate(){
+  if(streaming) return;
+  const log=getLog();
+  while(log.length && log[log.length-1].role==='assistant') log.pop();
+  if(!log.length){ renderMessages(); return; }
+  persist(); renderMessages(); await runRound();
+}
 
-/* ---------- character editor ---------- */
+/* ---- character editor ---- */
 function renderSwatches(){
   const el=$('#swatches'); el.innerHTML='';
-  ACCENTS.forEach(col=>{
-    const s=document.createElement('div');
-    s.className='swatch'+(col===editAccent?' sel':'');
-    s.style.background=col;
-    s.onclick=()=>{ editAccent=col; renderSwatches(); };
-    el.appendChild(s);
-  });
+  ACCENTS.forEach(col=>{ const s=document.createElement('div'); s.className='swatch'+(col===editAccent?' sel':''); s.style.background=col; s.onclick=()=>{ editAccent=col; renderSwatches(); }; el.appendChild(s); });
 }
 function openCharEditor(id){
-  editingId=id;
-  const isNew = !id;
-  $('#charTitle').textContent = isNew ? 'Nouveau prétendant' : 'Modifier le prétendant';
-  $('#charDelete').style.display = isNew ? 'none' : '';
-  const c = isNew ? {name:'',tag:'',blurb:'',persona:'',opening:'',accent:ACCENTS[chars.length%ACCENTS.length]} : charById(id);
-  $('#charName').value=c.name||''; $('#charTag').value=c.tag||'';
-  $('#charBlurb').value=c.blurb||''; $('#charPersona').value=c.persona||'';
-  $('#charOpening').value=c.opening||'';
-  editAccent = c.accent||ACCENTS[0]; renderSwatches();
-  openOverlay('#modalChar');
+  editingId=id; const isNew=!id;
+  $('#charTitle').textContent=isNew?'Nouveau prétendant':'Modifier la bible';
+  $('#charDelete').style.display=isNew?'none':'';
+  const c=isNew?{accent:ACCENTS[chars.length%ACCENTS.length]}:charById(id);
+  const g=(k)=>c[k]||'';
+  $('#charName').value=g('name'); $('#charTag').value=g('tag'); $('#charBlurb').value=g('blurb');
+  $('#charAddress').value=c.address==='vous'?'vous':'tu';
+  $('#charAge').value=g('age'); $('#charAppear').value=g('appear'); $('#charTemper').value=g('temper');
+  $('#charVoice').value=g('voice'); $('#charValues').value=g('values'); $('#charReacts').value=g('reacts');
+  $('#charBond').value=g('bond'); $('#charNotes').value=g('notes')|| (c.persona&&!c.temper?c.persona:''); $('#charOpening').value=g('opening');
+  editAccent=c.accent||ACCENTS[0]; renderSwatches();
+  openOverlay('#modalChar'); $('.modal').scrollTop=0;
 }
 function saveChar(){
-  const name=$('#charName').value.trim();
-  if(!name){ $('#charName').focus(); return; }
-  const data={
-    name, tag:$('#charTag').value.trim(), blurb:$('#charBlurb').value.trim(),
-    persona:$('#charPersona').value.trim(), opening:$('#charOpening').value.trim(), accent:editAccent
-  };
-  if(editingId){ Object.assign(charById(editingId), data); }
+  const name=$('#charName').value.trim(); if(!name){ $('#charName').focus(); return; }
+  const data={ name, tag:$('#charTag').value.trim(), blurb:$('#charBlurb').value.trim(), address:$('#charAddress').value,
+    age:$('#charAge').value.trim(), appear:$('#charAppear').value.trim(), temper:$('#charTemper').value.trim(),
+    voice:$('#charVoice').value.trim(), values:$('#charValues').value.trim(), reacts:$('#charReacts').value.trim(),
+    bond:$('#charBond').value.trim(), notes:$('#charNotes').value.trim(), opening:$('#charOpening').value.trim(), accent:editAccent };
+  if(editingId){ const c=charById(editingId); delete c.persona; Object.assign(c, data); }
   else { data.id='c'+Date.now(); chars.push(data); }
   saveChars(); renderCards(); closeOverlay('#modalChar');
 }
 function deleteChar(){
   if(!editingId) return;
   if(!confirm('Supprimer ce prétendant et sa conversation ?')) return;
-  chars = chars.filter(c=>c.id!==editingId);
-  delete convos[editingId]; saveChars(); saveConvos();
-  renderCards(); closeOverlay('#modalChar');
+  chars=chars.filter(c=>c.id!==editingId); delete convos[editingId];
+  groupSel=groupSel.filter(id=>id!==editingId);
+  saveChars(); saveConvos(); renderCards(); updateGroupBar(); closeOverlay('#modalChar');
 }
 
-/* ---------- settings / heroine ---------- */
-function openSettings(){
-  $('#setKey').value=apikey; $('#setModel').value=model; $('#setWorld').value=world;
-  openOverlay('#modalSettings');
-}
-function saveSettings(){
-  apikey=$('#setKey').value.trim(); model=$('#setModel').value; world=$('#setWorld').value.trim()||DEFAULT_WORLD;
-  localStorage.setItem(LS.key,apikey); localStorage.setItem(LS.model,model); localStorage.setItem(LS.world,world);
-  closeOverlay('#modalSettings');
-}
+/* ---- settings / heroine ---- */
+function openSettings(){ $('#setKey').value=apikey; $('#setModel').value=model; $('#setWorld').value=world; openOverlay('#modalSettings'); }
+function saveSettings(){ apikey=$('#setKey').value.trim(); model=$('#setModel').value; world=$('#setWorld').value.trim()||DEFAULT_WORLD;
+  localStorage.setItem(LS.key,apikey); localStorage.setItem(LS.model,model); localStorage.setItem(LS.world,world); closeOverlay('#modalSettings'); }
 function openHeroine(){ $('#heroName').value=hero.name||''; $('#heroTraits').value=hero.traits||''; openOverlay('#modalHeroine'); }
 function saveHeroine(){ hero={name:$('#heroName').value.trim(), traits:$('#heroTraits').value.trim()}; save(LS.hero,hero); closeOverlay('#modalHeroine'); }
 
-/* ---------- overlay helpers ---------- */
 function openOverlay(sel){ $(sel).classList.add('open'); document.body.style.overflow='hidden'; }
-function closeOverlay(sel){ $(sel).classList.remove('open'); if(!current) document.body.style.overflow=''; }
+function closeOverlay(sel){ $(sel).classList.remove('open'); if(!active) document.body.style.overflow=''; }
 
-/* ---------- events ---------- */
-$('#btnSettings').onclick=openSettings;
-$('#btnHeroine').onclick=openHeroine;
+/* ---- events ---- */
+$('#modeSolo').onclick=()=>setMode('solo');
+$('#modeGroup').onclick=()=>setMode('group');
+$('#groupOpen').onclick=openGroupScene;
+$('#btnSettings').onclick=openSettings; $('#btnHeroine').onclick=openHeroine;
 $('#setSave').onclick=saveSettings; $('#setClose').onclick=()=>closeOverlay('#modalSettings');
 $('#heroSave').onclick=saveHeroine; $('#heroClose').onclick=()=>closeOverlay('#modalHeroine');
 $('#charSave').onclick=saveChar; $('#charClose').onclick=()=>closeOverlay('#modalChar'); $('#charDelete').onclick=deleteChar;
 $('#chatBack').onclick=closeChat; $('#sendBtn').onclick=send; $('#chatRegen').onclick=regenerate;
 $('#chatClear').onclick=()=>{
-  if(!current) return;
+  if(!active || streaming) return;
   if(!confirm('Recommencer la scène depuis le début ?')) return;
-  const c=charById(current); convos[current]= c.opening?[{role:'assistant',content:c.opening}]:[]; saveConvos(); renderMessages();
+  if(active.type==='solo'){ const c=charById(active.id); convos[active.id]= c.opening?[{role:'assistant',content:c.opening}]:[]; saveConvos(); }
+  else { scenes[active.key].log=[]; saveScenes(); }
+  renderMessages();
 };
 document.querySelectorAll('.overlay').forEach(o=>o.addEventListener('click',e=>{ if(e.target===o) closeOverlay('#'+o.id); }));
-
 const input=$('#input');
 input.addEventListener('input',()=>{ input.style.height='auto'; input.style.height=Math.min(input.scrollHeight,160)+'px'; });
-input.addEventListener('keydown',e=>{ if(e.key==='Enter' && !e.shiftKey){ e.preventDefault(); send(); } });
+input.addEventListener('keydown',e=>{ if(e.key==='Enter'&&!e.shiftKey){ e.preventDefault(); send(); } });
 
-/* ---------- boot ---------- */
-renderCards();
-if(!apikey){ /* invite gently on first visit */ setTimeout(()=>{ if(!localStorage.getItem('hr_seen')){ localStorage.setItem('hr_seen','1'); } },300); }
+/* boot */
+renderCards(); updateGroupBar();
 </script>
 </body>
 </html>
