@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Le Salon des Prétendants ✦ Harem inversé — Manésia</title>
+<link href="https://fonts.googleapis.com/css2?family=Tinos:ital,wght@0,400;0,700;1,400;1,700&family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { background:#080604; color:#f5efe0; font-family:'Tinos',Georgia,serif; line-height:1.7; -webkit-font-smoothing:antialiased; }
+
+:root{
+  --gold:#c9a84c; --gold-soft:#e8c97a; --ink:#080604; --ink2:#0e0b08; --ink3:#151009;
+  --parch:#f5efe0; --muted:#b5a898; --line:rgba(201,168,76,0.15);
+}
+
+/* ---------- shared bits ---------- */
+.cin{ font-family:'Cinzel',serif; }
+.gold{ color:var(--gold); }
+button{ font-family:'Cinzel',serif; cursor:pointer; }
+a{ color:inherit; }
+
+nav{ position:sticky; top:0; z-index:60; padding:14px 26px; display:flex; justify-content:space-between; align-items:center;
+     background:rgba(8,6,4,0.92); backdrop-filter:blur(6px); border-bottom:1px solid var(--line); }
+.nav-logo{ font-family:'Cinzel',serif; font-size:11px; letter-spacing:4px; color:var(--gold); text-decoration:none; }
+.nav-tools{ display:flex; gap:10px; align-items:center; }
+.icon-btn{ background:transparent; border:1px solid var(--line); color:var(--muted); font-size:10px; letter-spacing:2px;
+           text-transform:uppercase; padding:8px 14px; border-radius:2px; transition:.25s; }
+.icon-btn:hover{ color:var(--gold); border-color:var(--gold); }
+
+/* ---------- hero / gallery ---------- */
+.wrap{ max-width:1080px; margin:0 auto; padding:0 24px; }
+.hero{ text-align:center; padding:70px 24px 30px; }
+.hero-tag{ display:block; font-family:'Cinzel',serif; font-size:9px; letter-spacing:7px; color:var(--gold); text-transform:uppercase; margin-bottom:18px; }
+.hero-title{ font-family:'Cinzel',serif; font-size:clamp(34px,7vw,64px); font-weight:700; color:#fff; letter-spacing:4px; line-height:1.1; margin-bottom:18px; text-shadow:0 2px 30px rgba(0,0,0,.6); }
+.hero-title em{ color:var(--gold-soft); font-style:italic; font-family:'Tinos',serif; }
+.hero-sub{ font-style:italic; font-size:clamp(15px,2.4vw,19px); color:var(--muted); max-width:620px; margin:0 auto 8px; }
+
+.sep{ text-align:center; color:var(--gold); opacity:.5; font-size:18px; margin:26px 0 10px; }
+
+.cards{ display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:20px; padding:20px 0 60px; }
+.card{ position:relative; background:linear-gradient(160deg,var(--ink2),var(--ink3)); border:1px solid var(--line);
+       border-top:2px solid var(--accent,var(--gold)); border-radius:3px; padding:26px 24px 22px; display:flex; flex-direction:column;
+       transition:.3s; overflow:hidden; }
+.card:hover{ transform:translateY(-4px); border-color:var(--accent,var(--gold)); box-shadow:0 14px 40px rgba(0,0,0,.5); }
+.card-crest{ width:52px; height:52px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+             font-family:'Cinzel',serif; font-size:22px; color:var(--ink); font-weight:700;
+             background:var(--accent,var(--gold)); margin-bottom:16px; box-shadow:0 0 22px -6px var(--accent,var(--gold)); }
+.card-name{ font-family:'Cinzel',serif; font-size:21px; letter-spacing:1.5px; color:var(--parch); }
+.card-tag{ font-style:italic; color:var(--accent,var(--gold-soft)); font-size:14px; margin:3px 0 14px; }
+.card-blurb{ color:var(--muted); font-size:14.5px; line-height:1.75; flex:1; margin-bottom:18px; }
+.card-actions{ display:flex; gap:8px; align-items:center; }
+.btn-primary{ flex:1; background:var(--accent,var(--gold)); color:var(--ink); border:none; padding:12px; font-size:10px;
+              letter-spacing:3px; text-transform:uppercase; border-radius:2px; transition:.25s; }
+.btn-primary:hover{ filter:brightness(1.12); transform:translateY(-1px); }
+.btn-ghost{ background:transparent; border:1px solid var(--line); color:var(--muted); padding:12px 13px; font-size:11px; border-radius:2px; transition:.25s; }
+.btn-ghost:hover{ color:var(--gold); border-color:var(--gold); }
+.card.add{ align-items:center; justify-content:center; text-align:center; border-style:dashed; border-top-style:dashed; color:var(--muted); min-height:220px; }
+.card.add:hover{ color:var(--gold); }
+.card.add .plus{ font-family:'Cinzel',serif; font-size:40px; color:var(--gold); margin-bottom:8px; }
+
+/* ---------- chat view ---------- */
+#view-chat{ display:none; position:fixed; inset:0; z-index:70; background:var(--ink); flex-direction:column; }
+.chat-head{ display:flex; align-items:center; gap:14px; padding:14px 20px; border-bottom:1px solid var(--line);
+            background:rgba(14,11,8,.96); }
+.chat-back{ background:transparent; border:none; color:var(--muted); font-size:20px; padding:4px 8px; }
+.chat-back:hover{ color:var(--gold); }
+.chat-crest{ width:42px; height:42px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+             font-family:'Cinzel',serif; font-weight:700; color:var(--ink); background:var(--accent,var(--gold)); flex-shrink:0; }
+.chat-id{ flex:1; min-width:0; }
+.chat-id h3{ font-family:'Cinzel',serif; font-size:16px; letter-spacing:1px; color:var(--parch); }
+.chat-id p{ font-style:italic; font-size:12.5px; color:var(--accent,var(--gold-soft)); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.chat-head .icon-btn{ padding:7px 11px; }
+
+.messages{ flex:1; overflow-y:auto; padding:26px 18px 8px; }
+.messages-inner{ max-width:760px; margin:0 auto; display:flex; flex-direction:column; gap:16px; }
+.msg{ max-width:82%; padding:13px 17px; border-radius:12px; font-size:15.5px; line-height:1.75; white-space:pre-wrap; word-wrap:break-word; }
+.msg em{ color:var(--gold-soft); font-style:italic; }
+.msg.them{ align-self:flex-start; background:var(--ink2); border:1px solid var(--line); border-bottom-left-radius:3px; }
+.msg.me{ align-self:flex-end; background:linear-gradient(160deg,rgba(201,168,76,.16),rgba(201,168,76,.06));
+         border:1px solid rgba(201,168,76,.28); border-bottom-right-radius:3px; color:var(--parch); }
+.msg-name{ display:block; font-family:'Cinzel',serif; font-size:9px; letter-spacing:2px; text-transform:uppercase;
+           color:var(--accent,var(--gold)); margin-bottom:5px; }
+.typing{ display:inline-flex; gap:5px; padding:4px 2px; }
+.typing span{ width:6px; height:6px; border-radius:50%; background:var(--gold); opacity:.4; animation:blink 1.2s infinite; }
+.typing span:nth-child(2){ animation-delay:.2s; } .typing span:nth-child(3){ animation-delay:.4s; }
+@keyframes blink{ 0%,100%{opacity:.25; transform:translateY(0);} 50%{opacity:1; transform:translateY(-3px);} }
+
+.composer{ border-top:1px solid var(--line); background:rgba(14,11,8,.96); padding:14px 18px calc(14px + env(safe-area-inset-bottom)); }
+.composer-inner{ max-width:760px; margin:0 auto; display:flex; gap:10px; align-items:flex-end; }
+.composer textarea{ flex:1; resize:none; background:var(--ink3); border:1px solid var(--line); color:var(--parch);
+                    font-family:'Tinos',serif; font-size:15.5px; line-height:1.5; padding:12px 14px; border-radius:8px; max-height:160px; }
+.composer textarea:focus{ outline:none; border-color:var(--gold); }
+.send-btn{ background:var(--accent,var(--gold)); color:var(--ink); border:none; width:48px; height:48px; border-radius:50%;
+           font-size:18px; flex-shrink:0; display:flex; align-items:center; justify-content:center; transition:.2s; }
+.send-btn:hover{ filter:brightness(1.12); } .send-btn:disabled{ opacity:.4; cursor:default; }
+.chat-hint{ text-align:center; color:var(--muted); font-size:11px; font-style:italic; margin-top:8px; opacity:.7; }
+
+/* ---------- modals ---------- */
+.overlay{ display:none; position:fixed; inset:0; z-index:90; background:rgba(4,3,2,.82); backdrop-filter:blur(4px);
+          align-items:center; justify-content:center; padding:18px; overflow-y:auto; }
+.overlay.open{ display:flex; }
+.modal{ width:100%; max-width:520px; background:linear-gradient(160deg,var(--ink2),var(--ink3)); border:1px solid var(--line);
+        border-top:2px solid var(--gold); border-radius:4px; padding:28px 26px; margin:auto; }
+.modal h2{ font-family:'Cinzel',serif; font-size:18px; letter-spacing:2px; color:var(--parch); margin-bottom:4px; }
+.modal .lead{ font-style:italic; color:var(--muted); font-size:13.5px; margin-bottom:20px; }
+.field{ margin-bottom:16px; }
+.field label{ display:block; font-family:'Cinzel',serif; font-size:9px; letter-spacing:2px; text-transform:uppercase; color:var(--gold); margin-bottom:7px; }
+.field input, .field textarea, .field select{ width:100%; background:var(--ink); border:1px solid var(--line); color:var(--parch);
+       font-family:'Tinos',serif; font-size:14.5px; padding:11px 13px; border-radius:3px; }
+.field textarea{ resize:vertical; min-height:90px; line-height:1.6; }
+.field input:focus, .field textarea:focus, .field select:focus{ outline:none; border-color:var(--gold); }
+.field .hint{ font-size:11.5px; color:var(--muted); font-style:italic; margin-top:6px; }
+.swatches{ display:flex; gap:9px; flex-wrap:wrap; margin-top:4px; }
+.swatch{ width:30px; height:30px; border-radius:50%; border:2px solid transparent; cursor:pointer; transition:.2s; }
+.swatch.sel{ border-color:var(--parch); transform:scale(1.12); }
+.modal-actions{ display:flex; gap:10px; margin-top:22px; flex-wrap:wrap; }
+.modal-actions .btn-primary{ flex:1; min-width:120px; }
+.modal-actions .btn-ghost{ padding:12px 18px; }
+.btn-danger{ background:transparent; border:1px solid rgba(180,70,70,.5); color:#c98a8a; padding:12px 16px; font-size:10px;
+             letter-spacing:2px; text-transform:uppercase; border-radius:2px; }
+.btn-danger:hover{ border-color:#c96a6a; color:#e0a0a0; }
+.note{ background:rgba(201,168,76,.07); border:1px solid var(--line); border-radius:3px; padding:12px 14px; font-size:12.5px;
+       color:var(--muted); line-height:1.6; margin-bottom:18px; }
+.note b{ color:var(--gold-soft); }
+.note a{ color:var(--gold); text-decoration:underline; }
+.foot{ text-align:center; padding:26px; color:var(--muted); font-size:11px; letter-spacing:1px; opacity:.6; border-top:1px solid var(--line); }
+::-webkit-scrollbar{ width:9px; } ::-webkit-scrollbar-track{ background:var(--ink); } ::-webkit-scrollbar-thumb{ background:rgba(201,168,76,.25); border-radius:9px; }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-logo">✦ MANÉSIA · LE SALON</a>
+  <div class="nav-tools">
+    <button class="icon-btn" id="btnHeroine">Héroïne</button>
+    <button class="icon-btn" id="btnSettings">Réglages</button>
+  </div>
+</nav>
+
+<!-- ============ GALLERY ============ -->
+<div id="view-gallery">
+  <div class="hero">
+    <span class="hero-tag">Harem inversé · Romantasy</span>
+    <h1 class="hero-title">Le Salon des <em>Prétendants</em></h1>
+    <p class="hero-sub">Cinq âmes courtisent la tienne, chacune à sa façon. Choisis un prétendant, ouvre le dialogue, et laisse la scène s'écrire — pour nourrir tes propres pages.</p>
+  </div>
+  <div class="wrap">
+    <div class="sep">✦ ✦ ✦</div>
+    <div class="cards" id="cards"></div>
+  </div>
+  <div class="foot">Fiction interactive · Tes conversations restent sur cet appareil</div>
+</div>
+
+<!-- ============ CHAT ============ -->
+<div id="view-chat">
+  <div class="chat-head">
+    <button class="chat-back" id="chatBack" title="Retour">‹</button>
+    <div class="chat-crest" id="chatCrest">A</div>
+    <div class="chat-id">
+      <h3 id="chatName">—</h3>
+      <p id="chatTag">—</p>
+    </div>
+    <button class="icon-btn" id="chatRegen" title="Régénérer la dernière réponse">↻</button>
+    <button class="icon-btn" id="chatClear" title="Recommencer la scène">Effacer</button>
+  </div>
+  <div class="messages" id="messages"><div class="messages-inner" id="messagesInner"></div></div>
+  <div class="composer">
+    <div class="composer-inner">
+      <textarea id="input" rows="1" placeholder="Écris à ton prétendant…"></textarea>
+      <button class="send-btn" id="sendBtn" title="Envoyer">➤</button>
+    </div>
+    <div class="chat-hint">Entrée pour envoyer · Maj+Entrée pour un saut de ligne</div>
+  </div>
+</div>
+
+<!-- ============ SETTINGS MODAL ============ -->
+<div class="overlay" id="modalSettings">
+  <div class="modal">
+    <h2>Réglages</h2>
+    <p class="lead">Le chatbot a besoin d'une clé pour donner vie aux personnages.</p>
+    <div class="note">
+      <b>Comment obtenir une clé :</b> crée un compte sur <a href="https://console.anthropic.com" target="_blank" rel="noopener">console.anthropic.com</a>, ajoute un petit crédit, puis génère une clé API (elle commence par <b>sk-ant-</b>). Colle-la ci-dessous — elle reste <b>uniquement sur ton appareil</b>, jamais envoyée ailleurs qu'à Anthropic.
+    </div>
+    <div class="field">
+      <label>Clé API Anthropic</label>
+      <input type="password" id="setKey" placeholder="sk-ant-…" autocomplete="off">
+      <div class="hint">Stockée localement dans ton navigateur.</div>
+    </div>
+    <div class="field">
+      <label>Modèle</label>
+      <select id="setModel">
+        <option value="claude-sonnet-5">Sonnet 5 — équilibré (recommandé)</option>
+        <option value="claude-opus-5">Opus 5 — prose la plus riche (plus coûteux)</option>
+        <option value="claude-haiku-4-5">Haiku 4.5 — rapide & économique</option>
+      </select>
+      <div class="hint">Tu peux changer à tout moment selon ton envie et ton budget.</div>
+    </div>
+    <div class="field">
+      <label>Univers / contexte</label>
+      <textarea id="setWorld" placeholder="Décris ton monde…"></textarea>
+      <div class="hint">Ce texte est donné à tous les prétendants pour ancrer les scènes dans ton univers.</div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-primary" id="setSave">Enregistrer</button>
+      <button class="btn-ghost" id="setClose">Fermer</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ HEROINE MODAL ============ -->
+<div class="overlay" id="modalHeroine">
+  <div class="modal">
+    <h2>Ton héroïne</h2>
+    <p class="lead">Comment les prétendants doivent-ils t'appeler ?</p>
+    <div class="field">
+      <label>Nom / surnom de l'héroïne</label>
+      <input type="text" id="heroName" placeholder="ex. Elara, ou simplement « toi »">
+    </div>
+    <div class="field">
+      <label>Quelques traits d'elle (optionnel)</label>
+      <textarea id="heroTraits" placeholder="ex. Vive, indomptable, curieuse de magie…"></textarea>
+      <div class="hint">Aide les prétendants à réagir à ta personnalité.</div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-primary" id="heroSave">Enregistrer</button>
+      <button class="btn-ghost" id="heroClose">Fermer</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ EDIT CHARACTER MODAL ============ -->
+<div class="overlay" id="modalChar">
+  <div class="modal">
+    <h2 id="charTitle">Nouveau prétendant</h2>
+    <p class="lead">Façonne sa personnalité, sa voix, sa couleur.</p>
+    <div class="field">
+      <label>Nom</label>
+      <input type="text" id="charName" placeholder="ex. Aeron">
+    </div>
+    <div class="field">
+      <label>Archétype / accroche</label>
+      <input type="text" id="charTag" placeholder="ex. Le prince au cœur de glace">
+    </div>
+    <div class="field">
+      <label>Présentation courte (carte)</label>
+      <textarea id="charBlurb" placeholder="Une ou deux phrases visibles sur sa carte."></textarea>
+    </div>
+    <div class="field">
+      <label>Personnalité & voix (donnée à l'IA)</label>
+      <textarea id="charPersona" placeholder="Décris son tempérament, son passé, sa façon de parler, ce qu'il ressent pour l'héroïne…" style="min-height:130px"></textarea>
+      <div class="hint">Plus c'est précis, plus il sera crédible et distinct.</div>
+    </div>
+    <div class="field">
+      <label>Première réplique (son entrée en scène)</label>
+      <textarea id="charOpening" placeholder="Ce qu'il dit en premier quand la scène s'ouvre."></textarea>
+    </div>
+    <div class="field">
+      <label>Couleur</label>
+      <div class="swatches" id="swatches"></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-primary" id="charSave">Enregistrer</button>
+      <button class="btn-ghost" id="charClose">Annuler</button>
+      <button class="btn-danger" id="charDelete">Supprimer</button>
+    </div>
+  </div>
+</div>
+
+<script>
+"use strict";
+const $ = s => document.querySelector(s);
+const LS = {
+  key:'hr_apikey', model:'hr_model', world:'hr_world',
+  chars:'hr_characters', convos:'hr_convos', hero:'hr_heroine'
+};
+const ACCENTS = ['#7fb3d5','#d9765a','#9b7fc9','#6fae8f','#e8c97a','#d18fb0','#c9a84c','#a0b56f'];
+
+const DEFAULT_WORLD =
+"Manésia — un monde de romantasy où la magie court dans le sang de quelques élus. " +
+"Cours rivales, serments anciens et créatures de légende. L'héroïne y avance libre et convoitée, " +
+"chaque prétendant portant sa part de lumière et d'ombre.";
+
+const DEFAULT_CHARS = [
+  { id:'c1', name:'Aeron', accent:'#7fb3d5',
+    tag:"Le prince au cœur de glace",
+    blurb:"Héritier d'une cour d'hiver. Distant, orgueilleux — et pourtant, sous le givre, quelque chose fond quand tu t'approches.",
+    persona:"Aeron est le prince héritier de la Cour de Givre. Froid, maître de lui, d'une politesse tranchante. Il choisit ses mots comme des lames, se protège derrière l'étiquette et le devoir. Mais face à l'héroïne, sa carapace se fêle : il devient possessif, presque vulnérable, et le laisse à peine paraître. Il exprime la tendresse par des gestes discrets plus que par des mots. Fierté, retenue, feu sous la glace.",
+    opening:"*Le froid de la salle du trône semble reculer d'un pas quand tu entres.* Vous voilà. *Il ne se lève pas, mais son regard, lui, ne te lâche plus.* J'avais donné l'ordre qu'on ne me dérange pas ce soir. *Un silence.* Étrangement, je ne vous trouve pas… dérangeante." },
+  { id:'c2', name:'Kaelen', accent:'#d9765a',
+    tag:"Le guerrier au sang ardent",
+    blurb:"Capitaine de la garde, rieur et loyal. Il te protégerait au prix de sa vie — et te taquinerait jusqu'à ton dernier souffle.",
+    persona:"Kaelen est capitaine de la garde royale. Chaleureux, franc, taquin, un rire facile et un courage sans faille. Il flirte ouvertement, avec une audace bon enfant, mais sa loyauté est totale et son cœur, une fois donné, ne se reprend pas. Physique, protecteur, il touche l'épaule, tend la main. Sous la bravade, une sincérité désarmante. Feu franc et généreux.",
+    opening:"*Il abaisse son épée d'entraînement, le souffle court, un sourire au coin des lèvres en te voyant.* Tiens donc. *Il essuie son front d'un revers de main.* Tu viens me regarder m'entraîner, ou tu comptes croiser le fer avec moi ? *Un clin d'œil.* Je te préviens : je ne laisse gagner personne. Sauf peut-être toi." },
+  { id:'c3', name:'Nyx', accent:'#9b7fc9',
+    tag:"Le mage des ombres",
+    blurb:"Il parle par énigmes et lit dans les silences. Mystérieux, envoutant — nul ne sait ce qu'il veut vraiment. Toi, peut-être.",
+    persona:"Nyx est un mage de l'ombre, énigmatique et d'une élégance inquiétante. Il parle bas, par métaphores et demi-vérités, semble toujours en savoir plus qu'il n'en dit. Séduisant par le mystère, il observe, devine, effleure les pensées. Derrière l'apparente froideur, une fascination profonde pour l'héroïne — la seule qu'il ne parvient pas entièrement à lire. Poétique, magnétique, un danger doux.",
+    opening:"*La lumière des chandelles vacille, comme si l'ombre elle-même te faisait place.* Je t'attendais. *Il incline la tête, un sourire indéchiffrable.* Non — je te sentais venir. Il y a une différence. *Ses yeux cherchent les tiens.* Dis-moi… sais-tu seulement ce que tu es venue chercher ici ce soir ?" },
+  { id:'c4', name:'Roan', accent:'#6fae8f',
+    tag:"Le voleur au sourire d'or",
+    blurb:"Hors-la-loi charmeur, langue affûtée et doigts agiles. Il te volera peut-être quelque chose — à commencer par ta tranquillité.",
+    persona:"Roan est un voleur au charme insolent, l'esprit vif et la répartie plus rapide que sa lame. Il taquine sans cesse, joue de l'ironie et du flirt, refuse de se prendre au sérieux — c'est son armure. Mais au fil des scènes, l'héroïne fait tomber le masque : sous le bagou, un cœur loyal et une peur d'être vu vraiment. Impertinent, malicieux, secrètement tendre.",
+    opening:"*Il est perché sur le rebord de la fenêtre, là où personne ne devrait pouvoir entrer.* Avant que tu ne cries à la garde — *il lève les mains, un sourire en coin* — je n'ai rien volé. Enfin. *Il fait tourner une bague dorée entre ses doigts.* Rien qui ne t'appartienne… encore. Alors ? Tu me dénonces, ou tu m'offres un verre ?" },
+  { id:'c5', name:'Elian', accent:'#e8c97a',
+    tag:"L'ami de toujours",
+    blurb:"Il te connaît depuis l'enfance et t'a aimée en secret tout ce temps. Doux, fidèle — et enfin prêt à le dire.",
+    persona:"Elian est l'ami d'enfance de l'héroïne, devenu érudit et guérisseur. Doux, attentif, d'une constance rare. Il connaît ses silences, ses habitudes, ses blessures. Il l'aime depuis toujours sans jamais l'avoir dit, par peur de tout perdre. Tendre, maladroit dès qu'il s'agit de ses sentiments, profondément loyal. La chaleur du connu qui bascule, doucement, en désir. Slow-burn, sincérité, dévotion.",
+    opening:"*Il lève les yeux du grimoire ouvert devant lui, et son visage s'éclaire de cette façon qu'il n'a que pour toi.* Te voilà. *Il referme le livre, un peu trop vite.* Je gardais ta place, comme toujours. *Un silence, puis, plus bas :* Il y a… quelque chose que j'aurais dû te dire depuis longtemps. Mais assieds-toi d'abord. Reste." },
+];
+
+/* ---------- state ---------- */
+let chars = load(LS.chars, DEFAULT_CHARS);
+let convos = load(LS.convos, {});
+let hero = load(LS.hero, {name:'', traits:''});
+let apikey = localStorage.getItem(LS.key) || '';
+let model = localStorage.getItem(LS.model) || 'claude-sonnet-5';
+let world = localStorage.getItem(LS.world) || DEFAULT_WORLD;
+let current = null;        // active character id in chat
+let editingId = null;      // character being edited (null = new)
+let editAccent = ACCENTS[0];
+let streaming = false;
+
+function load(k, fb){ try{ const v=JSON.parse(localStorage.getItem(k)); return v==null?fb:v; }catch(e){ return fb; } }
+function save(k, v){ localStorage.setItem(k, JSON.stringify(v)); }
+function saveChars(){ save(LS.chars, chars); }
+function saveConvos(){ save(LS.convos, convos); }
+function charById(id){ return chars.find(c=>c.id===id); }
+function initial(name){ return (name||'?').trim().charAt(0).toUpperCase(); }
+function esc(s){ return s.replace(/[&<>]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[m])); }
+function fmt(s){ return esc(s).replace(/\*(.+?)\*/gs,'<em>$1</em>'); }
+
+/* ---------- gallery render ---------- */
+function renderCards(){
+  const el = $('#cards'); el.innerHTML='';
+  chars.forEach(c=>{
+    const div = document.createElement('div');
+    div.className='card'; div.style.setProperty('--accent', c.accent);
+    div.innerHTML =
+      `<div class="card-crest">${esc(initial(c.name))}</div>`+
+      `<div class="card-name">${esc(c.name)}</div>`+
+      `<div class="card-tag">${esc(c.tag||'')}</div>`+
+      `<div class="card-blurb">${esc(c.blurb||'')}</div>`+
+      `<div class="card-actions">`+
+        `<button class="btn-primary" data-open="${c.id}">Commencer</button>`+
+        `<button class="btn-ghost" data-edit="${c.id}" title="Modifier">✎</button>`+
+      `</div>`;
+    el.appendChild(div);
+  });
+  const add = document.createElement('div');
+  add.className='card add';
+  add.innerHTML='<div class="plus">+</div><div>Créer un prétendant</div>';
+  add.onclick=()=>openCharEditor(null);
+  el.appendChild(add);
+  el.querySelectorAll('[data-open]').forEach(b=>b.onclick=()=>openChat(b.dataset.open));
+  el.querySelectorAll('[data-edit]').forEach(b=>b.onclick=()=>openCharEditor(b.dataset.edit));
+}
+
+/* ---------- chat ---------- */
+function heroLabel(){ return (hero.name||'').trim() || 'l\'héroïne'; }
+
+function buildSystem(c){
+  let s = `Tu incarnes ${c.name}, « ${c.tag} », un personnage masculin d'un roman de romantasy en HAREM INVERSÉ (plusieurs prétendants courtisent une même héroïne).\n\n`;
+  s += `UNIVERS :\n${world}\n\n`;
+  s += `TON PERSONNAGE :\n${c.persona}\n\n`;
+  s += `L'HÉROÏNE : ${heroLabel()}.`;
+  if((hero.traits||'').trim()) s += ` Traits : ${hero.traits.trim()}.`;
+  s += ` Tu t'adresses à elle. Tu es l'un de ses prétendants et tu cherches, à ta manière, à gagner son cœur.\n\n`;
+  s += `RÈGLES DU JEU :\n`+
+    `- Réponds toujours en français, à la première personne, en restant ${c.name}.\n`+
+    `- Écris de façon immersive et romanesque : mêle dialogue, sensations et gestes. Mets les actions/gestes entre *astérisques*.\n`+
+    `- Garde tes réponses courtes à moyennes (1 à 3 paragraphes) : fais vivre la scène sans monologuer.\n`+
+    `- Réagis à ce qu'elle dit et fait, fais avancer la tension romantique, pose parfois une question.\n`+
+    `- Reste fidèle à ta voix et à ta personnalité. Ne romps JAMAIS le personnage, ne parle jamais en tant qu'IA ou assistant.\n`+
+    `- Le registre peut être romantique et sensuel, mais élégant et suggéré : privilégie la tension et le tact à l'explicite. C'est une fiction destinée à inspirer l'écriture.`;
+  return s;
+}
+
+function openChat(id){
+  current = id;
+  const c = charById(id);
+  document.body.style.overflow='hidden';
+  $('#view-chat').style.display='flex';
+  $('#view-chat').style.setProperty('--accent', c.accent);
+  $('#chatCrest').textContent = initial(c.name);
+  $('#chatCrest').style.background = c.accent;
+  $('#chatName').textContent = c.name;
+  $('#chatTag').textContent = c.tag||'';
+  if(!convos[id] || !convos[id].length){
+    convos[id] = c.opening ? [{role:'assistant', content:c.opening}] : [];
+    saveConvos();
+  }
+  renderMessages();
+  $('#input').focus();
+}
+function closeChat(){
+  $('#view-chat').style.display='none';
+  document.body.style.overflow='';
+  current=null; renderCards();
+}
+function renderMessages(){
+  const c = charById(current);
+  const inner = $('#messagesInner'); inner.innerHTML='';
+  (convos[current]||[]).forEach(m=>{
+    const d=document.createElement('div');
+    d.className='msg '+(m.role==='assistant'?'them':'me');
+    const label = m.role==='assistant' ? `<span class="msg-name">${esc(c.name)}</span>` : '';
+    d.innerHTML = label + fmt(m.content);
+    inner.appendChild(d);
+  });
+  scrollDown();
+}
+function scrollDown(){ const m=$('#messages'); m.scrollTop=m.scrollHeight; }
+
+async function send(){
+  if(streaming) return;
+  const ta = $('#input');
+  const text = ta.value.trim();
+  if(!text) return;
+  if(!apikey){ openSettings(); return; }
+  ta.value=''; ta.style.height='auto';
+  convos[current].push({role:'user', content:text});
+  saveConvos(); renderMessages();
+  await stream();
+}
+
+async function regenerate(){
+  if(streaming) return;
+  const conv = convos[current];
+  if(!conv || conv.length<2) return;
+  if(conv[conv.length-1].role==='assistant') conv.pop();
+  saveConvos(); renderMessages();
+  await stream();
+}
+
+async function stream(){
+  if(!apikey){ openSettings(); return; }
+  streaming = true; $('#sendBtn').disabled=true;
+  const c = charById(current);
+  const inner = $('#messagesInner');
+  const bubble = document.createElement('div');
+  bubble.className='msg them';
+  bubble.innerHTML = `<span class="msg-name">${esc(c.name)}</span><div class="typing"><span></span><span></span><span></span></div>`;
+  inner.appendChild(bubble); scrollDown();
+
+  let acc='';
+  const paint = ()=>{ bubble.innerHTML = `<span class="msg-name">${esc(c.name)}</span>` + fmt(acc); scrollDown(); };
+  try{
+    const res = await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{
+        'content-type':'application/json',
+        'x-api-key':apikey,
+        'anthropic-version':'2023-06-01',
+        'anthropic-dangerous-direct-browser-access':'true'
+      },
+      body: JSON.stringify({
+        model,
+        max_tokens:1400,
+        stream:true,
+        system: buildSystem(c),
+        messages: convos[current].map(m=>({role:m.role, content:m.content}))
+      })
+    });
+    if(!res.ok){
+      let msg = 'Erreur '+res.status;
+      try{ const j=await res.json(); if(j.error&&j.error.message) msg=j.error.message; }catch(e){}
+      throw new Error(msg);
+    }
+    const reader = res.body.getReader();
+    const dec = new TextDecoder();
+    let buf='';
+    while(true){
+      const {done,value} = await reader.read();
+      if(done) break;
+      buf += dec.decode(value,{stream:true});
+      let i;
+      while((i=buf.indexOf('\n\n'))>=0){
+        const chunk = buf.slice(0,i); buf=buf.slice(i+2);
+        for(const line of chunk.split('\n')){
+          if(!line.startsWith('data:')) continue;
+          const data = line.slice(5).trim();
+          if(!data || data==='[DONE]') continue;
+          try{
+            const ev = JSON.parse(data);
+            if(ev.type==='content_block_delta' && ev.delta && ev.delta.type==='text_delta'){
+              acc += ev.delta.text; paint();
+            } else if(ev.type==='error'){
+              throw new Error(ev.error&&ev.error.message ? ev.error.message : 'Erreur du serveur');
+            }
+          }catch(e){ if(e instanceof Error && e.message && !/JSON/.test(e.message)) throw e; }
+        }
+      }
+    }
+    if(acc.trim()){
+      convos[current].push({role:'assistant', content:acc.trim()});
+      saveConvos();
+    } else {
+      acc='*Un silence…* (aucune réponse reçue — vérifie ta clé et ton modèle dans les Réglages.)'; paint();
+    }
+  }catch(err){
+    acc = '⚠️ '+ (err.message||'Impossible de contacter le service.') +
+          '\n\n*(Ouvre les Réglages pour vérifier ta clé API et ton crédit.)*';
+    bubble.classList.remove('them'); bubble.classList.add('them');
+    bubble.innerHTML = `<span class="msg-name">${esc(c.name)}</span>` + fmt(acc);
+    scrollDown();
+  }finally{
+    streaming=false; $('#sendBtn').disabled=false; $('#input').focus();
+  }
+}
+
+/* ---------- character editor ---------- */
+function renderSwatches(){
+  const el=$('#swatches'); el.innerHTML='';
+  ACCENTS.forEach(col=>{
+    const s=document.createElement('div');
+    s.className='swatch'+(col===editAccent?' sel':'');
+    s.style.background=col;
+    s.onclick=()=>{ editAccent=col; renderSwatches(); };
+    el.appendChild(s);
+  });
+}
+function openCharEditor(id){
+  editingId=id;
+  const isNew = !id;
+  $('#charTitle').textContent = isNew ? 'Nouveau prétendant' : 'Modifier le prétendant';
+  $('#charDelete').style.display = isNew ? 'none' : '';
+  const c = isNew ? {name:'',tag:'',blurb:'',persona:'',opening:'',accent:ACCENTS[chars.length%ACCENTS.length]} : charById(id);
+  $('#charName').value=c.name||''; $('#charTag').value=c.tag||'';
+  $('#charBlurb').value=c.blurb||''; $('#charPersona').value=c.persona||'';
+  $('#charOpening').value=c.opening||'';
+  editAccent = c.accent||ACCENTS[0]; renderSwatches();
+  openOverlay('#modalChar');
+}
+function saveChar(){
+  const name=$('#charName').value.trim();
+  if(!name){ $('#charName').focus(); return; }
+  const data={
+    name, tag:$('#charTag').value.trim(), blurb:$('#charBlurb').value.trim(),
+    persona:$('#charPersona').value.trim(), opening:$('#charOpening').value.trim(), accent:editAccent
+  };
+  if(editingId){ Object.assign(charById(editingId), data); }
+  else { data.id='c'+Date.now(); chars.push(data); }
+  saveChars(); renderCards(); closeOverlay('#modalChar');
+}
+function deleteChar(){
+  if(!editingId) return;
+  if(!confirm('Supprimer ce prétendant et sa conversation ?')) return;
+  chars = chars.filter(c=>c.id!==editingId);
+  delete convos[editingId]; saveChars(); saveConvos();
+  renderCards(); closeOverlay('#modalChar');
+}
+
+/* ---------- settings / heroine ---------- */
+function openSettings(){
+  $('#setKey').value=apikey; $('#setModel').value=model; $('#setWorld').value=world;
+  openOverlay('#modalSettings');
+}
+function saveSettings(){
+  apikey=$('#setKey').value.trim(); model=$('#setModel').value; world=$('#setWorld').value.trim()||DEFAULT_WORLD;
+  localStorage.setItem(LS.key,apikey); localStorage.setItem(LS.model,model); localStorage.setItem(LS.world,world);
+  closeOverlay('#modalSettings');
+}
+function openHeroine(){ $('#heroName').value=hero.name||''; $('#heroTraits').value=hero.traits||''; openOverlay('#modalHeroine'); }
+function saveHeroine(){ hero={name:$('#heroName').value.trim(), traits:$('#heroTraits').value.trim()}; save(LS.hero,hero); closeOverlay('#modalHeroine'); }
+
+/* ---------- overlay helpers ---------- */
+function openOverlay(sel){ $(sel).classList.add('open'); document.body.style.overflow='hidden'; }
+function closeOverlay(sel){ $(sel).classList.remove('open'); if(!current) document.body.style.overflow=''; }
+
+/* ---------- events ---------- */
+$('#btnSettings').onclick=openSettings;
+$('#btnHeroine').onclick=openHeroine;
+$('#setSave').onclick=saveSettings; $('#setClose').onclick=()=>closeOverlay('#modalSettings');
+$('#heroSave').onclick=saveHeroine; $('#heroClose').onclick=()=>closeOverlay('#modalHeroine');
+$('#charSave').onclick=saveChar; $('#charClose').onclick=()=>closeOverlay('#modalChar'); $('#charDelete').onclick=deleteChar;
+$('#chatBack').onclick=closeChat; $('#sendBtn').onclick=send; $('#chatRegen').onclick=regenerate;
+$('#chatClear').onclick=()=>{
+  if(!current) return;
+  if(!confirm('Recommencer la scène depuis le début ?')) return;
+  const c=charById(current); convos[current]= c.opening?[{role:'assistant',content:c.opening}]:[]; saveConvos(); renderMessages();
+};
+document.querySelectorAll('.overlay').forEach(o=>o.addEventListener('click',e=>{ if(e.target===o) closeOverlay('#'+o.id); }));
+
+const input=$('#input');
+input.addEventListener('input',()=>{ input.style.height='auto'; input.style.height=Math.min(input.scrollHeight,160)+'px'; });
+input.addEventListener('keydown',e=>{ if(e.key==='Enter' && !e.shiftKey){ e.preventDefault(); send(); } });
+
+/* ---------- boot ---------- */
+renderCards();
+if(!apikey){ /* invite gently on first visit */ setTimeout(()=>{ if(!localStorage.getItem('hr_seen')){ localStorage.setItem('hr_seen','1'); } },300); }
+</script>
+</body>
+</html>
