@@ -185,6 +185,11 @@ nav{ position:sticky; top:0; z-index:60; padding:14px 22px; display:flex; justif
     <option value="claude-opus-5">Opus 5 — prose la plus riche (plus coûteux)</option>
     <option value="claude-haiku-4-5">Haiku 4.5 — rapide &amp; économique</option>
   </select></div>
+  <div class="field"><label>Intensité des scènes</label><select id="setIntensity">
+    <option value="tendre">Tendre — romance chaste (baisers, émotion)</option>
+    <option value="sensuel">Sensuel — désir &amp; sous-entendu, fondu au noir (recommandé)</option>
+    <option value="ardent">Ardent — sensualité intense mais suggérée</option>
+  </select><div class="hint">Les trois niveaux restent non-explicites : ils suggèrent, ils ne décrivent jamais l'acte.</div></div>
   <div class="field"><label>Univers / contexte (mémoire de fond)</label><textarea id="setWorld" placeholder="Décris ton monde…"></textarea><div class="hint">Donné à tous les prétendants pour ancrer les scènes dans ton univers.</div></div>
   <div class="modal-actions"><button class="btn-primary" id="setSave">Enregistrer</button><button class="btn-ghost" id="setClose">Fermer</button></div>
 </div></div>
@@ -228,7 +233,7 @@ nav{ position:sticky; top:0; z-index:60; padding:14px 22px; display:flex; justif
 <script>
 "use strict";
 const $ = s => document.querySelector(s);
-const LS = { key:'hr_apikey', model:'hr_model', world:'hr_world', chars:'hr_characters', convos:'hr_convos', scenes:'hr_scenes', hero:'hr_heroine' };
+const LS = { key:'hr_apikey', model:'hr_model', world:'hr_world', intensity:'hr_intensity', chars:'hr_characters', convos:'hr_convos', scenes:'hr_scenes', hero:'hr_heroine' };
 const ACCENTS = ['#7fb3d5','#d9765a','#9b7fc9','#6fae8f','#e8c97a','#d18fb0','#c9a84c','#a0b56f'];
 
 const DEFAULT_WORLD = "Manésia — un monde de romantasy où la magie court dans le sang de quelques élus. Cours rivales, serments anciens et créatures de légende. L'héroïne y avance libre et convoitée, chaque prétendant portant sa part de lumière et d'ombre.";
@@ -298,6 +303,7 @@ let hero = load(LS.hero, {name:'', traits:''});
 let apikey = localStorage.getItem(LS.key) || '';
 let model = localStorage.getItem(LS.model) || 'claude-sonnet-5';
 let world = localStorage.getItem(LS.world) || DEFAULT_WORLD;
+let intensity = localStorage.getItem(LS.intensity) || 'sensuel';
 let mode = 'solo';            // gallery mode: 'solo' | 'group'
 let groupSel = [];           // selected char ids for a group scene
 let active = null;           // {type:'solo', id} | {type:'group', key}
@@ -313,6 +319,12 @@ function initial(n){ return (n||'?').trim().charAt(0).toUpperCase(); }
 function esc(s){ return String(s).replace(/[&<>]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[m])); }
 function fmt(s){ return esc(s).replace(/\*(.+?)\*/gs,'<em>$1</em>'); }
 function heroLabel(){ return (hero.name||'').trim() || "l'héroïne"; }
+
+const INTENSITY = {
+  tendre: `- Registre TENDRE et romantique : émotions, complicité, baisers, étreintes. Reste pudique et chaste ; la sensualité demeure légère et suggérée.`,
+  sensuel: `- Registre ROMANTIQUE et SENSUEL : tu peux faire monter le désir et la tension, décrire baisers, caresses, souffles, peau, corps qui se rapprochent, un vêtement qu'on dénoue. Quand la scène atteint le seuil de l'intime, suggère la suite par l'ellipse (fondu au noir, l'avant et l'après) plutôt que de la montrer.`,
+  ardent: `- Registre ARDENT mais SUGGÉRÉ : tension et désir intenses, sensualité pleinement assumée, jusqu'au seuil de l'intime. Décris implicitement ce qui se passe par les sensations, les gestes, l'atmosphère et l'aftermath (réveil enlacés, draps froissés) — puis l'ellipse. La montée peut être brûlante ; l'acte lui-même n'est jamais montré.`
+};
 
 /* ---- system prompt (bible) ---- */
 function buildBible(c){
@@ -353,7 +365,8 @@ function buildSystem(c, isGroup){
     (isGroup? '' : `- Garde tes réponses courtes à moyennes (1 à 3 paragraphes).\n`)+
     `- Réagis à ce qui vient d'être dit et fait avancer la tension romantique ; pose parfois une question.\n`+
     `- Ne romps JAMAIS le personnage, ne parle jamais en tant qu'IA ou assistant.\n`+
-    `- Registre romantique et sensuel possible, mais élégant et suggéré : privilégie la tension et le tact à l'explicite. C'est une fiction pour inspirer l'écriture.`;
+    INTENSITY[intensity] + `\n`+
+    `- LIMITE ABSOLUE (tous niveaux) : ne décris JAMAIS d'acte sexuel de façon explicite et n'emploie JAMAIS de vocabulaire cru ou anatomique explicite. Ce qui relève de l'intime se suggère par la sensation, le geste, l'atmosphère et l'ellipse (fondu au noir, l'avant et l'après). C'est une fiction pour inspirer l'écriture.`;
   return s;
 }
 
@@ -599,9 +612,9 @@ function deleteChar(){
 }
 
 /* ---- settings / heroine ---- */
-function openSettings(){ $('#setKey').value=apikey; $('#setModel').value=model; $('#setWorld').value=world; openOverlay('#modalSettings'); }
-function saveSettings(){ apikey=$('#setKey').value.trim(); model=$('#setModel').value; world=$('#setWorld').value.trim()||DEFAULT_WORLD;
-  localStorage.setItem(LS.key,apikey); localStorage.setItem(LS.model,model); localStorage.setItem(LS.world,world); closeOverlay('#modalSettings'); }
+function openSettings(){ $('#setKey').value=apikey; $('#setModel').value=model; $('#setIntensity').value=intensity; $('#setWorld').value=world; openOverlay('#modalSettings'); }
+function saveSettings(){ apikey=$('#setKey').value.trim(); model=$('#setModel').value; intensity=$('#setIntensity').value; world=$('#setWorld').value.trim()||DEFAULT_WORLD;
+  localStorage.setItem(LS.key,apikey); localStorage.setItem(LS.model,model); localStorage.setItem(LS.intensity,intensity); localStorage.setItem(LS.world,world); closeOverlay('#modalSettings'); }
 function openHeroine(){ $('#heroName').value=hero.name||''; $('#heroTraits').value=hero.traits||''; openOverlay('#modalHeroine'); }
 function saveHeroine(){ hero={name:$('#heroName').value.trim(), traits:$('#heroTraits').value.trim()}; save(LS.hero,hero); closeOverlay('#modalHeroine'); }
 
