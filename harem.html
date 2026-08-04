@@ -321,9 +321,9 @@ function fmt(s){ return esc(s).replace(/\*(.+?)\*/gs,'<em>$1</em>'); }
 function heroLabel(){ return (hero.name||'').trim() || "l'héroïne"; }
 
 const INTENSITY = {
-  tendre: `- Registre TENDRE et romantique : émotions, complicité, baisers, étreintes. Reste pudique et chaste ; la sensualité demeure légère et suggérée.`,
-  sensuel: `- Registre ROMANTIQUE et SENSUEL : tu peux faire monter le désir et la tension, décrire baisers, caresses, souffles, peau, corps qui se rapprochent, un vêtement qu'on dénoue. Quand la scène atteint le seuil de l'intime, suggère la suite par l'ellipse (fondu au noir, l'avant et l'après) plutôt que de la montrer.`,
-  ardent: `- Registre ARDENT mais SUGGÉRÉ : tension et désir intenses, sensualité pleinement assumée, jusqu'au seuil de l'intime. Décris implicitement ce qui se passe par les sensations, les gestes, l'atmosphère et l'aftermath (réveil enlacés, draps froissés) — puis l'ellipse. La montée peut être brûlante ; l'acte lui-même n'est jamais montré.`
+  tendre: `- Registre TENDRE et romantique : émotions, complicité, baisers, étreintes. Reste pudique ; la sensualité demeure légère et suggérée.`,
+  sensuel: `- Registre ROMANTIQUE et SENSUEL : fais monter le désir et la tension ; décris baisers, caresses, souffles, peau, corps qui se rapprochent, un vêtement qu'on dénoue. Tu peux poursuivre la scène dans l'intimité de façon suggérée, sans couper net au seuil.`,
+  ardent: `- Registre ARDENT : ne t'arrête PAS au seuil de l'intime — POURSUIS la scène à travers l'étreinte, mais de façon IMPLICITE et impressionniste. Rends ce qui se passe par les sensations (chaleur, souffle, frissons, la montée puis le vertige, l'apogée évoquée), l'émotion (l'abandon, se perdre l'un dans l'autre), le mouvement suggéré et la métaphore (la marée, le feu, deux corps qui se fondent). On doit comprendre clairement ce qui a lieu — sans que ce soit jamais nommé crûment. Enchaîne ensuite sur l'aftermath (réveil enlacés, draps froissés, tendresse).`
 };
 
 /* ---- system prompt (bible) ---- */
@@ -366,7 +366,7 @@ function buildSystem(c, isGroup){
     `- Réagis à ce qui vient d'être dit et fait avancer la tension romantique ; pose parfois une question.\n`+
     `- Ne romps JAMAIS le personnage, ne parle jamais en tant qu'IA ou assistant.\n`+
     INTENSITY[intensity] + `\n`+
-    `- LIMITE ABSOLUE (tous niveaux) : ne décris JAMAIS d'acte sexuel de façon explicite et n'emploie JAMAIS de vocabulaire cru ou anatomique explicite. Ce qui relève de l'intime se suggère par la sensation, le geste, l'atmosphère et l'ellipse (fondu au noir, l'avant et l'après). C'est une fiction pour inspirer l'écriture.`;
+    `- LIMITE ABSOLUE (tous niveaux) : n'emploie JAMAIS de vocabulaire cru, explicite ou anatomique, et ne verse jamais dans la description mécanique ou graphique de l'acte. L'intime se rend par la sensation, l'émotion, l'atmosphère et l'image — de façon implicite mais claire, jamais mot pour mot. Tu ne coupes pas forcément la scène : tu la traverses en la suggérant. C'est une fiction pour inspirer l'écriture.`;
   return s;
 }
 
