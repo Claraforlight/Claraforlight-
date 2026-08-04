@@ -334,6 +334,13 @@ const INTENSITY = {
     `On doit comprendre clairement ce qui a lieu — sans jamais nommer l'acte ni une partie du corps de façon crue ou explicite. Enchaîne ensuite sur l'aftermath (réveil enlacés, draps froissés, tendresse).`
 };
 
+const CRAFT_RULES =
+  `- SHOW, DON'T TELL : ne nomme jamais les émotions, MONTRE-les — le corps, le geste, le regard, la mâchoire qui se serre, le souffle qui change, la voix, le silence. Mise sur les réactions corporelles, les images et les métaphores plutôt que sur l'explication des sentiments.\n`+
+  `- Dialogues NATURELS et vivants : parfois tranchants, assurés, « badass », mais toujours crédibles — jamais explicatifs, ampoulés ni théâtraux. Le non-dit, le sous-entendu et l'ironie comptent autant que ce qui est dit. On ne dit pas tout.\n`+
+  `- NE RÉPÈTE JAMAIS et ne paraphrase pas la réplique de l'héroïne pour la commenter ou l'analyser avant de répondre : réagis-y directement, comme une vraie personne dans la scène.\n`;
+const ABS_LIMIT =
+  `- LIMITE ABSOLUE (tous niveaux) : n'emploie JAMAIS de vocabulaire cru, explicite ou anatomique, et ne verse jamais dans la description mécanique ou graphique de l'acte. L'intime se rend par la sensation, l'émotion, l'atmosphère et l'image — de façon implicite mais claire, jamais mot pour mot. Tu ne coupes pas forcément la scène : tu la traverses en la suggérant. C'est une fiction pour inspirer l'écriture.`;
+
 /* ---- system prompt (bible) ---- */
 function buildBible(c){
   const rows=[];
@@ -376,8 +383,28 @@ function buildSystem(c, isGroup){
     (isGroup? '' : `- Garde tes réponses courtes à moyennes (1 à 3 paragraphes).\n`)+
     `- Réagis à ce qui vient d'être dit et fait avancer la tension romantique ; pose parfois une question.\n`+
     `- Ne romps JAMAIS le personnage, ne parle jamais en tant qu'IA ou assistant.\n`+
+    CRAFT_RULES+
     INTENSITY[intensity] + `\n`+
-    `- LIMITE ABSOLUE (tous niveaux) : n'emploie JAMAIS de vocabulaire cru, explicite ou anatomique, et ne verse jamais dans la description mécanique ou graphique de l'acte. L'intime se rend par la sensation, l'émotion, l'atmosphère et l'image — de façon implicite mais claire, jamais mot pour mot. Tu ne coupes pas forcément la scène : tu la traverses en la suggérant. C'est une fiction pour inspirer l'écriture.`;
+    ABS_LIMIT;
+  return s;
+}
+
+function buildGroupSystem(memberIds){
+  const ms = memberIds.map(charById).filter(Boolean);
+  let s = `Tu es le NARRATEUR d'une scène de roman de romantasy en HAREM INVERSÉ. Plusieurs prétendants sont présents autour de l'héroïne. Écris la scène comme un romancier.\n\n`;
+  s += `UNIVERS :\n${world}\n\n`;
+  s += `PERSONNAGES PRÉSENTS (respecte fidèlement la fiche de chacun ; ils doivent rester nettement distincts) :\n`;
+  ms.forEach(c=>{ s += `\n— ${c.name} (${c.tag||''}) — il ${c.address==='vous'?'vouvoie':'tutoie'} l'héroïne dans ses paroles :\n${buildBible(c)}\n`; });
+  s += `\nL'HÉROÏNE : ${heroLabel()}.` + ((hero.traits||'').trim()? ` Traits : ${hero.traits.trim()}.` : '') + ` C'est le personnage que la joueuse incarne : n'écris JAMAIS ses répliques ni ses actions à sa place — pars de ce qu'elle vient d'écrire.\n\n`;
+  s += `RÈGLES DE LA SCÈNE :\n`+
+    `- Écris à la TROISIÈME personne, style roman. Les paroles sont au style direct, entre guillemets « … », attribuées clairement (ex. « … », lâche ${ms[0]?ms[0].name:'lui'}).\n`+
+    `- NE FAIS PAS intervenir tout le monde à chaque fois : seuls les personnages réellement concernés parlent ou agissent. Parfois un seul réagit, parfois deux ; les autres peuvent rester en retrait, observer, ou ne répondre que d'un geste ou d'un regard.\n`+
+    `- Les personnages INTERAGISSENT ENTRE EUX (répliques qui se croisent, rivalité, complicité, taquineries, jalousie selon leurs fiches), et surtout PAS chacun son tour de façon mécanique.\n`+
+    `- Chaque personnage garde sa voix, son rythme et ses réactions propres ; deux ne réagissent jamais de la même façon à la même situation.\n`+
+    CRAFT_RULES+
+    INTENSITY[intensity] + `\n`+
+    `- Garde la scène fluide et vivante, pas trop longue.\n`+
+    ABS_LIMIT;
   return s;
 }
 
@@ -440,6 +467,16 @@ function persist(){ active.type==='solo' ? saveConvos() : saveScenes(); }
 function toApiMessages(list){ // solo: strip leading assistant (opening greeting)
   const out=[]; let started=false;
   for(const m of list){ if(!started){ if(m.role!=='user') continue; started=true; } out.push({role:m.role, content:m.content}); }
+  return out;
+}
+function toGroupApiMessages(list){
+  const out=[]; let started=false;
+  for(const m of list){
+    const role = m.role==='assistant' ? 'assistant' : 'user';
+    if(!started){ if(role!=='user') continue; started=true; }
+    const last=out[out.length-1];
+    if(last && last.role===role) last.content += '\n'+m.content; else out.push({role, content:m.content});
+  }
   return out;
 }
 function buildGroupMessages(list, meId){
@@ -508,10 +545,12 @@ function renderMessages(){
     if(m.role==='user'){
       d.className='msg me';
       d.innerHTML = grp ? `<span class="msg-name" style="color:var(--gold-soft)">${esc(heroLabel())}</span>`+fmt(m.content) : fmt(m.content);
+    } else if(grp){
+      d.className='msg them'; d.style.borderLeft='2px solid var(--gold)';
+      d.innerHTML = `<span class="msg-name" style="color:var(--gold)">✦ Scène</span>`+fmt(m.content);
     } else {
-      const c = grp ? charById(m.who) : charById(active.id);
-      const col = c?c.accent:'var(--gold)';
-      d.className='msg them'; if(grp) d.style.borderLeft='2px solid '+col;
+      const c = charById(active.id); const col = c?c.accent:'var(--gold)';
+      d.className='msg them';
       d.innerHTML = `<span class="msg-name" style="color:${col}">${esc(c?c.name:'?')}</span>`+fmt(m.content);
     }
     inner.appendChild(d);
@@ -562,11 +601,24 @@ async function runReply(member){
     acc='⚠️ '+(err.message||'Erreur')+'\n\n*(Ouvre les Réglages pour vérifier ta clé API et ton crédit.)*'; paint();
   }
 }
+async function runScene(){
+  const inner=$('#messagesInner');
+  const bubble=document.createElement('div'); bubble.className='msg them'; bubble.style.borderLeft='2px solid var(--gold)';
+  const label=`<span class="msg-name" style="color:var(--gold)">✦ Scène</span>`;
+  bubble.innerHTML=label+`<div class="typing"><span></span><span></span><span></span></div>`;
+  inner.appendChild(bubble); scrollDown();
+  let acc=''; const paint=()=>{ bubble.innerHTML=label+fmt(acc); scrollDown(); };
+  try{
+    await requestStream(buildGroupSystem(getMembers()), toGroupApiMessages(getLog()), t=>{ acc+=t; paint(); });
+    if(acc.trim()){ getLog().push({role:'assistant', content:acc.trim(), who:'scene'}); persist(); }
+    else { acc='*(silence — vérifie ta clé et ton modèle dans les Réglages.)*'; paint(); }
+  }catch(err){ acc='⚠️ '+(err.message||'Erreur')+'\n\n*(Ouvre les Réglages pour vérifier ta clé API et ton crédit.)*'; paint(); }
+}
 async function runRound(){
   streaming=true; $('#sendBtn').disabled=true;
   try{
     if(active.type==='solo') await runReply(charById(active.id));
-    else for(const id of getMembers()){ const m=charById(id); if(m) await runReply(m); }
+    else await runScene();
   } finally { streaming=false; $('#sendBtn').disabled=false; $('#input').focus(); }
 }
 async function send(){
