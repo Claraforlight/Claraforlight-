@@ -185,6 +185,10 @@ nav{ position:sticky; top:0; z-index:60; padding:14px 22px; display:flex; justif
     <option value="claude-opus-5">Opus 5 — prose la plus riche (plus coûteux)</option>
     <option value="claude-haiku-4-5">Haiku 4.5 — rapide &amp; économique</option>
   </select></div>
+  <div class="field"><label>Narration</label><select id="setNarration">
+    <option value="3">Troisième personne — style roman (recommandé)</option>
+    <option value="1">Première personne — le personnage dit « je »</option>
+  </select></div>
   <div class="field"><label>Intensité des scènes</label><select id="setIntensity">
     <option value="tendre">Tendre — romance chaste (baisers, émotion)</option>
     <option value="sensuel">Sensuel — désir &amp; sous-entendu, fondu au noir (recommandé)</option>
@@ -233,7 +237,7 @@ nav{ position:sticky; top:0; z-index:60; padding:14px 22px; display:flex; justif
 <script>
 "use strict";
 const $ = s => document.querySelector(s);
-const LS = { key:'hr_apikey', model:'hr_model', world:'hr_world', intensity:'hr_intensity', chars:'hr_characters', convos:'hr_convos', scenes:'hr_scenes', hero:'hr_heroine' };
+const LS = { key:'hr_apikey', model:'hr_model', world:'hr_world', intensity:'hr_intensity', narration:'hr_narration', chars:'hr_characters', convos:'hr_convos', scenes:'hr_scenes', hero:'hr_heroine' };
 const ACCENTS = ['#7fb3d5','#d9765a','#9b7fc9','#6fae8f','#e8c97a','#d18fb0','#c9a84c','#a0b56f'];
 
 const DEFAULT_WORLD = "Manésia — un monde de romantasy où la magie court dans le sang de quelques élus. Cours rivales, serments anciens et créatures de légende. L'héroïne y avance libre et convoitée, chaque prétendant portant sa part de lumière et d'ombre.";
@@ -304,6 +308,7 @@ let apikey = localStorage.getItem(LS.key) || '';
 let model = localStorage.getItem(LS.model) || 'claude-sonnet-5';
 let world = localStorage.getItem(LS.world) || DEFAULT_WORLD;
 let intensity = localStorage.getItem(LS.intensity) || 'sensuel';
+let narration = localStorage.getItem(LS.narration) || '3';
 let mode = 'solo';            // gallery mode: 'solo' | 'group'
 let groupSel = [];           // selected char ids for a group scene
 let active = null;           // {type:'solo', id} | {type:'group', key}
@@ -358,11 +363,14 @@ function buildSystem(c, isGroup){
          `Réagis autant à l'héroïne qu'aux autres prétendants (rivalité, complicité, jalousie, taquineries selon ton caractère). Ne mets pas ton propre nom en préfixe : donne directement ta réplique. Garde-la courte (1 à 2 paragraphes) pour laisser vivre la scène.\n\n`;
   }
 
+  const person = narration==='1'
+    ? `- Réponds en français, à la PREMIÈRE personne, en restant ${c.name} (« je »). Les gestes/actions vont entre *astérisques*.\n`
+    : `- Réponds en français à la TROISIÈME personne, dans un style romanesque : raconte les gestes, expressions et pensées de ${c.name} à la 3e personne (« il », « ${c.name} »). Désigne l'héroïne par son nom (${heroLabel()}) ou « elle ». Les paroles prononcées sont au style direct, entre guillemets « … ». Tu peux garder les *astérisques* pour les actions si tu veux, mais l'essentiel est raconté comme dans un roman.\n`;
   s += `RÈGLES :\n`+
-    `- Réponds toujours en français, à la première personne, en restant ${c.name}.\n`+
+    person+
     (c.address==='vous'
-      ? `- VOUVOIE toujours l'héroïne (emploie « vous », jamais « tu »).\n`
-      : `- TUTOIE toujours l'héroïne (emploie « tu », jamais « vous »).\n`)+
+      ? `- Dans ses paroles, ${c.name} VOUVOIE l'héroïne (« vous », jamais « tu »).\n`
+      : `- Dans ses paroles, ${c.name} TUTOIE l'héroïne (« tu », jamais « vous »).\n`)+
     `- Incarne pleinement cette identité : ton vocabulaire, ton rythme, tes réactions doivent être uniques et reconnaissables. Deux personnages ne réagissent jamais de la même façon à la même situation.\n`+
     `- Écris de façon immersive : mêle dialogue, sensations et gestes. Mets les actions/gestes entre *astérisques*.\n`+
     (isGroup? '' : `- Garde tes réponses courtes à moyennes (1 à 3 paragraphes).\n`)+
@@ -615,9 +623,9 @@ function deleteChar(){
 }
 
 /* ---- settings / heroine ---- */
-function openSettings(){ $('#setKey').value=apikey; $('#setModel').value=model; $('#setIntensity').value=intensity; $('#setWorld').value=world; openOverlay('#modalSettings'); }
-function saveSettings(){ apikey=$('#setKey').value.trim(); model=$('#setModel').value; intensity=$('#setIntensity').value; world=$('#setWorld').value.trim()||DEFAULT_WORLD;
-  localStorage.setItem(LS.key,apikey); localStorage.setItem(LS.model,model); localStorage.setItem(LS.intensity,intensity); localStorage.setItem(LS.world,world); closeOverlay('#modalSettings'); }
+function openSettings(){ $('#setKey').value=apikey; $('#setModel').value=model; $('#setNarration').value=narration; $('#setIntensity').value=intensity; $('#setWorld').value=world; openOverlay('#modalSettings'); }
+function saveSettings(){ apikey=$('#setKey').value.trim(); model=$('#setModel').value; narration=$('#setNarration').value; intensity=$('#setIntensity').value; world=$('#setWorld').value.trim()||DEFAULT_WORLD;
+  localStorage.setItem(LS.key,apikey); localStorage.setItem(LS.model,model); localStorage.setItem(LS.narration,narration); localStorage.setItem(LS.intensity,intensity); localStorage.setItem(LS.world,world); closeOverlay('#modalSettings'); }
 function openHeroine(){ $('#heroName').value=hero.name||''; $('#heroTraits').value=hero.traits||''; openOverlay('#modalHeroine'); }
 function saveHeroine(){ hero={name:$('#heroName').value.trim(), traits:$('#heroTraits').value.trim()}; save(LS.hero,hero); closeOverlay('#modalHeroine'); }
 
