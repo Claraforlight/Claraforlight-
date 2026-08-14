@@ -74,13 +74,41 @@ function isTrivial(text) {
   return meaningful.length < 2;
 }
 
+// Un "echo" = un message envoye DEPUIS votre compte. Il y en a deux sortes :
+//  - ceux que le bot vient d'envoyer (a ignorer),
+//  - ceux que VOUS avez ecrits a la main dans Instagram (= vous reprenez la
+//    main) -> le bot se met en retrait pour ne pas faire doublon.
+function handleEcho(event) {
+  const userId = event.recipient?.id; // dans un echo, le destinataire = le prospect
+  const text = event.message?.text;
+  if (!userId || !text) return;
+
+  // Est-ce simplement le message que le bot vient d'envoyer ? Si oui, on ignore.
+  const lastAssistant = [...getMessages(userId)]
+    .reverse()
+    .find((m) => m.role === "assistant");
+  if (lastAssistant && lastAssistant.content.trim() === text.trim()) return;
+
+  // Sinon, c'est VOUS qui avez repondu a la main -> le bot se retire.
+  if (getState(userId) !== "handoff") {
+    setState(userId, "handoff");
+    console.log(`\n✋ Vous avez repris la main sur ${userId} — le bot se retire de cet echange.\n`);
+  }
+  appendMessage(userId, "assistant", text); // on garde une trace de votre reponse
+}
+
 async function handleEvent(event) {
   const senderId = event.sender?.id;
   const text = event.message?.text;
 
-  // On ignore : les echos (nos propres envois), les non-textes, nous-memes.
+  // Echo : un message parti de votre compte (bot ou vous). Traite a part.
+  if (event.message?.is_echo) {
+    handleEcho(event);
+    return;
+  }
+
+  // On ignore : les non-textes et nous-memes.
   if (!senderId || !text) return;
-  if (event.message?.is_echo) return;
   if (senderId === IG_BUSINESS_ID) return;
 
   // On ignore aussi les messages "vides" : uniquement des emojis, une

@@ -126,6 +126,10 @@ Réglez aussi dans `.env` :
   `.gitignore`). Ne le partagez pas.
 - Le bot **passe la main à un humain** (vous) dès qu'un mot-clé sensible
   apparaît, et note `🔔 REPRISE HUMAINE NECESSAIRE` dans les logs.
+- **Si vous répondez vous-même** dans l'app Instagram, le bot le détecte et
+  **se retire automatiquement de cette conversation** (plus de doublon). Il
+  note `✋ Vous avez repris la main` dans les logs. Il ne répondra plus à cette
+  personne — à vous de continuer l'échange à la main.
 - Il ne prétend jamais être une IA, mais reste honnête : pas de fausses
   promesses, pas d'infos inventées.
 - Testez d'abord avec vous-même avant d'ouvrir à de vrais prospects.
