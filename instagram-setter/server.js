@@ -63,6 +63,17 @@ app.post("/webhook", async (req, res) => {
   }
 });
 
+// Detecte un message "vide" de sens : que des emojis, de la ponctuation,
+// ou moins de 2 caracteres reels. On enleve les emojis puis on compte ce
+// qui reste de vraiment lisible (lettres/chiffres).
+function isTrivial(text) {
+  const withoutEmoji = text
+    .replace(/\p{Extended_Pictographic}/gu, "")
+    .replace(/[‍️\u{1F3FB}-\u{1F3FF}]/gu, ""); // liaisons, teintes
+  const meaningful = withoutEmoji.replace(/[^\p{L}\p{N}]/gu, ""); // lettres+chiffres
+  return meaningful.length < 2;
+}
+
 async function handleEvent(event) {
   const senderId = event.sender?.id;
   const text = event.message?.text;
@@ -71,6 +82,14 @@ async function handleEvent(event) {
   if (!senderId || !text) return;
   if (event.message?.is_echo) return;
   if (senderId === IG_BUSINESS_ID) return;
+
+  // On ignore aussi les messages "vides" : uniquement des emojis, une
+  // reaction, ou un truc trop court sans vrai contenu (ex. "👍", "❤️", "ok").
+  // Le bot attend un vrai message avant de repondre.
+  if (isTrivial(text)) {
+    console.log(`[dm] ${senderId}: message ignore (emoji / trop court): ${text}`);
+    return;
+  }
 
   console.log(`[dm] ${senderId}: ${text}`);
 
