@@ -1,0 +1,19 @@
+{
+  "name": "instagram-setter",
+  "version": "1.0.0",
+  "description": "Setter Claude pour Instagram : repond automatiquement aux DMs entrants dans votre ton, qualifie et prend rendez-vous. Integration officielle Meta.",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.70.0",
+    "dotenv": "^16.4.0",
+    "express": "^4.19.0"
+  }
+}
