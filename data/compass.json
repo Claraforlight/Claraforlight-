@@ -1,0 +1,244 @@
+{
+  "directions": [
+    {
+      "id": "north",
+      "name": "Nord",
+      "element": "Eau",
+      "color": "#06A77D",
+      "meaning": "Introspection, mystère, renouveau",
+      "season": "Hiver",
+      "phase": "Nouvelle Lune",
+      "energy": "Yin (intérieur)",
+      "guidance": "Allez vers votre centre, écoutez votre voix intérieure"
+    },
+    {
+      "id": "east",
+      "name": "Est",
+      "element": "Air",
+      "color": "#F77F00",
+      "meaning": "Nouvelle aurore, idées fraîches, communication",
+      "season": "Printemps",
+      "phase": "Lune croissante",
+      "energy": "Yang (extérieur)",
+      "guidance": "Exprimez-vous, partagez vos idées, commencez quelque chose de nouveau"
+    },
+    {
+      "id": "south",
+      "name": "Sud",
+      "element": "Feu",
+      "color": "#E63946",
+      "meaning": "Passion, action, transformation, puissance",
+      "season": "Été",
+      "phase": "Pleine Lune",
+      "energy": "Yang (extérieur)",
+      "guidance": "Agissez avec courage, manifestez votre puissance, créez du changement"
+    },
+    {
+      "id": "west",
+      "name": "Ouest",
+      "element": "Terre",
+      "color": "#264653",
+      "meaning": "Réflexion, intériorisation, repos, gratitude",
+      "season": "Automne",
+      "phase": "Lune décroissante",
+      "energy": "Yin (intérieur)",
+      "guidance": "Réfléchissez, intégrez vos apprentissages, préparez-vous à la transformation"
+    }
+  ],
+  "lunarCycles": [
+    {
+      "phase": "Nouvelle Lune",
+      "day": 0,
+      "symbol": "🌑",
+      "meaning": "Nouvelles intentions, potentiel caché",
+      "power": "Commencement",
+      "rituals": ["Définir des intentions", "Méditer", "Journaliser vos rêves"],
+      "activities": ["Planification", "Réflexion", "Initiation de projets"]
+    },
+    {
+      "phase": "Croissant croissant",
+      "day": 7,
+      "symbol": "🌒",
+      "meaning": "Construction d'énergie, développement",
+      "power": "Manifestation progressive",
+      "rituals": ["Affirmations positives", "Visualisation", "Actions de croissance"],
+      "activities": ["Travail acharné", "Apprentissage", "Accumulation"]
+    },
+    {
+      "phase": "Lune gibbeuse croissante",
+      "day": 8,
+      "symbol": "🌓",
+      "meaning": "Affinage des objectifs, ajustements",
+      "power": "Clarification",
+      "rituals": ["Révision des intentions", "Méditation focalisée", "Nettoyage"],
+      "activities": ["Perfectionnement", "Révision", "Communauté"]
+    },
+    {
+      "phase": "Pleine Lune",
+      "day": 14,
+      "symbol": "🌕",
+      "meaning": "Illumination complète, achèvement d'un cycle",
+      "power": "Climax et manifestation",
+      "rituals": ["Cérémonie de gratitude", "Lâcher prise", "Bains lunaires"],
+      "activities": ["Célébration", "Partage", "Puissance maximale"]
+    },
+    {
+      "phase": "Lune gibbeuse décroissante",
+      "day": 21,
+      "symbol": "🌖",
+      "meaning": "Partage de sagesse, évaluation",
+      "power": "Enseignement et évaluation",
+      "rituals": ["Partage d'expériences", "Gratitude", "Introspection"],
+      "activities": ["Enseignement", "Partage", "Analyse"]
+    },
+    {
+      "phase": "Croissant décroissant",
+      "day": 22,
+      "symbol": "🌗",
+      "meaning": "Lâcher prise, libération",
+      "power": "Transformation",
+      "rituals": ["Rituel de libération", "Lettres de lâcher prise", "Nettoyage énergétique"],
+      "activities": ["Fermeture", "Libération", "Repos"]
+    }
+  ],
+  "monthlyTrends": [
+    {
+      "month": "Janvier",
+      "theme": "Nouvelle Aurore",
+      "energy": "Yin (introspection)",
+      "focus": "Nouvelles résolutions, intention",
+      "color": "#3A0CA3"
+    },
+    {
+      "month": "Février",
+      "theme": "Amour et connexion",
+      "energy": "Équilibré",
+      "focus": "Relations, auto-amour",
+      "color": "#E8749F"
+    },
+    {
+      "month": "Mars",
+      "theme": "Action et énergie",
+      "energy": "Yang (action)",
+      "focus": "Initiatives, courage",
+      "color": "#E63946"
+    },
+    {
+      "month": "Avril",
+      "theme": "Renouveau du printemps",
+      "energy": "Yin croissant",
+      "focus": "Croissance, fertilité",
+      "color": "#06A77D"
+    },
+    {
+      "month": "Mai",
+      "theme": "Liberté et expression",
+      "energy": "Yang",
+      "focus": "Communication, créativité",
+      "color": "#F77F00"
+    },
+    {
+      "month": "Juin",
+      "theme": "Culmination de l'énergie",
+      "energy": "Yang maximal",
+      "focus": "Abondance, manifestation",
+      "color": "#FFD60A"
+    },
+    {
+      "month": "Juillet",
+      "theme": "Lumière et passion",
+      "energy": "Yang intense",
+      "focus": "Puissance personnelle, romance",
+      "color": "#E63946"
+    },
+    {
+      "month": "Août",
+      "theme": "Harvest et celebration",
+      "energy": "Yang décroissant",
+      "focus": "Récolte, gratitude",
+      "color": "#A4161A"
+    },
+    {
+      "month": "Septembre",
+      "theme": "Transition et retour",
+      "energy": "Équilibré",
+      "focus": "Intégration, apprentissage",
+      "color": "#F77F00"
+    },
+    {
+      "month": "Octobre",
+      "theme": "Mystère et introspection",
+      "energy": "Yin croissant",
+      "focus": "Sagesse intérieure, transformation",
+      "color": "#8B0000"
+    },
+    {
+      "month": "Novembre",
+      "theme": "Gratitude et introspection",
+      "energy": "Yin",
+      "focus": "Remerciements, fermeture",
+      "color": "#654321"
+    },
+    {
+      "month": "Décembre",
+      "theme": "Repos et renouveau",
+      "energy": "Yin maximal",
+      "focus": "Silence, renaissance",
+      "color": "#1B4965"
+    }
+  ],
+  "synchronicities": [
+    {
+      "name": "Heures miroir",
+      "symbol": "🕐",
+      "meaning": "Alignement avec votre chemin de vie",
+      "examples": ["11:11", "22:22", "12:34"]
+    },
+    {
+      "name": "Nombres angéliques",
+      "symbol": "👼",
+      "meaning": "Messages de protection et guidance",
+      "examples": ["111", "222", "333", "444", "555"]
+    },
+    {
+      "name": "Rencontres significatives",
+      "symbol": "🤝",
+      "meaning": "Personnes qui apportent des lessons importantes",
+      "examples": ["Nouvelle relation", "Reconnexion", "Âme sœur"]
+    },
+    {
+      "name": "Signes de la nature",
+      "symbol": "🦅",
+      "meaning": "Messages du univers à travers animaux et nature",
+      "examples": ["Plumes", "Papillons", "Oiseaux rares"]
+    }
+  ],
+  "rituals": [
+    {
+      "id": "moon_bath",
+      "name": "Bain lunaire",
+      "duration": "20 min",
+      "bestTime": "Pleine Lune",
+      "description": "Immergez-vous sous la lumière lunaire pour recharger votre énergie",
+      "steps": [
+        "Trouvez un endroit tranquille sous la lune",
+        "Réglez votre intention",
+        "Laissez la lumière vous recouvrir",
+        "Respirez profondément"
+      ]
+    },
+    {
+      "id": "intention_setting",
+      "name": "Fixation d'intention",
+      "duration": "15 min",
+      "bestTime": "Nouvelle Lune",
+      "description": "Écrivez vos intentions pour le cycle lunaire à venir",
+      "steps": [
+        "Écrivez vos 3-5 intentions",
+        "Lisez-les à haute voix",
+        "Gardez-les à proximité",
+        "Vérifiez le progrès à la pleine lune"
+      ]
+    }
+  ]
+}

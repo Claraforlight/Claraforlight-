@@ -1,0 +1,223 @@
+{
+  "astrocartography": {
+    "description": "Cartographie Astrale - Mapping des influences planétaires géographiques",
+    "definition": "La cartographie astrale montre où sur Terre vous pourriez ressentir les influences planétaires de votre thème natal de manière renforcée.",
+    "lines": [
+      {
+        "id": "ascendant",
+        "name": "Ligne d'Ascendant",
+        "symbol": "AC",
+        "meaning": "Où vous êtes le plus vous-même, identité renforcée",
+        "effect": "Amélioration du charisme et de l'auto-expression",
+        "characteristics": ["Acceptation personnelle", "Apparence améliorée", "Première impression positive"]
+      },
+      {
+        "id": "descendant",
+        "name": "Ligne de Descendant",
+        "symbol": "DC",
+        "meaning": "Où les relations et partenariats sont amplifiés",
+        "effect": "Harmonie relationnelle, attirance magnétique",
+        "characteristics": ["Connexions profondes", "Amitié renforcée", "Attrait romantique"]
+      },
+      {
+        "id": "midheaven",
+        "name": "Ligne de Milieu du Ciel",
+        "symbol": "MC",
+        "meaning": "Où votre carrière et réputation brillent",
+        "effect": "Succès professionnel et reconnaissance",
+        "characteristics": ["Réussite professionnelle", "Reconnaissance", "Autorité naturelle"]
+      },
+      {
+        "id": "imum_coeli",
+        "name": "Ligne du Fond du Ciel",
+        "symbol": "IC",
+        "meaning": "Où vous trouverez repos et stabilité familiale",
+        "effect": "Paix intérieure, stabilité domestique",
+        "characteristics": ["Sécurité émotionnelle", "Racines familiales", "Bien-être domestique"]
+      }
+    ],
+    "planetary_lines": [
+      {
+        "id": "sun_line",
+        "planet": "Soleil",
+        "symbol": "☉",
+        "meaning": "Illumination personnelle, essence",
+        "positive_zones": ["Charisma", "Succès", "Clarté vitale"],
+        "challenging_zones": ["Trop d'exposition", "Burn-out", "Égo"]
+      },
+      {
+        "id": "moon_line",
+        "planet": "Lune",
+        "symbol": "☽",
+        "meaning": "Émotions, intuition, nurturance",
+        "positive_zones": ["Sensibilité accrue", "Intuition forte", "Connexion émotionnelle"],
+        "challenging_zones": ["Instabilité émotionnelle", "Codépendance", "Anxiété"]
+      },
+      {
+        "id": "venus_line",
+        "planet": "Vénus",
+        "symbol": "♀",
+        "meaning": "Amour, beauté, abondance",
+        "positive_zones": ["Harmonie relationnelle", "Créativité", "Abundance"],
+        "challenging_zones": ["Dépendance affective", "Hédonisme", "Conflit relationnel"]
+      },
+      {
+        "id": "mars_line",
+        "planet": "Mars",
+        "symbol": "♂",
+        "meaning": "Énergie, action, défi",
+        "positive_zones": ["Dynamisme", "Courage", "Succès compétitif"],
+        "challenging_zones": ["Conflits", "Agressivité", "Précipitation"]
+      },
+      {
+        "id": "mercury_line",
+        "planet": "Mercure",
+        "symbol": "☿",
+        "meaning": "Communication, apprentissage",
+        "positive_zones": ["Communication claire", "Apprentissage facile", "Transactions"],
+        "challenging_zones": ["Nervosité", "Mensonges", "Indécision"]
+      },
+      {
+        "id": "jupiter_line",
+        "planet": "Jupiter",
+        "symbol": "♃",
+        "meaning": "Expansion, bonne fortune",
+        "positive_zones": ["Abondance", "Optimisme", "Opportunités"],
+        "challenging_zones": ["Excès", "Arrogance", "Surextension"]
+      },
+      {
+        "id": "saturn_line",
+        "planet": "Saturne",
+        "symbol": "♄",
+        "meaning": "Discipline, limitations, sagesse",
+        "positive_zones": ["Stabilité", "Sagesse", "Réussite durable"],
+        "challenging_zones": ["Restrictions", "Dépression", "Lenteur"]
+      }
+    ],
+    "power_spots": [
+      {
+        "id": "sacred_sites",
+        "name": "Lieux Sacrés",
+        "description": "Endroits d'alignement cosmique puissant",
+        "examples": ["Machu Picchu (Pérou)", "Stonehenge (UK)", "Pyramides (Égypte)", "Mont Shasta (USA)"],
+        "energy": "Très élevée"
+      },
+      {
+        "id": "vortex_sites",
+        "name": "Vortex Énergétiques",
+        "description": "Zones de vortex énergétique concentré",
+        "examples": ["Sedona (Arizona)", "Bali (Indonésie)", "Mont Kailash (Tibet)"],
+        "energy": "Extrêmement élevée"
+      },
+      {
+        "id": "personal_power_spots",
+        "name": "Zones de Puissance Personnelle",
+        "description": "Lieux alignés avec votre thème natal",
+        "energy": "Variable selon thème"
+      }
+    ],
+    "relocation": {
+      "concept": "Relocalisation Virtuelle - Calculer l'influence d'une mudanza sans y aller",
+      "benefits": [
+        "Tester un endroit avant de déménager",
+        "Comprendre comment différents lieux affectent votre vie",
+        "Trouver votre lieu idéal géographiquement"
+      ],
+      "process": [
+        "Calculer les lignes planétaires",
+        "Identifier les villes qui correspondent",
+        "Analyser les influences estimées"
+      ]
+    }
+  },
+  "geographic_influences": [
+    {
+      "region": "Nord",
+      "planets": ["Saturne", "Mercure"],
+      "characteristics": ["Clarté mentale", "Discipline", "Sagesse"],
+      "best_for": ["Étude", "Travail", "Introspection"]
+    },
+    {
+      "region": "Est",
+      "planets": ["Mercure", "Vénus"],
+      "characteristics": ["Communication", "Nouvelle aurore", "Fertilité"],
+      "best_for": ["Commencer quelque chose", "Communication", "Relations"]
+    },
+    {
+      "region": "Sud",
+      "planets": ["Mars", "Soleil"],
+      "characteristics": ["Passion", "Énergie", "Créativité"],
+      "best_for": ["Aventure", "Créativité", "Action"]
+    },
+    {
+      "region": "Ouest",
+      "planets": ["Lune", "Neptune"],
+      "characteristics": ["Réflexion", "Intuition", "Repos"],
+      "best_for": ["Spiritualité", "Arts", "Introspection"]
+    }
+  ],
+  "business_locations": [
+    {
+      "activity": "Bureau/Entrepreneuriat",
+      "best_planetary_lines": ["Jupiter", "Soleil", "Mercure"],
+      "reasoning": "Expansion, succès, communication"
+    },
+    {
+      "activity": "Arts & Créativité",
+      "best_planetary_lines": ["Vénus", "Neptune", "Lune"],
+      "reasoning": "Beauté, imagination, intuition"
+    },
+    {
+      "activity": "Sports & Aventure",
+      "best_planetary_lines": ["Mars", "Soleil"],
+      "reasoning": "Énergie, dynamisme, défi"
+    },
+    {
+      "activity": "Guérison & Thérapie",
+      "best_planetary_lines": ["Chiron", "Neptune", "Lune"],
+      "reasoning": "Compassion, sagesse, intuition"
+    },
+    {
+      "activity": "Commerce & Ventes",
+      "best_planetary_lines": ["Mercure", "Vénus", "Jupiter"],
+      "reasoning": "Communication, persuasion, chance"
+    }
+  ],
+  "city_profiles": [
+    {
+      "city": "New York",
+      "coordinates": { "lat": 40.7128, "lng": -74.0060 },
+      "planetary_influence": "Mercure dominant",
+      "energy": "Communication intense, rythme rapide",
+      "best_for": "Carrière, affaires, visibilité"
+    },
+    {
+      "city": "Bali",
+      "coordinates": { "lat": -8.6705, "lng": 115.2126 },
+      "planetary_influence": "Neptune/Vénus dominant",
+      "energy": "Spiritualité, beauté, introspection",
+      "best_for": "Retraite spirituelle, création"
+    },
+    {
+      "city": "Los Angeles",
+      "coordinates": { "lat": 34.0522, "lng": -118.2437 },
+      "planetary_influence": "Soleil/Vénus dominant",
+      "energy": "Créativité, illumination, charme",
+      "best_for": "Arts, spectacle, visibilité"
+    },
+    {
+      "city": "Tokyo",
+      "coordinates": { "lat": 35.6762, "lng": 139.6503 },
+      "planetary_influence": "Saturne/Mercure dominant",
+      "energy": "Discipline, perfectionnement, innovation",
+      "best_for": "Entreprise, technologie, maîtrise"
+    },
+    {
+      "city": "Paris",
+      "coordinates": { "lat": 48.8566, "lng": 2.3522 },
+      "planetary_influence": "Vénus/Neptune dominant",
+      "energy": "Beauté, sophistication, romance",
+      "best_for": "Arts, mode, romance"
+    }
+  ]
+}
